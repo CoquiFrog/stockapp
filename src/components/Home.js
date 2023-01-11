@@ -13,11 +13,18 @@ export const Home = () => {
     
     const grabExcelDataAndSetToState = (val) => {
         console.log('Here you are: ', val);
+        // filter dates before setting to state
         val.map((day) => {
             console.log('day: ', day);
+            delete day.Low;
+            delete day.Open;
+            delete day.High;
+            delete day["Vol."];
+            delete day["Change %"];
+            // delete day["__rowNum__"]
+
             day.Date = DateConversion(day.Date);
         })
-        // filter dates and fix them at root level
         // trim all the fat off leaving only date and price
         // then set to state
         setExcelData(val);
