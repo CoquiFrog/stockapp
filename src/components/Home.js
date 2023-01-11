@@ -6,59 +6,55 @@ import ExcelInput from "./ExcelInput";
 import DateConversion from '../functions/DateConversion';
 import DownloadExcel from "../functions/DownloadExcel";
 import FileNameInput from "./FileNameInput";
-const dummyData = [
-    {
-        Date: "2022-12-22",
-        Price: "150.33"
-    },
-    {
-        Date: "2022-11-22",
-        Price: "140.33"
-    },
-    {
-        Date: "2022-10-22",
-        Price: "130.33"
-    },
-    {
-        Date: "2022-9-22",
-        Price: "120.33"
-    },
-    {
-        Date: "2022-8-22",
-        Price: "110.33"
-    },
-];
 
 export const Home = () => {
     const [excelData, setExcelData] = useState([]);
     const [fileName, setFileName] = useState('testFile');
-
+    
     const grabExcelDataAndSetToState = (val) => {
+        console.log('Here you are: ', val);
+        val.map((day) => {
+            console.log('day: ', day);
+            day.Date = DateConversion(day.Date);
+        })
+        // filter dates and fix them at root level
+        // trim all the fat off leaving only date and price
+        // then set to state
         setExcelData(val);
     }
-
+    
     const setFileNameToDownload = (val) => {
         console.log('i am working: ', val);
         setFileName(val);
     }
-
-    const fireTestButton = () => {
+    
+    const saveExcelFile = () => {
         console.log('excelData: ', excelData);
-        DownloadExcel(dummyData, fileName)
+        DownloadExcel(excelData, fileName)
     }
-
-    // const fireTestButton2 = () => {
-    //     console.log(fileName);
-    // }
-
-
+    
+    const flipArray = () => {
+        const tryThis2 = excelData.reverse();
+        setExcelData(tryThis2);
+    }
+    
+    const showCurrentData = () => {
+        console.log(excelData)
+    }
+    
+    const filterArrayDates = () => {
+        console.log('filter fired');
+    }
+    
     return (
         <div>
             <ExcelInput grabExcelDataAndSetToState={grabExcelDataAndSetToState} />
             <FileNameInput setFileNameToDownload={setFileNameToDownload} />
-            <button onClick={fireTestButton}>Download</button>
-            {/* <button onClick={fireTestButton2}>test me2</button> */}
-            <table className="table container">
+            <button onClick={saveExcelFile}>Save</button>
+            <button onClick={flipArray}>Flip Data</button>
+            <button onClick={showCurrentData}>Show Data</button>
+            <button onClick={filterArrayDates}>Filter Array</button>
+            <table key="tableKey" className="table container">
                 <thead>
                     <tr>
                         <th scope="col">date</th>
@@ -66,9 +62,9 @@ export const Home = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {excelData.map((data) => 
+                    {excelData && excelData.map((data) => 
                         <tr key={data.Date}>
-                            <th>{DateConversion(data.Date)}</th>
+                            <th>{data.Date}</th>
                             <td>{data.Price}</td>
                         </tr>
                     )}
@@ -79,3 +75,26 @@ export const Home = () => {
 }
 
 export default Home;
+
+// const dummyData = [
+//     {
+//         Date: "2022-12-22",
+//         Price: "150.33"
+//     },
+//     {
+//         Date: "2022-11-22",
+//         Price: "140.33"
+//     },
+//     {
+//         Date: "2022-10-22",
+//         Price: "130.33"
+//     },
+//     {
+//         Date: "2022-9-22",
+//         Price: "120.33"
+//     },
+//     {
+//         Date: "2022-8-22",
+//         Price: "110.33"
+//     },
+// ];
