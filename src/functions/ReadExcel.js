@@ -2,7 +2,6 @@ import React from "react";
 import * as XLSX from "xlsx";
 
 export const ReadExcel = (file, props) => {
-    console.log('hihihihiiiiiiiii', props.grabExcelDataAndSetToState)
     const promise = new Promise((resolve, reject) => {
         const fileReader = new FileReader();
         fileReader.readAsArrayBuffer(file);

@@ -4,7 +4,6 @@ import * as XLSX from "xlsx";
 import ReadExcel from "../functions/ReadExcel";
 
 export const ExcelInput = (props) => {
-    console.log('props: ', props);
     return (
             <input
                 type="file"
