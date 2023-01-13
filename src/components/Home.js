@@ -10,7 +10,7 @@ import FileNameInput from "./FileNameInput";
 export const Home = () => {
     const [excelData, setExcelData] = useState([]);
     const [fileName, setFileName] = useState('testFile');
-    
+
     const grabExcelDataAndSetToState = (val) => {
         console.log('Here you are: ', val);
         // filter dates before setting to state
@@ -21,15 +21,13 @@ export const Home = () => {
             delete day.High;
             delete day["Vol."];
             delete day["Change %"];
-            // delete day["__rowNum__"]
-
             day.Date = DateConversion(day.Date);
         })
         // trim all the fat off leaving only date and price
         // then set to state
         setExcelData(val);
     }
-    
+
     const setFileNameToDownload = (val) => {
         console.log('i am working: ', val);
         setFileName(val);
@@ -41,8 +39,9 @@ export const Home = () => {
     }
     
     const flipArray = () => {
-        const tryThis2 = excelData.reverse();
-        setExcelData(tryThis2);
+        const deepCloneExcelDataForceRefresh = [...excelData];
+        const flippedArray = deepCloneExcelDataForceRefresh.reverse();
+        setExcelData(flippedArray);
     }
     
     const showCurrentData = () => {
@@ -61,6 +60,7 @@ export const Home = () => {
             <button onClick={flipArray}>Flip Data</button>
             <button onClick={showCurrentData}>Show Data</button>
             <button onClick={filterArrayDates}>Filter Array</button>
+            {/* <div key="testKey">{JSON.stringify(excelData)}</div> */}
             <table key="tableKey" className="table container">
                 <thead>
                     <tr>
