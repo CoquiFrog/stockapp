@@ -1,17 +1,21 @@
 import * as XLSX from "xlsx";
 import Splitter from '../functions/Splitter';
+import IterationToColumnConverter from '../functions/IterationToColumnConverter';
 
 export const DownloadExcel = (data, filename) => {
 
-    const addToSheet = (smallChunkArray) => {
+    const addToSheet = (smallChunkArray, counter) => {
 
         // add function that takes in number and spits out a correct column letter and add it and fire it here, have it take in parameter of number and spit out output as letter
 
         // XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: "F1" });
         // let columnString = letter + 1;
         // let columnString = GrabTheLetter(number) + 1;
-        let columnString = "G" + 1;
-        console.log(columnString);
+        let columnString = IterationToColumnConverter(counter) + 1;
+        console.log('check counter: ', counter);
+        console.log('column string: ', columnString);
+
+        // console.log('check pls: ', columnString);
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: columnString });
     }
 
@@ -69,7 +73,6 @@ export const DownloadExcel = (data, filename) => {
 
 export default DownloadExcel;
 
-// split order -> D, G, J, M, P, S, V, Y, AB, AE, AH, AK, AN, AQ, AT, AW
 
 
 // const dummyData = [

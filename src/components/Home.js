@@ -7,6 +7,7 @@ import DateConversion from '../functions/DateConversion';
 import DownloadExcel from "../functions/DownloadExcel";
 import FileNameInput from "./FileNameInput";
 import Splitter from "../functions/Splitter";
+import IterationToColumnConverter from "../functions/IterationToColumnConverter";
 
 export const Home = () => {
     const [excelData, setExcelData] = useState([]);
@@ -47,6 +48,8 @@ export const Home = () => {
     
     const showCurrentData = () => {
         console.log(excelData)
+        const hithere = IterationToColumnConverter(3);
+        console.log('result: ', hithere);
     }
 
     const splitterFunctionFire = () => {
