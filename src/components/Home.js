@@ -62,7 +62,6 @@ export const Home = () => {
             <button onClick={saveExcelFile}>Save</button>
             <button onClick={flipArray}>Flip Data</button>
             <button onClick={showCurrentData}>Show Data</button>
-            <button onClick={filterArrayDates}>Filter Array</button>
             <button onClick={splitterFunctionFire}>splitter</button>
             {/* <div key="testKey">{JSON.stringify(excelData)}</div> */}
             <table key="tableKey" className="table container">
