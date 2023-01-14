@@ -6,6 +6,7 @@ import ExcelInput from "./ExcelInput";
 import DateConversion from '../functions/DateConversion';
 import DownloadExcel from "../functions/DownloadExcel";
 import FileNameInput from "./FileNameInput";
+import Splitter from "../functions/Splitter";
 
 export const Home = () => {
     const [excelData, setExcelData] = useState([]);
@@ -15,7 +16,7 @@ export const Home = () => {
         console.log('Here you are: ', val);
         // filter dates before setting to state
         val.map((day) => {
-            console.log('day: ', day);
+            // console.log('day: ', day);
             delete day.Low;
             delete day.Open;
             delete day.High;
@@ -47,10 +48,12 @@ export const Home = () => {
     const showCurrentData = () => {
         console.log(excelData)
     }
-    
-    const filterArrayDates = () => {
-        console.log('filter fired');
+
+    const splitterFunctionFire = () => {
+        Splitter(excelData, 23);
     }
+
+
     
     return (
         <div>
@@ -60,6 +63,7 @@ export const Home = () => {
             <button onClick={flipArray}>Flip Data</button>
             <button onClick={showCurrentData}>Show Data</button>
             <button onClick={filterArrayDates}>Filter Array</button>
+            <button onClick={splitterFunctionFire}>splitter</button>
             {/* <div key="testKey">{JSON.stringify(excelData)}</div> */}
             <table key="tableKey" className="table container">
                 <thead>
