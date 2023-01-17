@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import "../styling/Home.css";
-import * as XLSX from "xlsx";
-import ReadExcel from "../functions/ReadExcel";
 
 export const FileNameInput = (props) => {
     return (

@@ -5,17 +5,21 @@ import ReadExcel from "../functions/ReadExcel";
 import ExcelInput from "./ExcelInput";
 import DateConversion from '../functions/DateConversion';
 import DownloadExcel from "../functions/DownloadExcel";
+import SplitExcel from "../functions/SplitExcel";
 import FileNameInput from "./FileNameInput";
 import Splitter from "../functions/Splitter";
 import IterationToColumnConverter from "../functions/IterationToColumnConverter";
+import ChunkAmountInput from "./ChunkAmountInput";
 
 export const Home = () => {
     const [excelData, setExcelData] = useState([]);
     const [fileName, setFileName] = useState('testFile');
+    const [chunkAmount, setChunkAmount] = useState(10);
 
     const grabExcelDataAndSetToState = (val) => {
         console.log('Here you are: ', val);
         // filter dates before setting to state
+        // trim all the fat off leaving only date and price
         val.map((day) => {
             // console.log('day: ', day);
             delete day.Low;
@@ -25,8 +29,7 @@ export const Home = () => {
             delete day["Change %"];
             day.Date = DateConversion(day.Date);
         })
-        // trim all the fat off leaving only date and price
-        // then set to state
+
         setExcelData(val);
     }
 
@@ -34,10 +37,15 @@ export const Home = () => {
         console.log('i am working: ', val);
         setFileName(val);
     }
+
+    const setChunkAmountForClipping = (val) => {
+        console.log('i am working: ', val);
+        setChunkAmount(val);
+    }
     
     const saveExcelFile = () => {
         console.log('excelData: ', excelData);
-        DownloadExcel(excelData, fileName)
+        DownloadExcel(excelData, fileName, true)
     }
     
     const flipArray = () => {
@@ -47,13 +55,14 @@ export const Home = () => {
     }
     
     const showCurrentData = () => {
-        console.log(excelData)
-        const hithere = IterationToColumnConverter(3);
-        console.log('result: ', hithere);
+        console.log(chunkAmount);
+        // console.log(excelData)
+        // const hithere = IterationToColumnConverter(3);
+        // console.log('result: ', hithere);
     }
 
     const splitterFunctionFire = () => {
-        Splitter(excelData, 23);
+        SplitExcel(excelData, parseInt(chunkAmount), fileName);
     }
 
 
@@ -62,6 +71,7 @@ export const Home = () => {
         <div>
             <ExcelInput grabExcelDataAndSetToState={grabExcelDataAndSetToState} />
             <FileNameInput setFileNameToDownload={setFileNameToDownload} />
+            <ChunkAmountInput setChunkAmountForClipping={setChunkAmountForClipping}/>
             <button onClick={saveExcelFile}>Save</button>
             <button onClick={flipArray}>Flip Data</button>
             <button onClick={showCurrentData}>Show Data</button>
@@ -87,6 +97,9 @@ export const Home = () => {
 }
 
 export default Home;
+
+// This is how to stack one column on top of another
+// const stackedOneTopTheOther = [...newData, ...newData];
 
 // const dummyData = [
 //     {

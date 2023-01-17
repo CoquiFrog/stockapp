@@ -3,7 +3,8 @@ export const SplitterFunction = (excelData, chunk, callback) => {
         let tempArray;
         tempArray = excelData.slice(i, i + chunk);
         // console.log(tempArray);
-        console.log('showing counter: ', counter);
+        // console.log('showing counter: ', counter);
+        // console.log('callback: ', callback);
         callback(tempArray, counter);
     }
 }
