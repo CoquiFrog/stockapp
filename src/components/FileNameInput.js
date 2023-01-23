@@ -1,5 +1,6 @@
 import React from "react";
 import "../styling/Home.css";
+// import XLSX from '../../src/xlsx.core.min.js'
 
 export const FileNameInput = (props) => {
     return (

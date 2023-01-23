@@ -1,6 +1,7 @@
 import * as XLSX from "xlsx";
 import Splitter from '../functions/Splitter';
 import IterationToColumnConverter from '../functions/IterationToColumnConverter';
+// import XLSX from '../../src/xlsx.core.min.js'
 
 export const SplitExcel = (data, chunkAmount, filename) => {
 

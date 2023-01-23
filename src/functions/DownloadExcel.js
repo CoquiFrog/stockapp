@@ -1,9 +1,25 @@
 import * as XLSX from "xlsx";
+// import XLSX from '../../src/xlsx.core.min.js'
+
+import React, {useEffect} from 'react';
+
 
 export const DownloadExcel = (data, filename) => {
-
+    
+    // useEffect(() => {
+    //     const script = document.createElement('script');
+    
+    //     script.src = "./src/xlsx.core.min.js";
+    //     script.async = true;
+    
+    //     document.body.appendChild(script);
+    
+    //     return () => {
+    //         document.body.removeChild(script);
+    //     }
+    // }, []);
     // data.cellFormat({fontWeight: "bold", textAlign: "center", fontSize:"40pt", backgroundColor:"#1E88E5"});
-
+    
     // const thingy = XLSX.utils.book_new();
     // let row2 = [
     //     { v: "Courier: 24", t: "s", s: { font: { name: "Courier", sz: 24 } } },

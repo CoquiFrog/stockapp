@@ -1,5 +1,6 @@
 import React from "react";
 import * as XLSX from "xlsx";
+// import XLSX from '../../src/xlsx.core.min.js'
 
 export const ReadExcel = (file, props) => {
     const promise = new Promise((resolve, reject) => {

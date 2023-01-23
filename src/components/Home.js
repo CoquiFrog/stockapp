@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styling/Home.css";
 import ExcelInput from "./ExcelInput";
 import DateConversion from '../functions/DateConversion';
@@ -6,8 +6,9 @@ import DownloadExcel from "../functions/DownloadExcel";
 import SplitExcel from "../functions/SplitExcel";
 import FileNameInput from "./FileNameInput";
 import ChunkAmountInput from "./ChunkAmountInput";
-import * as XLSX from "xlsx";
 import {saveAs } from 'file-saver';
+import * as XLSX from "xlsx";
+// import XLSX from '../../src/xlsx.core.min.js'
 
 export const Home = () => {
     const [excelData, setExcelData] = useState([]);
@@ -15,6 +16,19 @@ export const Home = () => {
     const [chunkAmount, setChunkAmount] = useState(10);
     const [sheetNames, setSheetNames] = useState([]);
     const [sheets, setSheets] = useState([]);
+
+    // useEffect(() => {
+    //     const script = document.createElement('script');
+
+    //     script.src = "./src/xlsx.core.min.js";
+    //     script.async = true;
+
+    //     document.body.appendChild(script);
+
+    //     return () => {
+    //         document.body.removeChild(script);
+    //     }
+    // }, []);
 
     const grabExcelDataAndSetToState = (val) => {
         // filter dates before setting to state
