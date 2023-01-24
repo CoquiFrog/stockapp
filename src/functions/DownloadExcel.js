@@ -1,7 +1,7 @@
-import * as XLSX from "xlsx";
+// import * as XLSX from "xlsx";
 // import XLSX from '../../src/xlsx.core.min.js'
 
-import React, {useEffect} from 'react';
+// import React, {useEffect} from 'react';
 
 
 export const DownloadExcel = (data, filename) => {
