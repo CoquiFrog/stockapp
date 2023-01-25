@@ -6,7 +6,7 @@ import DownloadExcel from "../functions/DownloadExcel";
 import SplitExcel from "../functions/SplitExcel";
 import FileNameInput from "./FileNameInput";
 import ChunkAmountInput from "./ChunkAmountInput";
-// import {saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
 // import * as XLSX from "xlsx";
 // import XLSX from '../../src/xlsx.core.min.js'
 
