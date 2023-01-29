@@ -1,5 +1,5 @@
 import React from "react";
-// import * as XLSX from "xlsx";
+import * as XLSX2 from "xlsx";
 // import XLSX from '../../src/xlsx.core.min.js'
 
 export const ReadExcel = (file, props) => {
@@ -9,10 +9,10 @@ export const ReadExcel = (file, props) => {
 
         fileReader.onload = (e) => {
             const bufferArray = e.target.result;
-            const wb = XLSX.read(bufferArray, { type: "buffer" });
+            const wb = XLSX2.read(bufferArray, { type: "buffer" });
             const wsname = wb.SheetNames[0];
             const ws = wb.Sheets[wsname];
-            const data = XLSX.utils.sheet_to_json(ws);
+            const data = XLSX2.utils.sheet_to_json(ws);
             resolve(data);
         }
 
