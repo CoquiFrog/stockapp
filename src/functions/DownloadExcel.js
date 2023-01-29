@@ -1,4 +1,4 @@
-// import * as XLSX from "xlsx";
+import * as XLSX2 from "xlsx";
 // import XLSX from '../../src/xlsx.core.min.js'
 
 // import React, {useEffect} from 'react';
@@ -155,14 +155,14 @@ export const DownloadExcel = (data, filename) => {
 
 
 
-
-    const workSheet=XLSX.utils.json_to_sheet(newData);
-    const workBook=XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
-    XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet2");
+    console.log('data: ', data);
+    const workSheet=XLSX2.utils.json_to_sheet(newData);
+    const workBook=XLSX2.utils.book_new()
+    XLSX2.utils.book_append_sheet(workBook,workSheet,"testSheet1");
+    XLSX2.utils.book_append_sheet(workBook,workSheet,"testSheet2");
     let buffer=XLSX.write(workBook, {bookType:"xlsx", type: "binary"})
-    XLSX.write(workBook, {bookType:"xlsx", type:"binary"})
-    XLSX.writeFile(workBook, (filename + '.xlsx'))
+    XLSX2.write(workBook, {bookType:"xlsx", type:"binary"})
+    XLSX2.writeFile(workBook, (filename + '.xlsx'))
 }
 
 export default DownloadExcel;
