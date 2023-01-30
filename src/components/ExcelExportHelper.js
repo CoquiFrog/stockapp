@@ -1,12 +1,12 @@
 import React from "react";
-import * as XLSX2 from "xlsx";
+import * as XLSX from "xlsx";
 import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 
 const ExcelExportHelper = (data) => {
-  console.log('hi: ', data);
+  // console.log('hi: ', data);
   const createDownLoadData = () => {
     handleExport().then((url) => {
-      console.log(url);
+      // console.log(url);
       const downloadAnchorNode = document.createElement("a");
       downloadAnchorNode.setAttribute("href", url);
       downloadAnchorNode.setAttribute("download", "student_report.xlsx");
@@ -22,7 +22,7 @@ const ExcelExportHelper = (data) => {
       type: "binary",
     };
 
-    const wbout = XLSX2.write(workbook, wopts);
+    const wbout = XLSX.write(workbook, wopts);
 
     // The application/octet-stream MIME type is used for unknown binary files.
     // It preserves the file contents, but requires the receiver to determine file type,
@@ -39,15 +39,15 @@ const ExcelExportHelper = (data) => {
     // create an ArrayBuffer with a size in bytes
     const buf = new ArrayBuffer(s.length);
 
-    console.log(buf);
+    // console.log(buf);
 
     //create a 8 bit integer array
     const view = new Uint8Array(buf);
 
-    console.log(view);
+    // console.log(view);
     //charCodeAt The charCodeAt() method returns an integer between 0 and 65535 representing the UTF-16 code
     for (let i = 0; i !== s.length; ++i) {
-      console.log(s.charCodeAt(i));
+      // console.log(s.charCodeAt(i));
       view[i] = s.charCodeAt(i);
     }
 
@@ -122,16 +122,16 @@ const ExcelExportHelper = (data) => {
 
     const finalData = [...title, ...table1];
 
-    console.log(finalData);
+    // console.log(finalData);
 
     //create a new workbook
-    const wb = XLSX2.utils.book_new();
+    const wb = XLSX.utils.book_new();
 
-    const sheet = XLSX2.utils.json_to_sheet(finalData, {
+    const sheet = XLSX.utils.json_to_sheet(finalData, {
       skipHeader: true,
     });
 
-    XLSX2.utils.book_append_sheet(wb, sheet, "student_report");
+    XLSX.utils.book_append_sheet(wb, sheet, "student_report");
 
     // binary large object
     // Since blobs can store binary data, they can be used to store images or other multimedia files.
