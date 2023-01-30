@@ -56,6 +56,7 @@ const ExcelExportHelper = (data) => {
 
   const handleExport = () => {
     const title = [{ A: "Students and Marks details" }, {}];
+    console.log('data in: ', data);
 
     let table1 = [
       {
@@ -82,8 +83,8 @@ const ExcelExportHelper = (data) => {
       },
     ];
 
+    // console.log('row: ', row);
     data.forEach((row) => {
-      console.log('row: ', row);
       const studentDetails = row.STUDENT_DETAILS;
       const marksDetails = row.MARKS;
 
@@ -122,7 +123,7 @@ const ExcelExportHelper = (data) => {
 
     const finalData = [...title, ...table1];
 
-    // console.log(finalData);
+    console.log('Middle: ', finalData);
 
     //create a new workbook
     const wb = XLSX.utils.book_new();
@@ -135,7 +136,7 @@ const ExcelExportHelper = (data) => {
 
     // binary large object
     // Since blobs can store binary data, they can be used to store images or other multimedia files.
-
+    console.log('actual Final wb: ', wb);
     const workbookBlob = workbook2blob(wb);
 
     var headerIndexes = [];
@@ -175,7 +176,7 @@ const ExcelExportHelper = (data) => {
           ? `H${headerIndexes[0] + 1}:H${totalRecords + headerIndexes[1] + 1}`
           : null,
     };
-
+    console.log('dataInfo: ', dataInfo);
     return addStyle(workbookBlob, dataInfo);
   };
 

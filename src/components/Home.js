@@ -6,11 +6,11 @@ import DownloadExcel from "../functions/DownloadExcel";
 import SplitExcel from "../functions/SplitExcel";
 import FileNameInput from "./FileNameInput";
 import ChunkAmountInput from "./ChunkAmountInput";
-import { saveAs } from 'file-saver';
 import moment from 'moment';
 import Constants from '../constants/Constants';
 import * as XLSX from "xlsx";
 import ExcelExportHelper from "./ExcelExportHelper";
+import ExcelExportHelperModified from './ExcelExportHelperModified'
 
 export const Home = () => {
     const [excelData, setExcelData] = useState([]);
@@ -60,6 +60,33 @@ export const Home = () => {
 
     const splitterFunctionFire = () => {
         SplitExcel(excelData, parseInt(chunkAmount), fileName);
+    }
+
+    const downloadWithStyle = () => {
+        // DownloadExcel(excelData, fileName, true)
+        const dummyData = [
+    {
+        Date: "2022-12-22",
+        Price: "150.33"
+    },
+    {
+        Date: "2022-11-22",
+        Price: "140.33"
+    },
+    {
+        Date: "2022-10-22",
+        Price: "130.33"
+    },
+    {
+        Date: "2022-9-22",
+        Price: "120.33"
+    },
+    {
+        Date: "2022-8-22",
+        Price: "110.33"
+    },
+];
+        ExcelExportHelperModified(dummyData);
     }
 
 
@@ -138,11 +165,12 @@ export const Home = () => {
             <ExcelInput grabExcelDataAndSetToState={grabExcelDataAndSetToState} />
             <FileNameInput setFileNameToDownload={setFileNameToDownload} />
             <ChunkAmountInput setChunkAmountForClipping={setChunkAmountForClipping}/>
+            <button onClick={downloadWithStyle}>MAKE THIS WORK</button>
             <button onClick={saveExcelFile}>Save</button>
             <button onClick={flipArray}>Flip Data</button>
             <button onClick={showCurrentData}>Show Data</button>
             <button onClick={splitterFunctionFire}>splitter</button>
-            <button onClick={save2}>fire button</button>
+            <button onClick={save2}>WORKING EXAMPLE</button>
             <button onClick={showThings}>show things</button>
             <table key="tableKey" className="table container">
                 <thead>
