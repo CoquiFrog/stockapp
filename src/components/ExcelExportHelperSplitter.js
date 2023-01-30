@@ -2,7 +2,7 @@ import React from "react";
 import * as XLSX from "xlsx";
 import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 
-const ExcelExportHelperModified = (data) => {
+const ExcelExportHelperSplitter = (data) => {
   // console.log('hi: ', data);
   const createDownLoadData = () => {
     handleExport().then((url) => {
@@ -57,19 +57,12 @@ const ExcelExportHelperModified = (data) => {
   const handleExport = () => {
     //   console.log('data in : ', data);
     //create a new workbook
-    const wb = XLSX.utils.book_new();
-
-    const sheet = XLSX.utils.json_to_sheet(data, {
-      skipHeader: true,
-    });
-
-    XLSX.utils.book_append_sheet(wb, sheet, "student_report");
 
     // binary large object
     // Since blobs can store binary data, they can be used to store images or other multimedia files.
 
     // console.log('wb: ', wb);
-    const workbookBlob = workbook2blob(wb);
+    const workbookBlob = workbook2blob(data);
     // console.log('workbookBlob: ', workbookBlob);
 
     return addStyle(workbookBlob);
@@ -108,4 +101,4 @@ const ExcelExportHelperModified = (data) => {
   return createDownLoadData();
 };
 
-export default ExcelExportHelperModified;
+export default ExcelExportHelperSplitter;

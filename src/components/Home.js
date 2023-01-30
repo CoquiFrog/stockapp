@@ -67,26 +67,167 @@ export const Home = () => {
         const dummyData = [
     {
         Date: "2022-12-22",
-        Price: "150.33"
+        Price: "150.33",
+        Test: "yoyoyoyoyoyo",
+        Test2: "gogogogogogogo",
+        Test3: "whereAmI"
     },
     {
         Date: "2022-11-22",
-        Price: "140.33"
+        Price: "140.33",
+        Test: "yoyoyoyoyoyo",
+        Test2: "gogogogogogogo",
+        Test3: "43"
     },
     {
         Date: "2022-10-22",
-        Price: "130.33"
+        Price: "130.33",
+        Test: "yoyoyoyoyoyo",
+        Test2: "gogogogogogogo",
+        Test3: "43"
     },
     {
         Date: "2022-9-22",
-        Price: "120.33"
+        Price: "120.33",
+        Test: "yoyoyoyoyoyo",
+        Test2: "gogogogogogogo",
+        Test3: "43"
     },
     {
         Date: "2022-8-22",
-        Price: "110.33"
+        Price: "110.33",
+        Test: "yoyoyoyoyoyo",
+        Test2: "gogogogogogogo",
+        Test3: "44.44"
     },
 ];
         ExcelExportHelperModified(dummyData);
+    }
+
+    const splitterWithStyles = () => {
+        const dummyData = [
+    {
+        Date: "2022-12-22",
+        Price: "150.33",
+    },
+    {
+        Date: "2022-11-22",
+        Price: "140.33",
+    },
+    {
+        Date: "2022-10-22",
+        Price: "130.33",
+    },
+    {
+        Date: "2022-9-22",
+        Price: "120.33",
+    },
+    {
+        Date: "2022-8-22",
+        Price: "110.33",
+    },
+    {
+        Date: "2022-12-22",
+        Price: "150.33",
+    },
+    {
+        Date: "2022-11-22",
+        Price: "140.33",
+    },
+    {
+        Date: "2022-10-22",
+        Price: "130.33",
+    },
+    {
+        Date: "2022-9-22",
+        Price: "120.33",
+    },
+    {
+        Date: "2022-8-22",
+        Price: "110.33",
+    },
+    {
+        Date: "2022-12-22",
+        Price: "150.33",
+    },
+    {
+        Date: "2022-11-22",
+        Price: "140.33",
+    },
+    {
+        Date: "2022-10-22",
+        Price: "130.33",
+    },
+    {
+        Date: "2022-9-22",
+        Price: "120.33",
+    },
+    {
+        Date: "2022-8-22",
+        Price: "110.33",
+    },
+    {
+        Date: "2022-12-22",
+        Price: "150.33",
+    },
+    {
+        Date: "2022-11-22",
+        Price: "140.33",
+    },
+    {
+        Date: "2022-10-22",
+        Price: "130.33",
+    },
+    {
+        Date: "2022-9-22",
+        Price: "120.33",
+    },
+    {
+        Date: "2022-8-22",
+        Price: "110.33",
+    },
+    {
+        Date: "2022-12-22",
+        Price: "150.33",
+    },
+    {
+        Date: "2022-11-22",
+        Price: "140.33",
+    },
+    {
+        Date: "2022-10-22",
+        Price: "130.33",
+    },
+    {
+        Date: "2022-9-22",
+        Price: "120.33",
+    },
+    {
+        Date: "2022-8-22",
+        Price: "110.33",
+    },
+    {
+        Date: "2022-12-22",
+        Price: "150.33",
+    },
+    {
+        Date: "2022-11-22",
+        Price: "140.33",
+    },
+    {
+        Date: "2022-10-22",
+        Price: "130.33",
+    },
+    {
+        Date: "2022-9-22",
+        Price: "120.33",
+    },
+    {
+        Date: "2022-8-22",
+        Price: "110.33",
+    },
+];
+        SplitExcel(excelData, parseInt(chunkAmount), fileName);
     }
 
 
@@ -172,6 +313,7 @@ export const Home = () => {
             <button onClick={splitterFunctionFire}>splitter</button>
             <button onClick={save2}>WORKING EXAMPLE</button>
             <button onClick={showThings}>show things</button>
+            <button onClick={splitterWithStyles}>Splitter With Styles</button>
             <table key="tableKey" className="table container">
                 <thead>
                     <tr>

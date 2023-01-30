@@ -56,7 +56,7 @@ const ExcelExportHelper = (data) => {
 
   const handleExport = () => {
     const title = [{ A: "Students and Marks details" }, {}];
-    console.log('data in: ', data);
+    // console.log('data in: ', data);
 
     let table1 = [
       {
