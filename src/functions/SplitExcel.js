@@ -23,11 +23,11 @@ export const SplitExcel = (data, chunkAmount, filename) => {
     XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
     // let TEST_ME = LetterToNumberConverter(howManyColumns);
     // console.log('DURRRR: ', howManyColumns)
-    console.log("test Num? ", testNum);
-    console.log('Test String: ', testString);
+    // console.log("test Num? ", testNum);
+    // console.log('Test String: ', testString);
     // The +2 is just because the letter we get is second to last, so we move it past the final column.
     let howManyColumns = LetterToNumberConverter(testString) + 2;
-    ExcelExportHelperSplitter(workBook, howManyColumns);
+    ExcelExportHelperSplitter(workBook, howManyColumns, (chunkAmount + 1));
 
     // Previous Method of Downloading
     // XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet2");

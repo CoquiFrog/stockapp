@@ -1,12 +1,15 @@
 import React from "react";
 import * as XLSX from "xlsx";
 import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
+import NumberToLetterConverter from "../functions/NumberToLetterConverter";
 
-const ExcelExportHelperSplitter = (data, howManyColumns) => {
-  console.log('hiyohi: ', data);
+const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
+  console.log('HOW MANY ROWS? ', howManyRows)
+  
+  // console.log('hiyohi: ', data);
   const createDownLoadData = () => {
     handleExport().then((url) => {
-      // console.log(url);
+      // console.log(url);d
       const downloadAnchorNode = document.createElement("a");
       downloadAnchorNode.setAttribute("href", url);
       downloadAnchorNode.setAttribute("download", "student_report.xlsx");
@@ -70,37 +73,82 @@ const ExcelExportHelperSplitter = (data, howManyColumns) => {
 
   const addStyle = (workbookBlob) => {
     return XlsxPopulate.fromDataAsync(workbookBlob).then((workbook) => {
-      console.log('ARRAY IS THIS LONG: ', howManyColumns);
-        // console.log('sheet: ', workbook.sheets());
-      workbook.sheets().forEach((sheet) => {
-          // console.log('sheet: ', sheet);
 
-          // console.log('COLUMNS LENGTH: ', sheet._columns)
-          // console.log('used range: ', sheet.usedRange());
-        sheet.usedRange().style({
-          fontFamily: "Arial",
-          horizontalAlignment: "center",
-          // fill: "FFFD04",
-        });
-        // Make Top Row Green
-        sheet.row(1).style("fill", "FFD04")
-        // Make First Column Pink
-        // sheet.column("A").style({fill: "FFD04", bold: true})
+    // WRITE A LOOP THAT USES THE LENGTH TO KNOW HOW MANY COLUMNS TO CHECK
+    // ITERATE OVER EACH COLUMN, AND CHECK THE TITLE NAME
+    // IF TITLE IS DATE, COLOR YELLOW
+    // IF TITLE IS PRICE, COLOR LIGHTBLUE
+    // Make top title cell light green, and all actual dates yellow, prices light blue
 
-        // var date = moment('2016-10-29', 'DD-MM-YYYY', true);
 
-        // console.log('test sheet: ', sheet.usedRange())
-        // console.log('cell: ', sheet.cell("A1"));
+    
+    
+    
+    
+    
+    // console.log('ARRAY IS THIS LONG: ', howManyColumns);
+    // console.log('sheet: ', workbook.sheets());
+    workbook.sheets().forEach((sheet) => {
+      // console.log('sheet: ', sheet);
+      // console.log('used range: ', sheet.usedRange());
+      sheet.usedRange().style({
+        fontFamily: "Arial",
+        horizontalAlignment: "center",
+        // fill: "FFFD04",
+      });
+      // Make Top Row Green
+      // sheet.row(1).style("fill", "FFD04")
+      // Make First Column Pink
+      // sheet.column("A").style({fill: "FFD04", bold: true})
+      
+      // var date = moment('2016-10-29', 'DD-MM-YYYY', true);
+      
+      
+      for (let i=0, counter=0; i < howManyColumns; i++) {
+        // console.log('i: ', i);
+        // console.log('converted: ', NumberToLetterConverter(i))
+        let columnAddress =  NumberToLetterConverter(i);
+        let columnAndRowAddress = columnAddress + 1;
+        // console.log('columnAndRowAddress: ', columnAndRowAddress);
+        let cellValue = sheet.cell(columnAndRowAddress).value();
+        // console.log('cellValue: ', cellValue);
+        if (cellValue === "Date") {
+          console.log('I found a Date!', columnAddress);
+          let dateRange = (columnAddress + 2) + ':' + (columnAddress + howManyRows)
+          sheet.range(dateRange).style("fill", "D9FE7F");
+          // set Date column width
+           sheet.column(columnAddress).width(15);
+          // Fill column light blue
+          // sheet.column(columnAddress).style("fill", "D9FE7F")
+          // Fill Title Cell Orange
+          sheet.cell(columnAndRowAddress).style("fill", "FDD44F")
+        }
+        if (cellValue === "Price") {
+          let priceRange = (columnAddress + 2) + ':' + (columnAddress + howManyRows)
+          console.log('I FIRED: ', priceRange)
+          // sheet.range(priceRange).style("fill", "7FCDFE");
+                    sheet.range(priceRange).style("fill", "7FCDFE");
 
+
+          // Set Price Column Width
+          sheet.column(columnAddress).width(11);
+
+          // Fill column light blue
+          // sheet.column(columnAddress).style("fill", "98F6EF")
+          // Fill Title Cell Violet
+          sheet.cell(columnAndRowAddress).style("fill", "F14FFD")
+          // console.log('I found a Price');
+        }
+        if (!cellValue){
+          // console.log('I found nothing!')
+          sheet.column(columnAddress).width(3);
+        }
+      }
         sheet.column("A").hidden(true);
         sheet.column("B").hidden(true);
         sheet.column("C").hidden(true);
 
-        sheet.column("A").width(35);
-        sheet.column("B").width(35);
-        sheet.column("D").width(35);
-        sheet.column("E").width(35);
-        sheet.column("G").width(35);
+        // sheet.column("A").width(35);
       });
 
       return workbook

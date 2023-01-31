@@ -1,5 +1,5 @@
 export const IterationToColumnConverter = (i) => {
-    console.log(i);
+    // console.log(i);
     function grabColumnFromList(i) {
 
     
