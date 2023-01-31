@@ -2,14 +2,13 @@ import React from "react";
 import * as XLSX from "xlsx";
 import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 import NumberToLetterConverter from "../functions/NumberToLetterConverter";
+import StyleConfig from '../constants/StyleConfig'
 
 const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
-  console.log('HOW MANY ROWS? ', howManyRows)
+  console.log('data Check ', data)
   
-  // console.log('hiyohi: ', data);
   const createDownLoadData = () => {
     handleExport().then((url) => {
-      // console.log(url);d
       const downloadAnchorNode = document.createElement("a");
       downloadAnchorNode.setAttribute("href", url);
       downloadAnchorNode.setAttribute("download", "student_report.xlsx");
@@ -42,15 +41,11 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
     // create an ArrayBuffer with a size in bytes
     const buf = new ArrayBuffer(s.length);
 
-    // console.log(buf);
-
     //create a 8 bit integer array
     const view = new Uint8Array(buf);
 
-    // console.log(view);
     //charCodeAt The charCodeAt() method returns an integer between 0 and 65535 representing the UTF-16 code
     for (let i = 0; i !== s.length; ++i) {
-      // console.log(s.charCodeAt(i));
       view[i] = s.charCodeAt(i);
     }
 
@@ -58,15 +53,7 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
   };
 
   const handleExport = () => {
-    //   console.log('data in : ', data);
-    //create a new workbook
-
-    // binary large object
-    // Since blobs can store binary data, they can be used to store images or other multimedia files.
-
-    // console.log('wb: ', wb);
     const workbookBlob = workbook2blob(data);
-    // console.log('workbookBlob: ', workbookBlob);
 
     return addStyle(workbookBlob);
   };
@@ -74,81 +61,47 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
   const addStyle = (workbookBlob) => {
     return XlsxPopulate.fromDataAsync(workbookBlob).then((workbook) => {
 
-    // WRITE A LOOP THAT USES THE LENGTH TO KNOW HOW MANY COLUMNS TO CHECK
-    // ITERATE OVER EACH COLUMN, AND CHECK THE TITLE NAME
-    // IF TITLE IS DATE, COLOR YELLOW
-    // IF TITLE IS PRICE, COLOR LIGHTBLUE
-    // Make top title cell light green, and all actual dates yellow, prices light blue
-
-
-    
-    
-    
-    
-    
-    // console.log('ARRAY IS THIS LONG: ', howManyColumns);
-    // console.log('sheet: ', workbook.sheets());
     workbook.sheets().forEach((sheet) => {
-      // console.log('sheet: ', sheet);
-      // console.log('used range: ', sheet.usedRange());
+      // Style Whole Page Here
       sheet.usedRange().style({
         fontFamily: "Arial",
         horizontalAlignment: "center",
-        // fill: "FFFD04",
       });
-      // Make Top Row Green
-      // sheet.row(1).style("fill", "FFD04")
-      // Make First Column Pink
-      // sheet.column("A").style({fill: "FFD04", bold: true})
-      
-      // var date = moment('2016-10-29', 'DD-MM-YYYY', true);
-      
-      
+
       for (let i=0, counter=0; i < howManyColumns; i++) {
-        // console.log('i: ', i);
-        // console.log('converted: ', NumberToLetterConverter(i))
         let columnAddress =  NumberToLetterConverter(i);
         let columnAndRowAddress = columnAddress + 1;
-        // console.log('columnAndRowAddress: ', columnAndRowAddress);
         let cellValue = sheet.cell(columnAndRowAddress).value();
-        // console.log('cellValue: ', cellValue);
+
+        // Set date range for one chunked array
+        let chunkedRange =  (columnAddress + 2) + ':' + (columnAddress + howManyRows);
+
         if (cellValue === "Date") {
-          console.log('I found a Date!', columnAddress);
-          let dateRange = (columnAddress + 2) + ':' + (columnAddress + howManyRows)
-          sheet.range(dateRange).style("fill", "D9FE7F");
-          // set Date column width
-           sheet.column(columnAddress).width(15);
-          // Fill column light blue
-          // sheet.column(columnAddress).style("fill", "D9FE7F")
+          // Apply background color to column range
+          sheet.range(chunkedRange).style("fill", StyleConfig.DATE_TITLE_BACKGROUND_COLOR);
+
+          // Set Date column width
+          sheet.column(columnAddress).width(StyleConfig.DATE_COLUMN_WIDTH);
+
           // Fill Title Cell Orange
-          sheet.cell(columnAndRowAddress).style("fill", "FDD44F")
+          sheet.cell(columnAndRowAddress).style("fill", StyleConfig.DATE_COLUMN_BACKGROUND_COLOR)
         }
         if (cellValue === "Price") {
-          let priceRange = (columnAddress + 2) + ':' + (columnAddress + howManyRows)
-          console.log('I FIRED: ', priceRange)
-          // sheet.range(priceRange).style("fill", "7FCDFE");
-                    sheet.range(priceRange).style("fill", "7FCDFE");
-
+          // Apply background color to column range
+          sheet.range(chunkedRange).style("fill", StyleConfig.PRICE_COLUMN_BACKGROUND_COLOR);
 
           // Set Price Column Width
-          sheet.column(columnAddress).width(11);
+          sheet.column(columnAddress).width(StyleConfig.PRICE_COLUMN_WIDTH);
 
-          // Fill column light blue
-          // sheet.column(columnAddress).style("fill", "98F6EF")
           // Fill Title Cell Violet
-          sheet.cell(columnAndRowAddress).style("fill", "F14FFD")
-          // console.log('I found a Price');
+          sheet.cell(columnAndRowAddress).style("fill", StyleConfig.PRICE_TITLE_BACKGROUND_COLOR)
         }
         if (!cellValue){
-          // console.log('I found nothing!')
-          sheet.column(columnAddress).width(3);
+          // Set Empty Column Width
+          sheet.column(columnAddress).width(StyleConfig.EMPTY_COLUMN_WIDTH);
         }
       }
         // sheet.column("A").hidden(true);
-        // sheet.column("B").hidden(true);
-        // sheet.column("C").hidden(true);
-
-        // sheet.column("A").width(35);
       });
 
       return workbook
