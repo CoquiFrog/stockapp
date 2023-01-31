@@ -144,9 +144,9 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
           sheet.column(columnAddress).width(3);
         }
       }
-        sheet.column("A").hidden(true);
-        sheet.column("B").hidden(true);
-        sheet.column("C").hidden(true);
+        // sheet.column("A").hidden(true);
+        // sheet.column("B").hidden(true);
+        // sheet.column("C").hidden(true);
 
         // sheet.column("A").width(35);
       });

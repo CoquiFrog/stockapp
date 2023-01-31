@@ -17,7 +17,8 @@ export const SplitExcel = (data, chunkAmount, filename) => {
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: columnString });
     }
     
-    const workSheet=XLSX.utils.json_to_sheet(data);
+    // Primes worksheet with small dummy data that will be overwritten
+    const workSheet=XLSX.utils.json_to_sheet([{"Date":"2022-12-30","Price":129.93}]);
     Splitter(data, chunkAmount, addToSheet);
     const workBook=XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
