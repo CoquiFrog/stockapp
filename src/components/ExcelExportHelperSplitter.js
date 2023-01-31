@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 
 const ExcelExportHelperSplitter = (data) => {
-  // console.log('hi: ', data);
+  console.log('hiyohi: ', data);
   const createDownLoadData = () => {
     handleExport().then((url) => {
       // console.log(url);
@@ -72,22 +72,32 @@ const ExcelExportHelperSplitter = (data) => {
     return XlsxPopulate.fromDataAsync(workbookBlob).then((workbook) => {
         // console.log('sheet: ', workbook.sheets());
       workbook.sheets().forEach((sheet) => {
-          console.log('sheet: ', sheet);
-          console.log('used range: ', sheet.usedRange());
+          // console.log('sheet: ', sheet);
+
+          // console.log('COLUMNS LENGTH: ', sheet._columns)
+          // console.log('used range: ', sheet.usedRange());
         sheet.usedRange().style({
           fontFamily: "Arial",
           horizontalAlignment: "center",
-          fill: "FFFD04",
+          // fill: "FFFD04",
         });
+        // Make Top Row Green
+        sheet.row(1).style("fill", "FFD04")
+        // Make First Column Pink
+        // sheet.column("A").style({fill: "FFD04", bold: true})
 
         // var date = moment('2016-10-29', 'DD-MM-YYYY', true);
 
-        console.log('test sheet: ', sheet.usedRange())
-        console.log('cell: ', sheet.cell("A1"));
+        // console.log('test sheet: ', sheet.usedRange())
+        // console.log('cell: ', sheet.cell("A1"));
+
+        sheet.column("A").hidden(true);
+        sheet.column("B").hidden(true);
+        sheet.column("C").hidden(true);
 
         sheet.column("A").width(35);
         sheet.column("B").width(35);
-        sheet.column("C").width(35);
+        sheet.column("D").width(35);
         sheet.column("E").width(35);
         sheet.column("G").width(35);
       });
