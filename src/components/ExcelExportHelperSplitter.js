@@ -2,7 +2,7 @@ import React from "react";
 import * as XLSX from "xlsx";
 import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 
-const ExcelExportHelperSplitter = (data) => {
+const ExcelExportHelperSplitter = (data, howManyColumns) => {
   console.log('hiyohi: ', data);
   const createDownLoadData = () => {
     handleExport().then((url) => {
@@ -70,6 +70,7 @@ const ExcelExportHelperSplitter = (data) => {
 
   const addStyle = (workbookBlob) => {
     return XlsxPopulate.fromDataAsync(workbookBlob).then((workbook) => {
+      console.log('ARRAY IS THIS LONG: ', howManyColumns);
         // console.log('sheet: ', workbook.sheets());
       workbook.sheets().forEach((sheet) => {
           // console.log('sheet: ', sheet);

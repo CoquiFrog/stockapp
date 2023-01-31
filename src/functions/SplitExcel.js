@@ -1,25 +1,35 @@
+import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import Splitter from '../functions/Splitter';
 import IterationToColumnConverter from '../functions/IterationToColumnConverter';
-// import XLSX from '../../src/xlsx.core.min.js'
 import ExcelExportHelperSplitter from "../components/ExcelExportHelperSplitter";
+import LetterToNumberConverter from "../functions/LetterToNumberConverter";
+
+
 
 export const SplitExcel = (data, chunkAmount, filename) => {
-
+    let testNum;
+    let testString;
     const addToSheet = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverter(counter) + 1;
-        console.log('COUNTER: ', columnString)
+        testNum = counter;
+        testString = IterationToColumnConverter(counter);
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: columnString });
     }
-    const workSheet=XLSX.utils.json_to_sheet(data);
-    // console.log('WORKSHEET YO!: ', workSheet);
-    Splitter(data, chunkAmount, addToSheet);
     
-    // console.log('check length: ', data);
+    const workSheet=XLSX.utils.json_to_sheet(data);
+    Splitter(data, chunkAmount, addToSheet);
     const workBook=XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
-    // console.log('WORKBOOK: ', workBook);
-    ExcelExportHelperSplitter(workBook);
+    // let TEST_ME = LetterToNumberConverter(howManyColumns);
+    // console.log('DURRRR: ', howManyColumns)
+    console.log("test Num? ", testNum);
+    console.log('Test String: ', testString);
+    // The +2 is just because the letter we get is second to last, so we move it past the final column.
+    let howManyColumns = LetterToNumberConverter(testString) + 2;
+    ExcelExportHelperSplitter(workBook, howManyColumns);
+
+    // Previous Method of Downloading
     // XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet2");
     // let buffer=XLSX.write(workBook, {bookType:"xlsx", type: "binary"})
     // XLSX.write(workBook, {bookType:"xlsx", type:"binary"})

@@ -1,4 +1,4 @@
-export const ColumnConverter = (i) => {
+export const NumberToLetterConverter = (i) => {
     console.log(i);
     function grabColumnFromList(i) {
 
@@ -620,5 +620,5 @@ export const ColumnConverter = (i) => {
     return column;
 }
 
-export default ColumnConverter;
+export default NumberToLetterConverter;
 
