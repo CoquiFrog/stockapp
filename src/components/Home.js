@@ -24,9 +24,9 @@ export const Home = () => {
         // filter dates before setting to state
         // trim all the fat off leaving only date and price
         val.map((day) => {
-             // delete day.Low;
+             delete day.Low;
             delete day.Open;
-             // delete day.High;
+             delete day.High;
             delete day["Vol."];
             delete day["Change %"];
             day.Date = DateConversion(day.Date);
@@ -62,26 +62,26 @@ export const Home = () => {
     }
 
     const splitterFunctionFire = () => {
-        const excelDataDatePrice = excelData.map((day) => {
-            delete day.High;
-            delete day.Low;
-            // delete day.Open;
-            // delete day["Vol."];
-            // delete day["Change %"];
-            // day.Date = DateConversion(day.Date);
-        })
-        SplitExcel(excelDataDatePrice, parseInt(chunkAmount), fileName);
+        // const excelDataDatePrice = excelData.map((day) => {
+        //     delete day.High;
+        //     delete day.Low;
+        //     // delete day.Open;
+        //     // delete day["Vol."];
+        //     // delete day["Change %"];
+        //     // day.Date = DateConversion(day.Date);
+        // })
+        SplitExcel(excelData, parseInt(chunkAmount), fileName);
     }
 
     const splitterWithStyles = () => {
-        const excelDataDatePrice = excelData.map((day) => {
-            delete day.High;
-            delete day.Low;
-            // delete day.Open;
-            // delete day["Vol."];
-            // delete day["Change %"];
-            // day.Date = DateConversion(day.Date);
-        })
+        // const excelDataDatePrice = excelData.map((day) => {
+        //     delete day.High;
+        //     delete day.Low;
+        //     // delete day.Open;
+        //     // delete day["Vol."];
+        //     // delete day["Change %"];
+        //     // day.Date = DateConversion(day.Date);
+        // })
         SplitExcel(excelData, parseInt(chunkAmount), fileName);
     }
 
