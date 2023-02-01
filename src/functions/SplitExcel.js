@@ -4,22 +4,30 @@ import Splitter from '../functions/Splitter';
 import IterationToColumnConverter from '../functions/IterationToColumnConverter';
 import ExcelExportHelperSplitter from "../components/ExcelExportHelperSplitter";
 import LetterToNumberConverter from "../functions/LetterToNumberConverter";
+import IterationToColumnConverterHighLow from "./IterationToColumnConverterHighLow";
 
 
 
 export const SplitExcel = (data, chunkAmount, filename) => {
     let testNum;
     let testString;
-    const addToSheet = (smallChunkArray, counter) => {
+    const addToSheetDatePrice = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverter(counter) + 1;
         testNum = counter;
         testString = IterationToColumnConverter(counter);
+        console.log('testString:', testString);
+        XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: columnString });
+    }
+    const addToSheetDatePriceHighLow = (smallChunkArray, counter) => {
+        let columnString = IterationToColumnConverterHighLow(counter) + 1;
+        testNum = counter;
+        testString = IterationToColumnConverterHighLow(counter);
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: columnString });
     }
     
     // Primes worksheet with small dummy data that will be overwritten
     const workSheet=XLSX.utils.json_to_sheet([{"Date":"2022-12-30","Price":129.93}]);
-    Splitter(data, chunkAmount, addToSheet);
+    Splitter(data, chunkAmount, addToSheetDatePrice);
     const workBook=XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
     // let TEST_ME = LetterToNumberConverter(howManyColumns);

@@ -7,152 +7,156 @@ export const IterationToColumnConverter = (i) => {
     
     var column;
     var columnList = {
-        1: function () {
+        0: function () {
+            
             column = "A";
         },
-        2: function () {
+        1: function () {
             column = "D";
         },
-        3: function () {
+        2: function () {
             column = "G";
         },
-        4: function () {
+        3: function () {
             column = "J";
         },
-        5: function () {
+        4: function () {
             column = "M";
         },
-        6: function () {
+        5: function () {
             column = "P";
         },
-        7: function () {
+        6: function () {
             column = "S";
         },
-        8: function () {
+        7: function () {
             column = "V";
         },
-        9: function () {
+        8: function () {
             column = "Y";
         },
-        10: function () {
+        9: function () {
             column = "AB";
         },
-        11: function () {
+        10: function () {
             column = "AE";
         },
-        12: function () {
+        11: function () {
             column = "AH";
         },
-        13: function () {
+        12: function () {
             column = "AK";
         },
-        14: function () {
+        13: function () {
             column = "AN";
         },
-        15: function () {
+        14: function () {
             column = "AQ";
         },
-        16: function () {
+        15: function () {
             column = "AT";
         },
-        17: function () {
+        16: function () {
             column = "AW";
         },
-        18: function () {
+        17: function () {
             column = "AZ";
         },
-        19: function () {
+        18: function () {
             column = "BC";
         },
-        20: function () {
+        19: function () {
             column = "BF";
         },
-        21: function () {
+        20: function () {
             column = "BI";
         },
-        22: function () {
+        21: function () {
             column = "BL";
         },
-        23: function () {
+        22: function () {
             column = "BO";
         },
-        24: function () {
+        23: function () {
             column = "BR";
         },
-        25: function () {
+        24: function () {
             column = "BU";
         },
-        26: function () {
+        25: function () {
             column = "BX";
         },
-        27: function () {
+        26: function () {
             column = "CA";
         },
-        28: function () {
+        27: function () {
             column = "CD";
         },
-        29: function () {
+        28: function () {
             column = "CG";
         },
-        30: function () {
+        29: function () {
             column = "CJ";
         },
-        31: function () {
+        30: function () {
             column = "CM";
         },
-        33: function () {
+        31: function () {
             column = "CP";
         },
-        34: function () {
+        33: function () {
             column = "CS";
         },
-        35: function () {
+        34: function () {
             column = "CV";
         },
-        36: function () {
+        35: function () {
             column = "CY";
         },
-        37: function () {
+        36: function () {
             column = "DB";
         },
-        38: function () {
+        37: function () {
             column = "DE";
         },
-        39: function () {
+        38: function () {
             column = "DH";
         },
-        40: function () {
+        39: function () {
             column = "DK";
         },
-        41: function () {
+        40: function () {
             column = "DN";
         },
-        42: function () {
+        41: function () {
             column = "DQ";
         },
-        43: function () {
+        42: function () {
             column = "DT";
         },
-        44: function () {
+        43: function () {
             column = "DW";
         },
-        45: function () {
+        44: function () {
             column = "DZ";
         },
-        46: function () {
+        45: function () {
             column = "EC";
         },
-        47: function () {
+        46: function () {
             column = "EF";
         },
-        48: function () {
+        47: function () {
             column = "EI";
         },
-        49: function () {
+        48: function () {
             column = "EL";
         },
-        50: function () {
+        49: function () {
             column = "EO";
+        },
+        50: function () {
+            column = "ER";
         },
         'default': function () {
             column = "A"
