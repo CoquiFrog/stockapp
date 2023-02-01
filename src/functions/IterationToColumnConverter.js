@@ -1,3 +1,5 @@
+// This iterates with enough room for date and price columns
+
 export const IterationToColumnConverter = (i) => {
     // console.log(i);
     function grabColumnFromList(i) {
@@ -56,7 +58,6 @@ export const IterationToColumnConverter = (i) => {
         17: function () {
             column = "AW";
         },
-        // jo
         18: function () {
             column = "AZ";
         },

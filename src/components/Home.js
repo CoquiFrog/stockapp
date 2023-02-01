@@ -153,6 +153,8 @@ export const Home = () => {
                     <tr>
                         <th scope="col">date</th>
                         <th scope="col">price</th>
+                        <th scope="col">high</th>
+                        <th scope="col">low</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -160,6 +162,8 @@ export const Home = () => {
                         <tr key={data.Date}>
                             <th>{data.Date}</th>
                             <td>{data.Price}</td>
+                            <th>{data.High}</th>
+                            <td>{data.Low}</td>
                         </tr>
                     )}
                 </tbody>

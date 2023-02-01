@@ -605,6 +605,306 @@ export const LetterToNumberConverter = (i) => {
         "GR": function () {
             column = 200;
         },
+        "GS": function () {
+            column = 201;
+        },
+        "GT": function () {
+            column = 202;
+        },
+        "GU": function () {
+            column = 203;
+        },
+        "GV": function () {
+            column = 204;
+        },
+        "GW": function () {
+            column = 205;
+        },
+        "GX": function () {
+            column = 206;
+        },
+        "GY": function () {
+            column = 207;
+        },
+        "GZ": function () {
+            column = 208;
+        },
+        "HA": function () {
+            column = 209;
+        },
+        "HB": function () {
+            column = 210;
+        },
+        "HC": function () {
+            column = 211;
+        },
+        "HD": function () {
+            column = 212;
+        },
+        "HE": function () {
+            column = 213;
+        },
+        "HF": function () {
+            column = 214;
+        },
+        "HG": function () {
+            column = 215;
+        },
+        "HH": function () {
+            column = 216;
+        },
+        "HI": function () {
+            column = 217;
+        },
+        "HJ": function () {
+            column = 218;
+        },
+        "HK": function () {
+            column = 219;
+        },
+        "HL": function () {
+            column = 220;
+        },
+        "HM": function () {
+            column = 221;
+        },
+        "HN": function () {
+            column = 222;
+        },
+        "HO": function () {
+            column = 223;
+        },
+        "HP": function () {
+            column = 224;
+        },
+        "HQ": function () {
+            column = 225;
+        },
+        "HR": function () {
+            column = 226;
+        },
+        "HS": function () {
+            column = 227;
+        },
+        "HT": function () {
+            column = 228;
+        },
+        "HU": function () {
+            column = 229;
+        },
+        "HV": function () {
+            column = 230;
+        },
+        "HW": function () {
+            column = 231;
+        },
+        "HX": function () {
+            column = 232;
+        },
+        "HY": function () {
+            column = 233;
+        },
+        "HZ": function () {
+            column = 234;
+        },
+        "IA": function () {
+            column = 235;
+        },
+        "IB": function () {
+            column = 236;
+        },
+        "IC": function () {
+            column = 237;
+        },
+        "ID": function () {
+            column = 238;
+        },
+        "IE": function () {
+            column = 239;
+        },
+        "IF": function () {
+            column = 240;
+        },
+        "IG": function () {
+            column = 241;
+        },
+        "IH": function () {
+            column = 242;
+        },
+        "II": function () {
+            column = 243;
+        },
+        "IJ": function () {
+            column = 244;
+        },
+        "IK": function () {
+            column = 245;
+        },
+        "IL": function () {
+            column = 246;
+        },
+        "IM": function () {
+            column = 247;
+        },
+        "IN": function () {
+            column = 248;
+        },
+        "IO": function () {
+            column = 249;
+        },
+        "IP": function () {
+            column = 250;
+        },
+        "IQ": function () {
+            column = 251;
+        },
+        "IR": function () {
+            column = 252;
+        },
+        "IS": function () {
+            column = 253;
+        },
+        "IT": function () {
+            column = 254;
+        },
+        "IU": function () {
+            column = 255;
+        },
+        "IV": function () {
+            column = 256;
+        },
+        "IW": function () {
+            column = 257;
+        },
+        "IX": function () {
+            column = 258;
+        },
+        "IY": function () {
+            column = 259;
+        },
+        "IZ": function () {
+            column = 260;
+        },
+        "JA": function () {
+            column = 261;
+        },
+        "JB": function () {
+            column = 262;
+        },
+        "JC": function () {
+            column = 263;
+        },
+        "JD": function () {
+            column = 264;
+        },
+        "JE": function () {
+            column = 265;
+        },
+        "JF": function () {
+            column = 266;
+        },
+        "JG": function () {
+            column = 267;
+        },
+        "JH": function () {
+            column = 268;
+        },
+        "JI": function () {
+            column = 269;
+        },
+        "JJ": function () {
+            column = 270;
+        },
+        "JK": function () {
+            column = 271;
+        },
+        "JL": function () {
+            column = 272;
+        },
+        "JM": function () {
+            column = 273;
+        },
+        "JN": function () {
+            column = 274;
+        },
+        "JO": function () {
+            column = 275;
+        },
+        "JP": function () {
+            column = 276;
+        },
+        "JQ": function () {
+            column = 277;
+        },
+        "JR": function () {
+            column = 278;
+        },
+        "JS": function () {
+            column = 279;
+        },
+        "JT": function () {
+            column = 280;
+        },
+        "JU": function () {
+            column = 281;
+        },
+        "JV": function () {
+            column = 282;
+        },
+        "JW": function () {
+            column = 283;
+        },
+        "JW": function () {
+            column = 284;
+        },
+        "JY": function () {
+            column = 285;
+        },
+        "JZ": function () {
+            column = 286;
+        },
+        "KA": function () {
+            column = 287;
+        },
+        "KB": function () {
+            column = 288;
+        },
+        "KC": function () {
+            column = 289;
+        },
+        "KD": function () {
+            column = 290;
+        },
+        "KE": function () {
+            column = 291;
+        },
+        "KF": function () {
+            column = 292;
+        },
+        "KG": function () {
+            column = 293;
+        },
+        "KH": function () {
+            column = 294;
+        },
+        "KI": function () {
+            column = 295;
+        },
+        "KJ": function () {
+            column = 296;
+        },
+        "KK": function () {
+            column = 297;
+        },
+        "KL": function () {
+            column = 298;
+        },
+        "KM": function () {
+            column = 299;
+        },
+        "KN": function () {
+            column = 300;
+        },
         'default': function () {
             column = "A"
         }
