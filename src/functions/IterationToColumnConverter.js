@@ -8,7 +8,6 @@ export const IterationToColumnConverter = (i) => {
     var column;
     var columnList = {
         0: function () {
-            
             column = "A";
         },
         1: function () {

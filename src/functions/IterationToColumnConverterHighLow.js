@@ -7,302 +7,305 @@ export const IterationToColumnConverterHighLow = (i) => {
     
     var column;
     var columnList = {
-        1: function () {
+        0: function () {
             column = "A";
         },
-        2: function () {
+        1: function () {
             column = "F";
         },
-        3: function () {
+        2: function () {
             column = "K";
         },
-        4: function () {
+        3: function () {
             column = "P";
         },
-        5: function () {
+        4: function () {
             column = "U";
         },
-        6: function () {
+        5: function () {
             column = "Z";
         },
-        7: function () {
+        6: function () {
             column = "AE";
         },
-        8: function () {
+        7: function () {
             column = "AJ";
         },
-        9: function () {
+        8: function () {
             column = "AO";
         },
-        10: function () {
+        9: function () {
             column = "AT";
         },
-        11: function () {
+        10: function () {
             column = "AY";
         },
-        12: function () {
+        11: function () {
             column = "BD";
         },
-        13: function () {
+        12: function () {
             column = "BI";
         },
-        14: function () {
+        13: function () {
             column = "BN";
         },
-        15: function () {
+        14: function () {
             column = "BS";
         },
-        16: function () {
+        15: function () {
             column = "BX";
         },
-        17: function () {
+        16: function () {
             column = "CC";
         },
-        18: function () {
+        17: function () {
             column = "CH";
         },
-        19: function () {
+        18: function () {
             column = "CM";
         },
-        20: function () {
+        19: function () {
             column = "CR";
         },
-        21: function () {
+        20: function () {
             column = "CW";
         },
-        22: function () {
+        21: function () {
             column = "DB";
         },
-        23: function () {
+        22: function () {
             column = "DG";
         },
-        24: function () {
+        23: function () {
             column = "DL";
         },
-        25: function () {
+        24: function () {
             column = "DQ";
         },
-        26: function () {
+        25: function () {
             column = "DV";
         },
-        27: function () {
+        26: function () {
             column = "EA";
         },
-        28: function () {
+        27: function () {
             column = "EF";
         },
-        29: function () {
+        28: function () {
             column = "EK";
         },
-        30: function () {
+        29: function () {
             column = "EP";
         },
-        31: function () {
+        30: function () {
             column = "EU";
         },
-        32: function () {
+        31: function () {
             column = "EZ";
         },
-        33: function () {
+        32: function () {
             column = "FE";
         },
-        34: function () {
+        33: function () {
             column = "FJ";
         },
-        35: function () {
+        34: function () {
             column = "FO";
         },
-        36: function () {
+        35: function () {
             column = "FT";
         },
-        37: function () {
+        36: function () {
             column = "FY";
         },
-        38: function () {
+        37: function () {
             column = "GD";
         },
-        39: function () {
+        38: function () {
             column = "GI";
         },
-        40: function () {
+        39: function () {
             column = "GN";
         },
-        41: function () {
+        40: function () {
             column = "GS";
         },
-        42: function () {
+        41: function () {
             column = "GX";
         },
-        43: function () {
+        42: function () {
             column = "HC";
         },
-        44: function () {
+        43: function () {
             column = "HH";
         },
-        45: function () {
+        44: function () {
             column = "HM";
         },
-        46: function () {
+        45: function () {
             column = "HR";
         },
-        47: function () {
+        46: function () {
             column = "HW";
         },
-        48: function () {
+        47: function () {
             column = "IB";
         },
-        49: function () {
+        48: function () {
             column = "IG";
         },
-        50: function () {
+        49: function () {
             column = "IL";
         },
-        51: function () {
+        50: function () {
             column = "IQ";
         },
-        52: function () {
+        51: function () {
             column = "IV";
         },
-        53: function () {
+        52: function () {
             column = "JA";
         },
-        54: function () {
+        53: function () {
             column = "JF";
         },
-        55: function () {
+        54: function () {
             column = "JK";
         },
-        56: function () {
+        55: function () {
             column = "JP";
         },
-        57: function () {
+        56: function () {
             column = "JU";
         },
-        58: function () {
+        57: function () {
             column = "JZ";
         },
-        59: function () {
+        58: function () {
             column = "KE";
         },
-        60: function () {
+        59: function () {
             column = "KJ";
         },
-        61: function () {
+        60: function () {
             column = "KO";
         },
-        62: function () {
+        61: function () {
             column = "KT";
         },
-        63: function () {
+        62: function () {
             column = "KY";
         },
-        64: function () {
+        63: function () {
             column = "LD";
         },
-        65: function () {
+        64: function () {
             column = "LI";
         },
-        66: function () {
+        65: function () {
             column = "LN";
         },
-        67: function () {
+        66: function () {
             column = "LS";
         },
-        68: function () {
+        67: function () {
             column = "LX";
         },
-        69: function () {
+        68: function () {
             column = "MC";
         },
-        70: function () {
+        69: function () {
             column = "MH";
         },
-        71: function () {
+        70: function () {
             column = "MM";
         },
-        72: function () {
+        71: function () {
             column = "MR";
         },
-        73: function () {
+        72: function () {
             column = "MW";
         },
-        74: function () {
+        73: function () {
             column = "NB";
         },
-        75: function () {
+        74: function () {
             column = "NG";
         },
-        76: function () {
+        75: function () {
             column = "NL";
         },
-        77: function () {
+        76: function () {
             column = "NQ";
         },
-        78: function () {
+        77: function () {
             column = "NV";
         },
-        79: function () {
+        78: function () {
             column = "OA";
         },
-        80: function () {
+        79: function () {
             column = "OF";
         },
-        81: function () {
+        80: function () {
             column = "OK";
         },
-        82: function () {
+        81: function () {
             column = "OP";
         },
-        83: function () {
+        82: function () {
             column = "OU";
         },
-        84: function () {
+        83: function () {
             column = "OZ";
         },
-        85: function () {
+        84: function () {
             column = "PE";
         },
-        86: function () {
+        85: function () {
             column = "PJ";
         },
-        87: function () {
+        86: function () {
             column = "PO";
         },
-        88: function () {
+        87: function () {
             column = "PT";
         },
-        89: function () {
+        88: function () {
             column = "PY";
         },
-        90: function () {
+        89: function () {
             column = "QD";
         },
-        91: function () {
+        90: function () {
             column = "QI";
         },
-        92: function () {
+        91: function () {
             column = "QN";
         },
-        93: function () {
+        92: function () {
             column = "QS";
         },
-        94: function () {
+        93: function () {
             column = "QX";
         },
-        95: function () {
+        94: function () {
             column = "RC";
         },
-        96: function () {
+        95: function () {
             column = "RH";
         },
-        97: function () {
+        96: function () {
             column = "RM";
         },
-        98: function () {
+        97: function () {
             column = "RR";
         },
-        99: function () {
+        98: function () {
             column = "RW";
+        },
+        99: function () {
+            column = "SB";
         },
         100: function () {
             column = "SB";

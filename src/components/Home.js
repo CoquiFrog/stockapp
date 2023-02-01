@@ -12,30 +12,32 @@ import * as XLSX from "xlsx";
 import ExcelExportHelper from "./ExcelExportHelper";
 
 export const Home = () => {
-    const [excelData, setExcelData] = useState(Constants.DUMMY_OBJECT);
+    const [excelData, setExcelData] = useState(Constants.DUMMY_OBJECT_MEDIUM);
     const [excelDataHighLow, setExcelDataHighLow] = useState([]);
     const [fileName, setFileName] = useState('testFile');
     const [chunkAmount, setChunkAmount] = useState(10);
     const [sheetNames, setSheetNames] = useState([]);
     const [sheets, setSheets] = useState([]);
     const [saveSpot, setSaveSpot] = useState([]);
+    const [theThing, setTheThing] = useState([]);
 
     const grabExcelDataAndSetToState = (val) => {
         // filter dates before setting to state
         // trim all the fat off leaving only date and price
         val.map((day) => {
-             delete day.Low;
+            // delete day.Low;
             delete day.Open;
-             delete day.High;
+            // delete day.High;
             delete day["Vol."];
             delete day["Change %"];
             day.Date = DateConversion(day.Date);
         })
         setExcelData(val);
-        
+    
         
         navigator.clipboard.writeText(JSON.stringify(val));
         }
+
         
     const setFileNameToDownload = (val) => {
         setFileName(val);
@@ -54,40 +56,64 @@ export const Home = () => {
         const flippedArray = deepCloneExcelDataForceRefresh.reverse();
         setExcelData(flippedArray);
     }
+
+    const testFunc = () => {
+        const newArrayWithoutHighLow = excelData.map((day) => {
+            console.log('I am nuts: ', day);
+            delete day.Low;
+            delete day.High;
+            return day;
+        })
+        console.log('NEWARRAY!!!' , newArrayWithoutHighLow);
+
+        setTheThing(newArrayWithoutHighLow);
+
+    }
     
     const showCurrentData = () => {
         console.log('high and low: ', excelDataHighLow);
         console.log('date and price: ', excelData);
+        console.log('the thing: ', theThing);
 
     }
 
     const splitterFunctionFire = () => {
+        console.log('computers sure are dumb: ', excelData);
         // const excelDataDatePrice = excelData.map((day) => {
         //     delete day.High;
         //     delete day.Low;
-        //     // delete day.Open;
-        //     // delete day["Vol."];
-        //     // delete day["Change %"];
-        //     // day.Date = DateConversion(day.Date);
         // })
-        SplitExcel(excelData, parseInt(chunkAmount), fileName);
+        // SplitExcel(excelData, parseInt(chunkAmount), fileName, true);
     }
 
     const splitterWithStyles = () => {
-        // const excelDataDatePrice = excelData.map((day) => {
+        console.log('computers are dumb: ', excelData)
+        //  const excelDataDatePrice = excelData.map((day) => {
         //     delete day.High;
         //     delete day.Low;
-        //     // delete day.Open;
-        //     // delete day["Vol."];
-        //     // delete day["Change %"];
-        //     // day.Date = DateConversion(day.Date);
         // })
-        SplitExcel(excelData, parseInt(chunkAmount), fileName);
+        // console.log('WHY?!?!?!?!?!?! ', excelDataDatePrice)
+        // SplitExcel(excelData, parseInt(chunkAmount), fileName, false);
+    }
+
+    const splitterWithStylesDatePrice = () => {
+        const newArrayWithoutHighLow = excelData.map((day) => {
+            delete day.Low;
+            delete day.High;
+            return day;
+        })
+        console.log('NEWARRAY!!!' , newArrayWithoutHighLow);
+        SplitExcel(newArrayWithoutHighLow, parseInt(chunkAmount), fileName, true);
     }
 
     const splitterWithStylesDatePriceHighLow = () => {
-        
-        SplitExcel(excelDataHighLow, parseInt(chunkAmount), fileName);
+        const newArrayWithoutHighLow = excelData.map((day) => {
+            delete day.Low;
+            delete day.High;
+            return day;
+        })
+        console.log('NEWARRAY!!!' , newArrayWithoutHighLow);
+        SplitExcel(newArrayWithoutHighLow, parseInt(chunkAmount), fileName, true);
     }
 
 
@@ -173,7 +199,9 @@ export const Home = () => {
             <button onClick={save2}>WORKING EXAMPLE</button>
             <button onClick={showThings}>show things</button>
             <button onClick={splitterWithStyles}>Splitter With Styles</button>
-            <button onClick={splitterWithStylesDatePriceHighLow}>Splitter With High And Low</button>
+            <button onClick={splitterWithStylesDatePrice}>Price Date</button>
+            <button onClick={splitterWithStylesDatePriceHighLow}>Price Date High Low</button>
+            <button onClick={testFunc}>testFunc</button>
 
             <table key="tableKey" className="table container">
                 <thead>
@@ -200,6 +228,15 @@ export const Home = () => {
 }
 
 export default Home;
+
+
+// excelData.map((day) => {
+    //  delete day.Low;
+//     delete day.Open;
+    //  delete day.High;
+//     delete day["Vol."];
+//     delete day["Change %"];
+//     day.Date = DateConversion(day.Date);
 
 // This is how to stack one column on top of another
 // const stackedOneTopTheOther = [...newData, ...newData];
