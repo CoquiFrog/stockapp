@@ -64,8 +64,8 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
     workbook.sheets().forEach((sheet) => {
       // Style Whole Page Here
       sheet.usedRange().style({
-        fontFamily: "Arial",
-        horizontalAlignment: "center",
+        fontFamily: StyleConfig.MAIN_FONT,
+        horizontalAlignment: StyleConfig.MAIN_TEXT_HORIZONTAL_ALIGNMENT,
       });
 
       for (let i=0, counter=0; i < howManyColumns; i++) {

@@ -103,17 +103,11 @@ export const Home = () => {
             return day;
         })
         console.log('NEWARRAY!!!' , newArrayWithoutHighLow);
-        SplitExcel(newArrayWithoutHighLow, parseInt(chunkAmount), fileName, true);
+        SplitExcel(newArrayWithoutHighLow, parseInt(chunkAmount), fileName, false);
     }
 
     const splitterWithStylesDatePriceHighLow = () => {
-        const newArrayWithoutHighLow = excelData.map((day) => {
-            delete day.Low;
-            delete day.High;
-            return day;
-        })
-        console.log('NEWARRAY!!!' , newArrayWithoutHighLow);
-        SplitExcel(newArrayWithoutHighLow, parseInt(chunkAmount), fileName, true);
+        SplitExcel(excelData, parseInt(chunkAmount), fileName, true);
     }
 
 

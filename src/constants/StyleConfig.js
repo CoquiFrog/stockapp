@@ -6,7 +6,8 @@ const Constants = {
     DATE_COLUMN_WIDTH: 14,
     PRICE_COLUMN_WIDTH: 9,
     EMPTY_COLUMN_WIDTH: 3,
-
+    MAIN_FONT: "Arial",
+    MAIN_TEXT_HORIZONTAL_ALIGNMENT: "center",
     
 }
 export default Constants
