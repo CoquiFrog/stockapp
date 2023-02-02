@@ -12,7 +12,7 @@ import * as XLSX from "xlsx";
 import ExcelExportHelper from "./ExcelExportHelper";
 
 export const Home = () => {
-    const [excelData, setExcelData] = useState(Constants.DUMMY_OBJECT_MEDIUM);
+    const [excelData, setExcelData] = useState(Constants.DUMMY_OBJECT_BIG);
     const [excelDataHighLow, setExcelDataHighLow] = useState([]);
     const [fileName, setFileName] = useState('testFile');
     const [chunkAmount, setChunkAmount] = useState(10);
@@ -78,7 +78,6 @@ export const Home = () => {
     }
 
     const splitterFunctionFire = () => {
-        console.log('computers sure are dumb: ', excelData);
         // const excelDataDatePrice = excelData.map((day) => {
         //     delete day.High;
         //     delete day.Low;
@@ -87,7 +86,6 @@ export const Home = () => {
     }
 
     const splitterWithStyles = () => {
-        console.log('computers are dumb: ', excelData)
         //  const excelDataDatePrice = excelData.map((day) => {
         //     delete day.High;
         //     delete day.Low;
@@ -102,7 +100,6 @@ export const Home = () => {
             delete day.High;
             return day;
         })
-        console.log('NEWARRAY!!!' , newArrayWithoutHighLow);
         SplitExcel(newArrayWithoutHighLow, parseInt(chunkAmount), fileName, false);
     }
 
@@ -192,7 +189,6 @@ export const Home = () => {
             <button onClick={splitterFunctionFire}>splitter</button>
             <button onClick={save2}>WORKING EXAMPLE</button>
             <button onClick={showThings}>show things</button>
-            <button onClick={splitterWithStyles}>Splitter With Styles</button>
             <button onClick={splitterWithStylesDatePrice}>Price Date</button>
             <button onClick={splitterWithStylesDatePriceHighLow}>Price Date High Low</button>
             <button onClick={testFunc}>testFunc</button>

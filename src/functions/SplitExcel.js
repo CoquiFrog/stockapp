@@ -2,23 +2,21 @@ import * as XLSX from "xlsx";
 import Splitter from '../functions/Splitter';
 import IterationToColumnConverter from '../functions/IterationToColumnConverter';
 import ExcelExportHelperSplitter from "../components/ExcelExportHelperSplitter";
-import LetterToNumberConverter from "../functions/LetterToNumberConverter";
 import IterationToColumnConverterHighLow from "./IterationToColumnConverterHighLow";
 
 export const SplitExcel = (data, chunkAmount, filename, highAndLow) => {
     console.log('excel data has arrived: ', data);
-    let howManyColumns
+    let howManyColumns;
     const addToSheet = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverter(counter);
         let printStartPoint = columnString + 1;
-        howManyColumns = LetterToNumberConverter(columnString);
-        console.log('column string: ', columnString);
+        howManyColumns = counter * 3;
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: printStartPoint });
     }
     const addToSheetHighLow = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverterHighLow(counter);
         let printStartPoint = columnString + 1;
-        howManyColumns = LetterToNumberConverter(columnString);
+        howManyColumns = counter * 6;
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: printStartPoint });
     }
     
@@ -33,8 +31,7 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow) => {
         Splitter(data, chunkAmount, addToSheet);
     }
     XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
-    // Gives extra breathing room for looping;
-    howManyColumns = howManyColumns + 5;
+    console.log('howManyColumns: ', howManyColumns)
     ExcelExportHelperSplitter(workBook, howManyColumns, (chunkAmount + 1));
 
     // Previous Method of Downloading

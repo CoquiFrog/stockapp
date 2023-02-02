@@ -96,6 +96,26 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
           // Fill Title Cell Violet
           sheet.cell(columnAndRowAddress).style("fill", StyleConfig.PRICE_TITLE_BACKGROUND_COLOR)
         }
+        if (cellValue === "High") {
+          // Apply background color to column range
+          sheet.range(chunkedRange).style("fill", StyleConfig.HIGH_COLUMN_BACKGROUND_COLOR);
+
+          // Set Price Column Width
+          sheet.column(columnAddress).width(StyleConfig.HIGH_COLUMN_WIDTH);
+
+          // Fill Title Cell Violet
+          sheet.cell(columnAndRowAddress).style("fill", StyleConfig.HIGH_TITLE_BACKGROUND_COLOR)
+        }
+        if (cellValue === "Low") {
+          // Apply background color to column range
+          sheet.range(chunkedRange).style("fill", StyleConfig.LOW_COLUMN_BACKGROUND_COLOR);
+
+          // Set Price Column Width
+          sheet.column(columnAddress).width(StyleConfig.LOW_COLUMN_WIDTH);
+
+          // Fill Title Cell Violet
+          sheet.cell(columnAndRowAddress).style("fill", StyleConfig.LOW_TITLE_BACKGROUND_COLOR)
+        }
         if (!cellValue){
           // Set Empty Column Width
           sheet.column(columnAddress).width(StyleConfig.EMPTY_COLUMN_WIDTH);
