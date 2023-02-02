@@ -69,7 +69,9 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
       });
 
       for (let i=0, counter=0; i < howManyColumns; i++) {
+        console.log('i: ', i)
         let columnAddress =  NumberToLetterConverter(i);
+        console.log('columnAdress: ', columnAddress)
         let columnAndRowAddress = columnAddress + 1;
         let cellValue = sheet.cell(columnAndRowAddress).value();
 
@@ -80,44 +82,44 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
           // Apply background color to column range
           sheet.range(chunkedRange).style("fill", StyleConfig.DATE_TITLE_BACKGROUND_COLOR);
 
-          // Set Date column width
+          // Column Width
           sheet.column(columnAddress).width(StyleConfig.DATE_COLUMN_WIDTH);
 
-          // Fill Title Cell Orange
+          // Title Cell Background Color
           sheet.cell(columnAndRowAddress).style("fill", StyleConfig.DATE_COLUMN_BACKGROUND_COLOR)
         }
         if (cellValue === "Price") {
           // Apply background color to column range
           sheet.range(chunkedRange).style("fill", StyleConfig.PRICE_COLUMN_BACKGROUND_COLOR);
 
-          // Set Price Column Width
+          // Column Width
           sheet.column(columnAddress).width(StyleConfig.PRICE_COLUMN_WIDTH);
 
-          // Fill Title Cell Violet
+          // Title Cell Background Color
           sheet.cell(columnAndRowAddress).style("fill", StyleConfig.PRICE_TITLE_BACKGROUND_COLOR)
         }
         if (cellValue === "High") {
           // Apply background color to column range
           sheet.range(chunkedRange).style("fill", StyleConfig.HIGH_COLUMN_BACKGROUND_COLOR);
 
-          // Set Price Column Width
+          // Column Width
           sheet.column(columnAddress).width(StyleConfig.HIGH_COLUMN_WIDTH);
 
-          // Fill Title Cell Violet
+          // Title Cell Background Color
           sheet.cell(columnAndRowAddress).style("fill", StyleConfig.HIGH_TITLE_BACKGROUND_COLOR)
         }
         if (cellValue === "Low") {
           // Apply background color to column range
           sheet.range(chunkedRange).style("fill", StyleConfig.LOW_COLUMN_BACKGROUND_COLOR);
 
-          // Set Price Column Width
+          // Column Width
           sheet.column(columnAddress).width(StyleConfig.LOW_COLUMN_WIDTH);
 
-          // Fill Title Cell Violet
+          // Title Cell Background Color
           sheet.cell(columnAndRowAddress).style("fill", StyleConfig.LOW_TITLE_BACKGROUND_COLOR)
         }
         if (!cellValue){
-          // Set Empty Column Width
+          // Column Width
           sheet.column(columnAddress).width(StyleConfig.EMPTY_COLUMN_WIDTH);
         }
       }

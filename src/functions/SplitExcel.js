@@ -16,7 +16,7 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow) => {
     const addToSheetHighLow = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverterHighLow(counter);
         let printStartPoint = columnString + 1;
-        howManyColumns = counter * 6;
+        howManyColumns = counter * 7;
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: printStartPoint });
     }
     
