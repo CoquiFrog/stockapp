@@ -4,17 +4,18 @@ import IterationToColumnConverter from '../functions/IterationToColumnConverter'
 import ExcelExportHelperSplitter from "../components/ExcelExportHelperSplitter";
 import IterationToColumnConverterHighLow from "./IterationToColumnConverterHighLow";
 
-export const SplitExcel = (data, chunkAmount, filename, highAndLow) => {
-    console.log('excel data has arrived: ', data);
+export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowNumbers) => {
     let howManyColumns;
     const addToSheet = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverter(counter);
+        console.log('addToSheet columnString: ', columnString);
         let printStartPoint = columnString + 1;
         howManyColumns = counter * 3;
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: printStartPoint });
     }
     const addToSheetHighLow = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverterHighLow(counter);
+        console.log('addToSheetHighLow columnString: ', columnString);
         let printStartPoint = columnString + 1;
         howManyColumns = counter * 7;
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: printStartPoint });
@@ -24,26 +25,12 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow) => {
     const workSheet=XLSX.utils.json_to_sheet([{"Date":"2022-12-30","Price":129.93}]);
     const workBook=XLSX.utils.book_new()
     if (highAndLow === true) {
-        console.log('TRUE')
         Splitter(data, chunkAmount, addToSheetHighLow);
     } else {
-        console.log('FALSE');
         Splitter(data, chunkAmount, addToSheet);
     }
     XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
-    console.log('howManyColumns: ', howManyColumns)
-    ExcelExportHelperSplitter(workBook, howManyColumns, (chunkAmount + 1));
-
-    // Previous Method of Downloading
-    // XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet2");
-    // let buffer=XLSX.write(workBook, {bookType:"xlsx", type: "binary"})
-    // XLSX.write(workBook, {bookType:"xlsx", type:"binary"})
-    // XLSX.writeFile(workBook, (filename + '.xlsx'))
+    ExcelExportHelperSplitter(workBook, howManyColumns, (chunkAmount + 1), hideHighLowNumbers);
 }
 
 export default SplitExcel;
-
-// const newData=data.map(row=>{
-//     delete row.tableData
-//     return row;
-// })

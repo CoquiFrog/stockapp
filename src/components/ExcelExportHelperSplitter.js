@@ -4,7 +4,7 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 import NumberToLetterConverter from "../functions/NumberToLetterConverter";
 import StyleConfig from '../constants/StyleConfig'
 
-const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
+const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows, hideHighLowNumbers) => {
   console.log('data Check ', data)
   
   const createDownLoadData = () => {
@@ -69,9 +69,7 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
       });
 
       for (let i=0, counter=0; i < howManyColumns; i++) {
-        console.log('i: ', i)
         let columnAddress =  NumberToLetterConverter(i);
-        console.log('columnAdress: ', columnAddress)
         let columnAndRowAddress = columnAddress + 1;
         let cellValue = sheet.cell(columnAndRowAddress).value();
 
@@ -122,8 +120,15 @@ const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows) => {
           // Column Width
           sheet.column(columnAddress).width(StyleConfig.EMPTY_COLUMN_WIDTH);
         }
+        if (hideHighLowNumbers) {
+          if (cellValue === "High") {
+            sheet.column(columnAddress).hidden(true);
+          }
+          if (cellValue === "Low") {
+            sheet.column(columnAddress).hidden(true);
+          }
+        }
       }
-        // sheet.column("A").hidden(true);
       });
 
       return workbook
