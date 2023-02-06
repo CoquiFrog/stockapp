@@ -8,6 +8,12 @@ import FileNameInput from "./FileNameInput";
 import ChunkAmountInput from "./ChunkAmountInput";
 import Constants from '../constants/Constants';
 
+const myStyle = {
+    color: '#ffffff',
+    backgroundColor: '7FCDFE',
+};
+
+
 export const Home = () => {
     const [excelData, setExcelData] = useState(Constants.DUMMY_OBJECT_BIG);
     const [fileName, setFileName] = useState('testFile');
