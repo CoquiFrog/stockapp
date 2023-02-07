@@ -3,12 +3,17 @@ import "../styling/Home.css";
 
 export const ChunkAmountInput = (props) => {
     return (
-            <input
-                type="number"
-                placeholder="chunk amount"
-                value={props.chunkAmount}
-                onChange={(e) => props.setChunkAmountForClipping(e.target.value)}
-            />
+        <div>
+        <label class="custom-field one">
+        <input
+            type="number"
+            value={props.chunkAmount}
+            placeholder=" "
+            onChange={(e) => props.setChunkAmountForClipping(e.target.value)}
+        />
+            <span class="placeholder">Chunk Amount</span>
+        </label>
+    </div>
     )
 }
 

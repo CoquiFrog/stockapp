@@ -7,12 +7,7 @@ import SplitExcel from "../functions/SplitExcel";
 import FileNameInput from "./FileNameInput";
 import ChunkAmountInput from "./ChunkAmountInput";
 import Constants from '../constants/Constants';
-
-const myStyle = {
-    color: '#ffffff',
-    backgroundColor: '7FCDFE',
-};
-
+import StyleConfig from '../constants/StyleConfig';
 
 export const Home = () => {
     const [excelData, setExcelData] = useState(Constants.DUMMY_OBJECT_BIG);
@@ -94,35 +89,63 @@ export const Home = () => {
         
         return (
             <div>
-            <ExcelInput grabExcelDataAndSetToState={grabExcelDataAndSetToState} />
-            <FileNameInput setFileNameToDownload={setFileNameToDownload} />
-            <ChunkAmountInput setChunkAmountForClipping={setChunkAmountForClipping}/>
-            <button onClick={hideHighLowOrNot}>Hide:{JSON.stringify(hideHighLowColumns)}</button>
+                <div className="margin-top-30">
+                    <ExcelInput grabExcelDataAndSetToState={grabExcelDataAndSetToState} />
+                </div>
+                <div className="margin-top-10">
+                    <FileNameInput setFileNameToDownload={setFileNameToDownload}/>
+                </div>
+                <div className="margin-top-20">
+                    <ChunkAmountInput setChunkAmountForClipping={setChunkAmountForClipping}/>
+                </div>
+                {/* <div className="margin-top-20">
+                    <button onClick={hideHighLowOrNot}>Hide:{JSON.stringify(hideHighLowColumns)}</button>
+                </div>
+                <div className="margin-top-20">
+                    <button onClick={saveExcelFile}>Save</button>
+                </div> */}
+                {/* <div className="margin-top-20">
+                    <button onClick={flipArray}>Flip Data</button>
+                </div> */}
+                {/* <div className="margin-top-20">
+                    <button onClick={showCurrentData}>Show Data</button>
+                </div> */}
+                {/* <div className="margin-top-20">
+                    <button onClick={showThings}>show things</button>
 
-            <button onClick={saveExcelFile}>Save</button>
-            <button onClick={flipArray}>Flip Data</button>
-            <button onClick={showCurrentData}>Show Data</button>
-            <button onClick={showThings}>show things</button>
-            <button onClick={splitterDatePrice}>Price Date</button>
-            <button onClick={splitterDatePriceHighLow}>High Low W/ Numbers</button>
-            <button onClick={splitterHighLowNoNumbers}>High Low No Numbers</button>
+                </div>
+                <div className="margin-top-20">
+                    <button onClick={splitterDatePrice}>Price Date</button>
 
-            <table key="tableKey" className="table container">
+                </div>
+                <div className="margin-top-20">
+                    <button onClick={splitterDatePriceHighLow}>High Low W/ Numbers</button>
+
+                </div> */}
+                {/* <div className="margin-top-30">
+                    <button onClick={splitterHighLowNoNumbers} className="button-33">High Low No Numbers</button>
+                </div> */}
+                <div className="margin-top-20">
+                    <button className="button-33" onClick={saveExcelFile}>{StyleConfig.DOWNLOAD_BUTTON_TEXT}</button>
+                </div>
+
+
+            <table key="tableKey" className="margin-top-20 margin-left-11-percent">
                 <thead>
                     <tr>
-                        <th scope="col">date</th>
-                        <th scope="col">price</th>
-                        <th scope="col">high</th>
-                        <th scope="col">low</th>
+                        <th className="column-padding" scope="col">date</th>
+                        <th className="column-padding" scope="col">price</th>
+                        <th className="column-padding" scope="col">high</th>
+                        <th className="column-padding" scope="col">low</th>
                     </tr>
                 </thead>
                 <tbody>
                     {excelData && excelData.map((data) => 
                         <tr key={data.Date}>
-                            <th>{data.Date}</th>
-                            <td>{data.Price}</td>
-                            <th>{data.High}</th>
-                            <td>{data.Low}</td>
+                            <th className="column-padding">{data.Date}</th>
+                            <td className="column-padding">{data.Price}</td>
+                            <th className="column-padding">{data.High}</th>
+                            <td className="column-padding">{data.Low}</td>
                         </tr>
                     )}
                 </tbody>

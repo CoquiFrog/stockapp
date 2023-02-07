@@ -16,6 +16,8 @@ const Constants = {
     EMPTY_COLUMN_WIDTH: 4,
     MAIN_FONT: "Arial",
     MAIN_TEXT_HORIZONTAL_ALIGNMENT: "center",
+    EXCEL_INPUT_BUTTON_TEXT: "Excel Input",
+    DOWNLOAD_BUTTON_TEXT: "Download",
     
 }
 export default Constants

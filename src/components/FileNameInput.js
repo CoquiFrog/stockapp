@@ -1,15 +1,19 @@
 import React from "react";
 import "../styling/Home.css";
-// import XLSX from '../../src/xlsx.core.min.js'
 
 export const FileNameInput = (props) => {
     return (
-            <input
-                type="text"
-                placeholder="file name here"
-                value={props.FileNameInput}
-                onChange={(e) => props.setFileNameToDownload(e.target.value)}
-            />
+        <div>
+            <label class="custom-field one">
+                <input
+                    type="text"
+                    value={props.FileNameInput}
+                    placeholder=" "
+                    onChange={(e) => props.setFileNameToDownload(e.target.value)}
+                />
+                <span class="placeholder">File Name</span>
+            </label>
+        </div>
     )
 }
 
