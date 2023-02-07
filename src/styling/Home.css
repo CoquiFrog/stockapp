@@ -21,6 +21,32 @@
     margin-top: 30px;
 }
 
+.margin-left-25 {
+    margin-left: 18px;
+}
+
+.margin-right-25 {
+    margin-right: 18px;
+}
+
+.width-140 {
+    width: 140px;
+}
+
+.height-40 {
+    height: 40px;
+}
+
+.position-relative {
+    position: relative;
+}
+
+/* Change these values to move the function title within the div */
+.position-within-div {
+    top: 0px;
+    left: 0px;
+}
+
 
 .button-15 {
     height: 40px;
@@ -139,6 +165,14 @@
 
 .flex-direction-column {
     flex-direction: column;
+}
+
+.flex-direction-row {
+    flex-direction: row;
+}
+
+.justify-content-center {
+    justify-content: center;
 }
 
 .justify-content-center {

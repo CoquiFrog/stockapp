@@ -4,14 +4,14 @@ import "../styling/Home.css";
 export const FileNameInput = (props) => {
     return (
         <div>
-            <label class="custom-field one">
+            <label className="custom-field one">
                 <input
                     type="text"
                     value={props.FileNameInput}
                     placeholder=" "
                     onChange={(e) => props.setFileNameToDownload(e.target.value)}
                 />
-                <span class="placeholder">File Name</span>
+                <span className="placeholder">File Name</span>
             </label>
         </div>
     )

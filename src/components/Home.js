@@ -8,12 +8,15 @@ import FileNameInput from "./FileNameInput";
 import ChunkAmountInput from "./ChunkAmountInput";
 import Constants from '../constants/Constants';
 import StyleConfig from '../constants/StyleConfig';
+import NameDial from '../functions/NameDial';
 
 export const Home = () => {
+    const [amountOfFunctions, setAmountOfFunctions] = useState(9);
     const [excelData, setExcelData] = useState(Constants.DUMMY_OBJECT_BIG);
     const [fileName, setFileName] = useState('testFile');
     const [chunkAmount, setChunkAmount] = useState(28);
     const [hideHighLowColumns, setHideHighLowColumns] = useState(false)
+    const [menuNumber, setMenuNumber] = useState(1);
 
     const grabExcelDataAndSetToState = (val) => {
         // filter dates before setting to state
@@ -32,6 +35,18 @@ export const Home = () => {
         // navigator.clipboard.writeText(JSON.stringify(val));
     }
 
+    const addMenuNumber = () => {
+        console.log('menuNumber: ', menuNumber);
+        if (menuNumber <= amountOfFunctions) {
+            setMenuNumber(menuNumber + 1);
+        }
+    }
+    const subtractMenuNumber = () => {
+        console.log('menuNumber: ', menuNumber);
+        if (menuNumber >= 2) {
+            setMenuNumber(menuNumber - 1);
+        }
+    }
         
     const setFileNameToDownload = (val) => {
         setFileName(val);
@@ -78,13 +93,22 @@ export const Home = () => {
     }
         
     const showThings = () => {
-        console.log('showthings: ', hideHighLowColumns);
+        console.log('showthings: ');
     }
 
     const hideHighLowOrNot = () => {
         setHideHighLowColumns(!hideHighLowColumns)
     }
     
+    const downloadExcelFile = () => {
+        const functionArray = [
+            showThings, saveExcelFile, splitterDatePrice, splitterDatePriceHighLow, splitterHighLowNoNumbers
+        ]
+        // console.log('check: ', functionArray[menuNumber - 1])
+        functionArray[menuNumber - 1]();
+        // functionArray[menuNumber]();
+
+    }
         
         
         return (
@@ -95,42 +119,17 @@ export const Home = () => {
                 <div className="margin-top-10">
                     <FileNameInput setFileNameToDownload={setFileNameToDownload}/>
                 </div>
-                <div className="margin-top-20">
+                <div className="margin-top-10">
                     <ChunkAmountInput setChunkAmountForClipping={setChunkAmountForClipping}/>
                 </div>
-                {/* <div className="margin-top-20">
-                    <button onClick={hideHighLowOrNot}>Hide:{JSON.stringify(hideHighLowColumns)}</button>
+                <div className="display-flex flex-direction-row justify-content-center margin-top-10">
+                    <button className="button-33 margin-right-25 height-40" onClick={subtractMenuNumber}>-</button>
+                    <div className="width-140"><p className="position-relative position-within-div">{NameDial(menuNumber)}</p></div>
+                    <button className="button-33 margin-left-25 height-40" onClick={addMenuNumber}>+</button>
                 </div>
-                <div className="margin-top-20">
-                    <button onClick={saveExcelFile}>Save</button>
-                </div> */}
-                {/* <div className="margin-top-20">
-                    <button onClick={flipArray}>Flip Data</button>
-                </div> */}
-                {/* <div className="margin-top-20">
-                    <button onClick={showCurrentData}>Show Data</button>
-                </div> */}
-                {/* <div className="margin-top-20">
-                    <button onClick={showThings}>show things</button>
-
+                <div className="margin-top-10 ">
+                    <button className="button-33" onClick={downloadExcelFile}>{StyleConfig.DOWNLOAD_BUTTON_TEXT}</button>
                 </div>
-                <div className="margin-top-20">
-                    <button onClick={splitterDatePrice}>Price Date</button>
-
-                </div>
-                <div className="margin-top-20">
-                    <button onClick={splitterDatePriceHighLow}>High Low W/ Numbers</button>
-
-                </div> */}
-                {/* <div className="margin-top-30">
-                    <button onClick={splitterHighLowNoNumbers} className="button-33">High Low No Numbers</button>
-                </div> */}
-                <div className="margin-top-20">
-                    <button className="button-33" onClick={saveExcelFile}>{StyleConfig.DOWNLOAD_BUTTON_TEXT}</button>
-                    {/* <button onClick={saveExcelFile}>{StyleConfig.DOWNLOAD_BUTTON_TEXT}</button> */}
-
-                </div>
-
 
             <table key="tableKey" className="margin-top-20 table-center ">
                 <thead>
