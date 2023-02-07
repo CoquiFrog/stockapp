@@ -127,10 +127,12 @@ export const Home = () => {
                 </div> */}
                 <div className="margin-top-20">
                     <button className="button-33" onClick={saveExcelFile}>{StyleConfig.DOWNLOAD_BUTTON_TEXT}</button>
+                    {/* <button onClick={saveExcelFile}>{StyleConfig.DOWNLOAD_BUTTON_TEXT}</button> */}
+
                 </div>
 
 
-            <table key="tableKey" className="margin-top-20 margin-left-11-percent">
+            <table key="tableKey" className="margin-top-20 table-center ">
                 <thead>
                     <tr>
                         <th className="column-padding" scope="col">date</th>

@@ -30,7 +30,7 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowN
         Splitter(data, chunkAmount, addToSheet);
     }
     XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
-    ExcelExportHelperSplitter(workBook, howManyColumns, (chunkAmount + 1), hideHighLowNumbers);
+    ExcelExportHelperSplitter(workBook, filename, howManyColumns, (chunkAmount + 1), hideHighLowNumbers);
 }
 
 export default SplitExcel;

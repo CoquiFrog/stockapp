@@ -3,14 +3,14 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 import NumberToLetterConverter from "../functions/NumberToLetterConverter";
 import StyleConfig from '../constants/StyleConfig'
 
-const ExcelExportHelperSplitter = (data, howManyColumns, howManyRows, hideHighLowNumbers) => {
+const ExcelExportHelperSplitter = (data, filename, howManyColumns, howManyRows, hideHighLowNumbers) => {
   console.log('data Check ', data)
   
   const createDownLoadData = () => {
     handleExport().then((url) => {
       const downloadAnchorNode = document.createElement("a");
       downloadAnchorNode.setAttribute("href", url);
-      downloadAnchorNode.setAttribute("download", "student_report.xlsx");
+      downloadAnchorNode.setAttribute("download", (filename + ".xlsx"));
       downloadAnchorNode.click();
       downloadAnchorNode.remove();
     });
