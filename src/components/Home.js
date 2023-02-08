@@ -13,7 +13,7 @@ import NameDial from '../functions/NameDial';
 export const Home = () => {
     const [amountOfFunctions, setAmountOfFunctions] = useState(9);
     const [excelData, setExcelData] = useState(Constants.DUMMY_OBJECT_BIG);
-    const [fileName, setFileName] = useState('testFile');
+    const [fileName, setFileName] = useState('Default_File_Name');
     const [chunkAmount, setChunkAmount] = useState(28);
     const [hideHighLowColumns, setHideHighLowColumns] = useState(false)
     const [menuNumber, setMenuNumber] = useState(1);
@@ -58,21 +58,18 @@ export const Home = () => {
 
     // Function 1 - Save
     const saveExcelFile = () => {
-        console.log('function 1');
         DownloadExcel(excelData, fileName, true)
     }
     
     
     // Function 2 - Date Price
     const splitterDatePrice = () => {
-        console.log('function 2');
-        // Bobby Cooper Elite Code
         const copiedClone = excelData.map(({Date, Price})=> ({Date, Price}));
         SplitExcel(copiedClone, parseInt(chunkAmount), fileName, false, hideHighLowColumns);
     }
+
     // Function 3 - High Low
     const splitterDatePriceHighLow = () => {
-        console.log('function 3', excelData);
         const copiedClone = excelData.map(({Date, Price, High, Low}) => ({
             Date, Price, High, Low}));
         const newArrayWithNoHighAndLow = copiedClone.map((day) => {
@@ -80,31 +77,30 @@ export const Home = () => {
             day.High = "";
             return day;
         })
-        console.log('copied clone: ', newArrayWithNoHighAndLow);
         
         SplitExcel(newArrayWithNoHighAndLow, parseInt(chunkAmount), fileName, true, hideHighLowColumns);
     }
+
     // Function 4 - High Low Numbers
     const splitterHighLowNoNumbers = () => {
-
-        
-        console.log('function 4')
-        // Bobby Cooper Elite Code
-        // const copiedClone = excelData.map(({Date, Price})=> ({Date, Price}));
-        
         SplitExcel(excelData, parseInt(chunkAmount), fileName, true, hideHighLowColumns);
     }
-    
-    
 
     // Function 5 - High Low Hidden
     const splitterHighLowHideColumns = () => {
-        SplitExcel(excelData, parseInt(chunkAmount), fileName, true, true);
+        const copiedClone = excelData.map(({Date, Price, High, Low}) => ({
+            Date, Price, High, Low}));
+        const newArrayWithNoHighAndLow = copiedClone.map((day) => {
+            day.Low = "";
+            day.High = "";
+            return day;
+        })
+        
+        SplitExcel(newArrayWithNoHighAndLow, parseInt(chunkAmount), fileName, true, true);
     }
 
     // Function 6 - Flip Array
     const flipArray = () => {
-        console.log('function 5');
         const deepCloneExcelDataForceRefresh = [...excelData];
         const flippedArray = deepCloneExcelDataForceRefresh.reverse();
         setExcelData(flippedArray);
@@ -117,14 +113,8 @@ export const Home = () => {
         functionArray[menuNumber - 1]();
     }
 
-    const showThings = () => {
-        console.log(excelData[0])
-    }
-        
-        
         return (
             <div>
-                {/* <button onClick={showThings}>test</button> */}
                 <div className="margin-top-30">
                     <ExcelInput grabExcelDataAndSetToState={grabExcelDataAndSetToState} />
                 </div>
