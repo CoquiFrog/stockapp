@@ -8,16 +8,16 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowN
     let howManyColumns;
     const addToSheet = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverter(counter);
-        console.log('addToSheet columnString: ', columnString);
+        // console.log('addToSheet columnString: ', columnString);
         let printStartPoint = columnString + 1;
-        howManyColumns = counter * 3;
+        howManyColumns = counter * 4;
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: printStartPoint });
     }
     const addToSheetHighLow = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverterHighLow(counter);
-        console.log('addToSheetHighLow columnString: ', columnString);
+        // console.log('addToSheetHighLow columnString: ', columnString);
         let printStartPoint = columnString + 1;
-        howManyColumns = counter * 7;
+        howManyColumns = counter * 8;
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: printStartPoint });
     }
     

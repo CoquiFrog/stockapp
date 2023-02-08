@@ -6,19 +6,25 @@ export const NameDial = (numberValue) => {
                 name = 'Save';
             },
             2: function () {
-                name = 'Date & Price';
+                name = 'Date Price';
             },
             3: function () {
-                name = 'High & Low';
+                name = 'High Low';
             },
             4: function () {
-                name = 'High Low W/ Numbers';
+                name = 'High Low Numbers';
             },
             5: function () {
-                name = 'Fifth Function';
+                name = 'High Low Hidden';
             },
             6: function () {
-                name = 'Sixth Function';
+                name = 'Flip Array';
+            },
+            7: function () {
+                name = 'Seventh Function';
+            },
+            8: function () {
+                name = 'Eighth Function';
             },
             'default': function () {
                 name = 'Default Name';
