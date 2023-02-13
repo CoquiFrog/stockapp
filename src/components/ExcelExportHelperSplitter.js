@@ -76,13 +76,13 @@ const ExcelExportHelperSplitter = (data, filename, howManyColumns, howManyRows, 
 
         if (cellValue === "Date") {
           // Apply background color to column range
-          sheet.range(chunkedRange).style("fill", StyleConfig.DATE_TITLE_BACKGROUND_COLOR);
+          sheet.range(chunkedRange).style("fill", StyleConfig.DATE_COLUMN_BACKGROUND_COLOR);
 
           // Column Width
           sheet.column(columnAddress).width(StyleConfig.DATE_COLUMN_WIDTH);
 
           // Title Cell Background Color
-          sheet.cell(columnAndRowAddress).style("fill", StyleConfig.DATE_COLUMN_BACKGROUND_COLOR)
+          sheet.cell(columnAndRowAddress).style("fill", StyleConfig.DATE_TITLE_BACKGROUND_COLOR)
         }
         if (cellValue === "Price") {
           // Apply background color to column range

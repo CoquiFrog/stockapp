@@ -1,3 +1,5 @@
+const LIGHT_YELLOW = "F5FF73";
+
 const Constants = {
     // APP_NAME: "Metal Detector",
     DATE_TITLE_BACKGROUND_COLOR: "D9FE7F",
