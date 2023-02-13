@@ -1,10 +1,26 @@
 import * as XLSX from "xlsx";
 import Splitter from '../functions/Splitter';
 import IterationToColumnConverter from '../functions/IterationToColumnConverter';
-import ExcelExportHelperSplitter from "../components/ExcelExportHelperSplitter";
 import IterationToColumnConverterHighLow from "./IterationToColumnConverterHighLow";
+import Workbook2blob from "./Workbook2blob";
+import S2ab from "./S2ab";
+import AddStyle from '../functions/AddStyle';
 
 export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowNumbers) => {
+    const createDownLoadData = (howManyRows) => {
+        handleExport(howManyRows).then((url) => {
+          const downloadAnchorNode = document.createElement("a");
+          downloadAnchorNode.setAttribute("href", url);
+          downloadAnchorNode.setAttribute("download", (filename + ".xlsx"));
+          downloadAnchorNode.click();
+          downloadAnchorNode.remove();
+        });
+    };
+      const handleExport = (howManyRows) => {
+        const workbookBlob = Workbook2blob(data);
+    
+        return AddStyle(workbookBlob, howManyColumns, howManyRows, hideHighLowNumbers);
+      };
     let howManyColumns;
     const addToSheet = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverter(counter);
@@ -30,7 +46,8 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowN
         Splitter(data, chunkAmount, addToSheet);
     }
     XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
-    ExcelExportHelperSplitter(workBook, filename, howManyColumns, (chunkAmount + 1), hideHighLowNumbers, data);
+
+    return createDownLoadData(chunkAmount);
 }
 
 export default SplitExcel;

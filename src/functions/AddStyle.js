@@ -3,60 +3,7 @@ import * as XlsxPopulate from "xlsx-populate/browser/xlsx-populate";
 import NumberToLetterConverter from "../functions/NumberToLetterConverter";
 import StyleConfig from '../constants/StyleConfig'
 
-const ExcelExportHelperSplitter = (data, filename, howManyColumns, howManyRows, hideHighLowNumbers) => {
-  
-  const createDownLoadData = () => {
-    handleExport().then((url) => {
-      const downloadAnchorNode = document.createElement("a");
-      downloadAnchorNode.setAttribute("href", url);
-      downloadAnchorNode.setAttribute("download", (filename + ".xlsx"));
-      downloadAnchorNode.click();
-      downloadAnchorNode.remove();
-    });
-  };
-
-  const workbook2blob = (workbook) => {
-    const wopts = {
-      bookType: "xlsx",
-      bookSST: false,
-      type: "binary",
-    };
-
-    const wbout = XLSX.write(workbook, wopts);
-
-    // The application/octet-stream MIME type is used for unknown binary files.
-    // It preserves the file contents, but requires the receiver to determine file type,
-    // for example, from the filename extension.
-    const blob = new Blob([s2ab(wbout)], {
-      type: "application/octet-stream",
-    });
-
-    return blob;
-  };
-
-  const s2ab = (s) => {
-    // The ArrayBuffer() constructor is used to create ArrayBuffer objects.
-    // create an ArrayBuffer with a size in bytes
-    const buf = new ArrayBuffer(s.length);
-
-    //create a 8 bit integer array
-    const view = new Uint8Array(buf);
-
-    //charCodeAt The charCodeAt() method returns an integer between 0 and 65535 representing the UTF-16 code
-    for (let i = 0; i !== s.length; ++i) {
-      view[i] = s.charCodeAt(i);
-    }
-
-    return buf;
-  };
-
-  const handleExport = () => {
-    const workbookBlob = workbook2blob(data);
-
-    return addStyle(workbookBlob);
-  };
-
-  const addStyle = (workbookBlob) => {
+export const AddStyle = (workbookBlob, howManyColumns, howManyRows, hideHighLowNumbers) => {
     return XlsxPopulate.fromDataAsync(workbookBlob).then((workbook) => {
 
     workbook.sheets().forEach((sheet) => {
@@ -135,7 +82,4 @@ const ExcelExportHelperSplitter = (data, filename, howManyColumns, howManyRows, 
     });
   };
 
-  return createDownLoadData();
-};
-
-export default ExcelExportHelperSplitter;
+export default AddStyle;
