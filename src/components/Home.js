@@ -116,19 +116,23 @@ export const Home = () => {
         const copiedClone = excelData.map((day, index, arr) => {
         // Filters out first and last 2 days
             if (index > 2 && index <= (lengthOfArray - 3)) {
-            
-                let processValue_minus_2 = arr[index-2].High/arr[index-2].Low;
-                let processValue_minus_1 = arr[index-1].High/arr[index-1].Low;
-                let processValue = arr[index].High/arr[index].Low;
-                let processValue_plus_1 = arr[index+1].High/arr[index+1].Low;
-                let processValue_plus_2 = arr[index+2].High/arr[index+2].Low;
-                if (processValue > processValue_minus_2 && processValue > processValue_minus_1 && processValue > processValue_plus_1 && processValue > processValue_plus_2) {
+                let highCheck1 = arr[index].High > arr[index-2].High;
+                let highCheck2 = arr[index].High > arr[index-1].High;
+                let highCheck3 = arr[index].High > arr[index+1].High;
+                let highCheck4 = arr[index].High > arr[index+2].High;
+
+                let lowCheck1 = arr[index].Low < arr[index-2].Low;
+                let lowCheck2 = arr[index].Low < arr[index-1].Low;
+                let lowCheck3 = arr[index].Low < arr[index+1].Low;
+                let lowCheck4 = arr[index].Low < arr[index+2].Low;
+
+                if (highCheck1 && highCheck2 && highCheck3 && highCheck4) {
                     console.log('HIGH FRACTAL')
                     day.High = " " + day.High;
                 }
-                if (processValue < processValue_minus_2 && processValue < processValue_minus_1 && processValue < processValue_plus_1 && processValue < processValue_plus_2) {
+                if (lowCheck1 && lowCheck2 && lowCheck3 && lowCheck4) {
                     console.log('LOW FRACTAL');
-                    day.Low = " " + day.Low;
+                    day.Low = " " + day.Low
                 }
                 }
 
