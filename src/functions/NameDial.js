@@ -21,7 +21,7 @@ export const NameDial = (numberValue) => {
                 name = 'Flip Array';
             },
             7: function () {
-                name = 'Seventh Function';
+                name = 'Fractals';
             },
             8: function () {
                 name = 'Eighth Function';

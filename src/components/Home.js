@@ -19,7 +19,7 @@ export const Home = () => {
     const [fileName, setFileName] = useState('Default_File_Name');
     const [chunkAmount, setChunkAmount] = useState(28);
     const [hideHighLowColumns, setHideHighLowColumns] = useState(false)
-    const [menuNumber, setMenuNumber] = useState(4);
+    const [menuNumber, setMenuNumber] = useState(7);
     const [graphFloor, setGraphFloor] = useState();
     const [graphCeiling, setGraphCeiling] = useState();
     const [showGraph, setShowGraph] = useState(true);
@@ -27,18 +27,21 @@ export const Home = () => {
     const grabExcelDataAndSetToState = (val) => {
         // filter dates before setting to state
         // trim all the fat off leaving only date and price
+        console.log('val: ', val);
         val.map((day) => {
             // delete day.Low;
             delete day.Open;
             // delete day.High;
             delete day["Vol."];
             delete day["Change %"];
-            day.Date = DateConversion(day.Date);
+
+            // Toggle this on and off depending on sheets
+            // day.Date = DateConversion(day.Date);
         })
         setExcelData(val);
 
         // Clipboard command for saving JSON data
-        // navigator.clipboard.writeText(JSON.stringify(val));
+        navigator.clipboard.writeText(JSON.stringify(val));
     }
 
     const addMenuNumber = () => {
@@ -72,7 +75,7 @@ export const Home = () => {
     // Function 2 - Date Price
     const splitterDatePrice = () => {
         const copiedClone = excelData.map(({Date, Price})=> ({Date, Price}));
-        SplitExcel(copiedClone, parseInt(chunkAmount), fileName, false, hideHighLowColumns);
+        SplitExcel(copiedClone, parseInt(chunkAmount), fileName, false, false);
     }
 
     // Function 3 - High Low
@@ -80,12 +83,12 @@ export const Home = () => {
         const copiedClone = excelData.map(({Date, Price, High, Low}) => ({
             Date, Price, High: "", Low: ""}));
         
-        SplitExcel(copiedClone, parseInt(chunkAmount), fileName, true, hideHighLowColumns);
+        SplitExcel(copiedClone, parseInt(chunkAmount), fileName, true, false);
     }
 
     // Function 4 - High Low Numbers
     const splitterHighLowNoNumbers = () => {
-        SplitExcel(excelData, parseInt(chunkAmount), fileName, true, hideHighLowColumns);
+        SplitExcel(excelData, parseInt(chunkAmount), fileName, true, false);
     }
 
     // Function 5 - High Low Hidden
@@ -105,12 +108,12 @@ export const Home = () => {
     
     const downloadExcelFile = () => {
         const functionArray = [
-            saveExcelFile, splitterDatePrice, splitterDatePriceHighLow, splitterHighLowNoNumbers, splitterHighLowHideColumns, flipArray
+            saveExcelFile, splitterDatePrice, splitterDatePriceHighLow, splitterHighLowNoNumbers, splitterHighLowHideColumns, flipArray, HighLowFractal
         ]
         functionArray[menuNumber - 1]();
     }
 
-    const testMe = () => {
+    const HighLowFractal = () => {
         const lengthOfArray = excelData.length;
         console.log('length of array: ', lengthOfArray);
         const copiedClone = excelData.map((day, index, arr) => {
@@ -137,11 +140,8 @@ export const Home = () => {
                 }
 
                 return day;
-        })
+            })
 
-
-        // const copiedClone2 = excelData.map(({Date, Price, High, Low}) => ({
-        //     Date, Price, High: "", Low: ""}));
         
         SplitExcel(copiedClone, parseInt(chunkAmount), fileName, true, false);
 
@@ -161,10 +161,16 @@ export const Home = () => {
     const toggleThings = () => {
         setShowGraph(!showGraph);
     }
+    const testMe = () => {
+        console.log('hi')
+        const deepCloneExcelDataForceRefresh = [...excelData];
+        const flippedArray = deepCloneExcelDataForceRefresh.reverse();
+        setExcelData(flippedArray);
+    }
 
         return (
             <div>
-                <button onClick={testMe}>Test</button>
+                <button onClick={testMe}>testMe</button>
                 {showGraph &&
                     <div>
                         <button className="button-33" onClick={toggleThings}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
@@ -219,6 +225,11 @@ export const Home = () => {
 }
 
 export default Home;
+
+
+
+        // const copiedClone2 = excelData.map(({Date, Price, High, Low}) => ({
+        //     Date, Price, High: "", Low: ""}));
 
     // Function 2
     // const splitterDatePrice = () => {

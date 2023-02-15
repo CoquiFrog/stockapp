@@ -61,7 +61,7 @@ export const AddStyle = (workbookBlob, howManyColumns, howManyRows, hideHighLowN
            let currentCell = columnAddress + j;
            let cellValue = sheet.cell(currentCell).value();
            // check for exclamation
-           if (cellValue[0] === " ") {
+           if (cellValue && cellValue[0] === " ") {
             //  console.log('I am fractal high', cellValue)
              sheet.cell(currentCell).style("fill", StyleConfig.GREEN_GREEN);
            }
@@ -81,7 +81,7 @@ export const AddStyle = (workbookBlob, howManyColumns, howManyRows, hideHighLowN
           for (let j=2; j < howManyRows; j++) {
             let currentCell = columnAddress + j;
             let cellValue = sheet.cell(currentCell).value();
-            if (cellValue[0] === " ") {
+            if (cellValue && cellValue[0] === " ") {
               sheet.cell(currentCell).style("fill", StyleConfig.RED_RED);
             }
           }
