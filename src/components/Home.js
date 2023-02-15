@@ -113,32 +113,33 @@ export const Home = () => {
     const testMe = () => {
         const lengthOfArray = excelData.length;
         console.log('length of array: ', lengthOfArray);
-        // const copiedClone = excelData.map((day, index, arr) => {
-        //     // Filters out first and last 2 days
-        //     if (index > 2 && index <= (lengthOfArray - 3)) {
+        const copiedClone = excelData.map((day, index, arr) => {
+        // Filters out first and last 2 days
+            if (index > 2 && index <= (lengthOfArray - 3)) {
             
-        //         let processValue_minus_2 = arr[index-2].High/arr[index-2].Low;
-        //         let processValue_minus_1 = arr[index-1].High/arr[index-1].Low;
-        //         let processValue = arr[index].High/arr[index].Low;
-        //         let processValue_plus_1 = arr[index+1].High/arr[index+1].Low;
-        //         let processValue_plus_2 = arr[index+2].High/arr[index+2].Low;
-        //         if (processValue > processValue_minus_2 && processValue > processValue_minus_1 && processValue > processValue_plus_1 && processValue > processValue_plus_2) {
-        //             console.log('HIGH FRACTAL')
-        //         }
-        //         if (processValue < processValue_minus_2 && processValue < processValue_minus_1 && processValue < processValue_plus_1 && processValue < processValue_plus_2) {
-        //             console.log('LOW FRACTAL');
-        //         }
+                let processValue_minus_2 = arr[index-2].High/arr[index-2].Low;
+                let processValue_minus_1 = arr[index-1].High/arr[index-1].Low;
+                let processValue = arr[index].High/arr[index].Low;
+                let processValue_plus_1 = arr[index+1].High/arr[index+1].Low;
+                let processValue_plus_2 = arr[index+2].High/arr[index+2].Low;
+                if (processValue > processValue_minus_2 && processValue > processValue_minus_1 && processValue > processValue_plus_1 && processValue > processValue_plus_2) {
+                    console.log('HIGH FRACTAL')
+                    day.High = " " + day.High;
+                }
+                if (processValue < processValue_minus_2 && processValue < processValue_minus_1 && processValue < processValue_plus_1 && processValue < processValue_plus_2) {
+                    console.log('LOW FRACTAL');
+                    day.Low = " " + day.Low;
+                }
+                }
 
-        //         return day;
-        //     }
-        //     // console.log('day: ', day)
-        // })
+                return day;
+        })
 
 
-        const copiedClone2 = excelData.map(({Date, Price, High, Low}) => ({
-            Date, Price, High: "", Low: ""}));
+        // const copiedClone2 = excelData.map(({Date, Price, High, Low}) => ({
+        //     Date, Price, High: "", Low: ""}));
         
-        SplitExcel(copiedClone2, parseInt(chunkAmount), fileName, true, false);
+        SplitExcel(copiedClone, parseInt(chunkAmount), fileName, true, false);
 
     }
 

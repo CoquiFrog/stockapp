@@ -1,4 +1,5 @@
 import S2ab from '../functions/S2ab';
+import * as XLSX from "xlsx";
 
 export const Workbook2blob = (workbook) => {
     const wopts = {

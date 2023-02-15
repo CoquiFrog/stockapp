@@ -3,10 +3,10 @@ import Splitter from '../functions/Splitter';
 import IterationToColumnConverter from '../functions/IterationToColumnConverter';
 import IterationToColumnConverterHighLow from "./IterationToColumnConverterHighLow";
 import Workbook2blob from "./Workbook2blob";
-import S2ab from "./S2ab";
 import AddStyle from '../functions/AddStyle';
 
 export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowNumbers) => {
+    // console.log('DATA HERE: ', data);
     const createDownLoadData = (howManyRows) => {
         handleExport(howManyRows).then((url) => {
           const downloadAnchorNode = document.createElement("a");
@@ -17,7 +17,8 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowN
         });
     };
       const handleExport = (howManyRows) => {
-        const workbookBlob = Workbook2blob(data);
+        const workbookBlob = Workbook2blob(workBook);
+        // console.log('TEST HERE: ', workbookBlob);
     
         return AddStyle(workbookBlob, howManyColumns, howManyRows, hideHighLowNumbers);
       };
@@ -46,6 +47,7 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowN
         Splitter(data, chunkAmount, addToSheet);
     }
     XLSX.utils.book_append_sheet(workBook,workSheet,"testSheet1");
+    console.log('workbook test: ', workBook)
 
     return createDownLoadData(chunkAmount);
 }
