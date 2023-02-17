@@ -1,5 +1,5 @@
 const Constants = {
-    SHOW_GRAPH_LABEL: "Show Graph",
+    SHOW_GRAPH_LABEL: "Graph",
     HIDE_GRAPH_LABEL: "Back",
     HEADER_MAX_HEIGHT: 200,
     OTHER_THINGS: 'whatever',

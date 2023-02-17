@@ -11,11 +11,11 @@ import StyleConfig from '../constants/StyleConfig';
 import NameDial from '../functions/NameDial';
 // import FractalGraph from './components/FractalGraph';
 // import FractalGraph from "./FractalGraph";
-import StockGraph from "./StockGraph";
+import StockChart from "./StockChart";
 
 export const Home = () => {
     const [amountOfFunctions, setAmountOfFunctions] = useState(9);
-    const [excelData, setExcelData] = useState(Constants.DUMMY_OBJECT_BIG);
+    const [excelData, setExcelData] = useState(); //Constants.DUMMY_OBJECT_BIG
     const [fileName, setFileName] = useState('Default_File_Name');
     const [chunkAmount, setChunkAmount] = useState(28);
     const [hideHighLowColumns, setHideHighLowColumns] = useState(false)
@@ -23,6 +23,7 @@ export const Home = () => {
     const [graphFloor, setGraphFloor] = useState();
     const [graphCeiling, setGraphCeiling] = useState();
     const [showGraph, setShowGraph] = useState(true);
+    const [storageBox, setStorageBox] = useState([]);
 
     const grabExcelDataAndSetToState = (val) => {
         // filter dates before setting to state
@@ -38,10 +39,21 @@ export const Home = () => {
             // Toggle this on and off depending on sheets
             // day.Date = DateConversion(day.Date);
         })
-        setExcelData(val);
 
+        setExcelData(val);
+        // setDummyData(Constants.DUMMY_DATA_LARGE_PART1.concat(Constants.DUMMY_DATA_LARGE_PART2));
         // Clipboard command for saving JSON data
-        navigator.clipboard.writeText(JSON.stringify(val));
+        // navigator.clipboard.writeText(JSON.stringify(val));
+
+
+        const storageBox = [];
+        Object.values(val).map((stockDay) => {
+            let testThing = {x: stockDay.Date, y: stockDay.Price};
+            storageBox.push(testThing);
+        })
+        console.log('STORAGE BOX: ', storageBox);
+        calculateGraphCeilingAndFloor(storageBox);
+        setStorageBox(storageBox)
     }
 
     const addMenuNumber = () => {
@@ -57,7 +69,7 @@ export const Home = () => {
 
     // To be passed through child component so child can set parent state
     const setFileNameToDownload = (val) => {
-        calculateGraphCeilingAndFloor(val);
+        
         setFileName(val);
     }
 
@@ -74,14 +86,15 @@ export const Home = () => {
     
     // Function 2 - Date Price
     const splitterDatePrice = () => {
-        const copiedClone = excelData.map(({Date, Price})=> ({Date, Price}));
+        const copiedClone = excelData.map(({Date, Price}) => ({
+            Date: DateConversion(Date), Price}));
         SplitExcel(copiedClone, parseInt(chunkAmount), fileName, false, false);
     }
 
     // Function 3 - High Low
     const splitterDatePriceHighLow = () => {
         const copiedClone = excelData.map(({Date, Price, High, Low}) => ({
-            Date, Price, High: "", Low: ""}));
+            Date: DateConversion(Date), Price, High: "", Low: ""}));
         
         SplitExcel(copiedClone, parseInt(chunkAmount), fileName, true, false);
     }
@@ -94,7 +107,7 @@ export const Home = () => {
     // Function 5 - High Low Hidden
     const splitterHighLowHideColumns = () => {
         const copiedClone = excelData.map(({Date, Price}) => ({
-            Date, Price, High: "", Low: ""}));
+            Date: DateConversion(Date), Price, High: "", Low: ""}));
         
         SplitExcel(copiedClone, parseInt(chunkAmount), fileName, true, true);
     }
@@ -148,12 +161,26 @@ export const Home = () => {
     }
 
     const calculateGraphCeilingAndFloor = (arr) => {
-        const min = Math.min(...arr)
-        const max = Math.max(...arr);
+        const xArray = []; 
+        const yArray = [];
+        Object.values(arr).map((stockDay) => {
+
+            xArray.push(stockDay.x);
+        })
+        Object.values(arr).map((stockDay) => {
+            yArray.push(stockDay.y);
+        })
+        console.log('nothing?', xArray)
+        const min = Math.min(...yArray)
+        const max = Math.max(...yArray);
+        console.log('check here: ', min);
+        console.log('and here: ', max);
         const difference = max - min;
         const gap = difference * .1;
         const floor = min - gap;
         const ceiling = max + gap;
+        // console.log('hihihih', floor);
+        // console.log('bye: ', ceiling);
         setGraphFloor(floor);
         setGraphCeiling(ceiling);
     }
@@ -162,18 +189,21 @@ export const Home = () => {
         setShowGraph(!showGraph);
     }
     const testMe = () => {
-        console.log('hi')
-        const deepCloneExcelDataForceRefresh = [...excelData];
-        const flippedArray = deepCloneExcelDataForceRefresh.reverse();
-        setExcelData(flippedArray);
+        const checkThis = [{Date: '1990-1-2', Price: 329.3474}, {Date: '1990-1-2', Price: 329.3474}, {Date: '1990-1-2', Price: 329.3474}];
+        const checkThis2 = [{Date: '1990-1-2', Price: 329.3474}, {Date: '1990-1-2', Price: 329.3474}, {Date: '1990-1-2', Price: 329.3474}];
+        const array1 = Constants.DUMMY_DATA_LARGE_PART1;
+        const array2 = Constants.DUMMY_DATA_LARGE_PART2;
+        const array3 = [...array1, ...array2];
+        // console.log('hi', checkThis.concat(checkThis2));
+        // console.log('hi ', Constants.DUMMY_DATA_LARGE_PART1.concat(Constants.DUMMY_DATA_LARGE_PART2))
     }
 
         return (
             <div>
-                <button onClick={testMe}>testMe</button>
+                {/* <button onClick={testMe}>testMe</button> */}
                 {showGraph &&
                     <div>
-                        <button className="button-33" onClick={toggleThings}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
+                        <button className="button-33 margin-top-20" onClick={toggleThings}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
                         <div className="margin-top-30">
                             <ExcelInput grabExcelDataAndSetToState={grabExcelDataAndSetToState} />
                         </div>
@@ -191,35 +221,35 @@ export const Home = () => {
                         <div className="margin-top-10 ">
                             <button className="button-33" onClick={downloadExcelFile}>{StyleConfig.DOWNLOAD_BUTTON_TEXT}</button>
                         </div>
+                        {excelData && <table key="tableKey" className="margin-top-20 table-center ">
+                            <thead>
+                                <tr>
+                                    <th className="column-padding" scope="col">date</th>
+                                    <th className="column-padding" scope="col">price</th>
+                                    <th className="column-padding" scope="col">high</th>
+                                    <th className="column-padding" scope="col">low</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {excelData && excelData.map((data) => 
+                                    <tr key={data.Date}>
+                                        <th className="column-padding">{DateConversion(data.Date)}</th>
+                                        <td className="column-padding">{data.Price}</td>
+                                        <th className="column-padding">{data.High}</th>
+                                        <td className="column-padding">{data.Low}</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>}
                     </div>
                 }
                 {!showGraph &&
                     <div>
                         <button className="button-33" onClick={toggleThings}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
-                        <StockGraph excelData={excelData} graphFloor={graphFloor} graphCeiling={graphCeiling}/>
+                        <StockChart storageBox={storageBox} stockChartData={excelData} graphFloor={graphFloor} graphCeiling={graphCeiling}/>
                     </div>
                 }
 
-            <table key="tableKey" className="margin-top-20 table-center ">
-                <thead>
-                    <tr>
-                        <th className="column-padding" scope="col">date</th>
-                        <th className="column-padding" scope="col">price</th>
-                        <th className="column-padding" scope="col">high</th>
-                        <th className="column-padding" scope="col">low</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {excelData && excelData.map((data) => 
-                        <tr key={data.Date}>
-                            <th className="column-padding">{data.Date}</th>
-                            <td className="column-padding">{data.Price}</td>
-                            <th className="column-padding">{data.High}</th>
-                            <td className="column-padding">{data.Low}</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
         </div>
     )
 }
