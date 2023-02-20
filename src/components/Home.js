@@ -101,7 +101,9 @@ export const Home = () => {
 
     // Function 4 - High Low Numbers
     const splitterHighLowNoNumbers = () => {
-        SplitExcel(excelData, parseInt(chunkAmount), fileName, true, false);
+        const copiedClone = excelData.map(({Date, Price, High, Low}) => ({
+            Date: DateConversion(Date), Price, High, Low}));
+        SplitExcel(copiedClone, parseInt(chunkAmount), fileName, true, false);
     }
 
     // Function 5 - High Low Hidden
