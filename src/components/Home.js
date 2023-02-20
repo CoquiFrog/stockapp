@@ -163,26 +163,16 @@ export const Home = () => {
     }
 
     const calculateGraphCeilingAndFloor = (arr) => {
-        const xArray = []; 
         const yArray = [];
-        Object.values(arr).map((stockDay) => {
-
-            xArray.push(stockDay.x);
-        })
         Object.values(arr).map((stockDay) => {
             yArray.push(stockDay.y);
         })
-        console.log('nothing?', xArray)
         const min = Math.min(...yArray)
         const max = Math.max(...yArray);
-        console.log('check here: ', min);
-        console.log('and here: ', max);
         const difference = max - min;
         const gap = difference * .1;
         const floor = min - gap;
         const ceiling = max + gap;
-        // console.log('hihihih', floor);
-        // console.log('bye: ', ceiling);
         setGraphFloor(floor);
         setGraphCeiling(ceiling);
     }
@@ -235,7 +225,7 @@ export const Home = () => {
                             <tbody>
                                 {excelData && excelData.map((data) => 
                                     <tr key={data.Date}>
-                                        <th className="column-padding">{DateConversion(data.Date)}</th>
+                                        <th className="column-padding">{data.Date || DateConversion(data.Date)}</th>
                                         <td className="column-padding">{data.Price}</td>
                                         <th className="column-padding">{data.High}</th>
                                         <td className="column-padding">{data.Low}</td>
