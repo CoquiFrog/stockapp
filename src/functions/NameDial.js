@@ -24,7 +24,7 @@ export const NameDial = (numberValue) => {
                 name = 'Fractals';
             },
             8: function () {
-                name = 'Eighth Function';
+                name = 'test splitter';
             },
             'default': function () {
                 name = 'Default Name';

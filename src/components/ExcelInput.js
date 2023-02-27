@@ -7,7 +7,7 @@ import StyleConfig from "../constants/StyleConfig";
 export const ExcelInput = (props) => {
     return (
         <div>
-            <label className="button-33">{StyleConfig.EXCEL_INPUT_BUTTON_TEXT}
+            <label className="button-33">{props.buttonText}
 
             <input
                 type="file"

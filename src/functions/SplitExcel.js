@@ -41,7 +41,7 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowN
     // Primes worksheet with small dummy data that will be overwritten
     const workSheet=XLSX.utils.json_to_sheet([{"Date":"2022-12-30","Price":129.93}]);
     const workBook=XLSX.utils.book_new()
-    if (highAndLow === true) {
+    if (highAndLow === "highAndLow") {
         Splitter(data, chunkAmount, addToSheetHighLow);
     } else {
         Splitter(data, chunkAmount, addToSheet);

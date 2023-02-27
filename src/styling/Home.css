@@ -5,6 +5,16 @@
     position: absolute;
 }
 
+.highFractal {
+  transform: translateX(-4px) translateY(-4px);
+  background-color: "green";
+  color: "green";
+}
+
+.lowFractal {
+  transform: translateX(-5px) translateY(11px);
+}
+
 .margin-top-10 {
     margin-top: 10px;
 }
@@ -51,7 +61,10 @@
 
 } */
 
-.chartSize {
+
+.stock-chart {
+  display: flex;
+  justify-content: center;
 }
 
 .button-15 {

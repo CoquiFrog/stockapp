@@ -22,6 +22,7 @@ const Constants = {
     MAIN_FONT: "Arial",
     MAIN_TEXT_HORIZONTAL_ALIGNMENT: "center",
     EXCEL_INPUT_BUTTON_TEXT: "Excel Input",
+    FRACTAL_INPUT_BUTTON_TEXT: "Fractal Input",
     DOWNLOAD_BUTTON_TEXT: "Download",
     
 }
