@@ -7,11 +7,11 @@ import DateConversion from "../functions/DateConversion";
 const DataPoint1 = (props) => {
       const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
     //   const cat = datum._y >= 0 ? "😻" : "😹";
-    const cat = datum._y >= 0 ? "▼" : "🔺";
+    const point = datum._y >= 0 ? "▼" : "🔺";
     
       return (
         <text x={x} y={y} fontSize={10} className="highFractal">
-          {cat}
+          {point}
         </text>
       );
     }
@@ -19,18 +19,29 @@ const DataPoint1 = (props) => {
     const DataPoint2 = (props) => {
         const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
       //   const cat = datum._y >= 0 ? "😻" : "😹";
-      const cat = datum._y >= 0 ? "🔺" : "🔺";
+      const point = datum._y >= 0 ? "🔺" : "🔺";
       
         return (
           <text x={x} y={y} fontSize={10} className="lowFractal">
-            {cat}
+            {point}
+          </text>
+        );
+    }
+
+    const DataPoint3 = (props) => {
+        const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
+      //   const cat = datum._y >= 0 ? "😻" : "😹";
+      const point = datum._y >= 0 ? "😻" : "😻";
+      
+        return (
+          <text x={x} y={y} fontSize={10} className="lowFractal">
+            {point}
           </text>
         );
       }
   
 
 export const StockChart = (props) => {
-    console.log('PROPS: ', props);
     return (
         <div>
             <VictoryChart domainPadding={{ y: 10}}
@@ -47,7 +58,6 @@ export const StockChart = (props) => {
                 
             >
                 <VictoryLine
-                    // dataComponent={<DataPoint/>}
                     data={props.storageBox}
                     style={{
                         labels: { fill: "black" },
@@ -55,44 +65,39 @@ export const StockChart = (props) => {
                         parent: { border: ".5px dotted #ccc"}
                     }}
                 />
-                {/* <VictoryLine
-                    data={props.stockChartFractalHighs}
+                {props.showFractalHigh && <VictoryScatter
+                    dataComponent={<DataPoint1/>}
+                    size={7}
+                    data={props.victoryScatterHigh}
                     style={{
-                        labels: { fill: "black" },
-                        data: { stroke: "green" },
-                        parent: { border: ".1px dotted #ccc"}
+                        data: {
+                        fill: ({ datum }) => datum.fill,
+                        opacity: ({ datum }) => datum.opacity
+                        }
                     }}
-                />
-                <VictoryLine
-                    data={props.stockChartFractalLows}
+                /> }
+                {props.showFractalLow && <VictoryScatter
+                    dataComponent={<DataPoint2/>}
+                    size={7}
+                    data={props.victoryScatterLow}
                     style={{
-                        labels: { fill: "black" },
-                        data: { stroke: "red" },
-                        parent: { border: ".1px dotted #ccc"}
+                        data: {
+                        fill: ({ datum }) => datum.fill,
+                        opacity: ({ datum }) => datum.opacity
+                        }
                     }}
-                /> */}
-<VictoryScatter
- dataComponent={<DataPoint1/>}
-  size={7}
-  data={props.victoryScatterHigh}
-  style={{
-    data: {
-      fill: ({ datum }) => datum.fill,
-      opacity: ({ datum }) => datum.opacity
-    }
-  }}
-/>
-<VictoryScatter
- dataComponent={<DataPoint2/>}
-  size={7}
-  data={props.victoryScatterLow}
-  style={{
-    data: {
-      fill: ({ datum }) => datum.fill,
-      opacity: ({ datum }) => datum.opacity
-    }
-  }}
-/>
+                />}
+                {props.showDateOverlay && <VictoryScatter
+                    dataComponent={<DataPoint3/>}
+                    size={7}
+                    data={props.victoryDateOverlay}
+                    style={{
+                        data: {
+                        fill: ({ datum }) => datum.fill,
+                        opacity: ({ datum }) => datum.opacity
+                        }
+                    }}
+                />}
             </VictoryChart>
     </div>
     )

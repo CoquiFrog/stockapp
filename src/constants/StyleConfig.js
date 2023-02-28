@@ -1,7 +1,12 @@
 const LIGHT_YELLOW = "F5FF73";
 
-const Constants = {
+const StyleConfig = {
     // APP_NAME: "Metal Detector",
+    VICTORY_OVERLAY_LABEL: "Overlay",
+    TOGGLE_FRACTAL_HIGH_LABEL: "Highs",
+    TOGGLE_FRACTAL_LOW_LABEL: "Lows",
+    SHOW_GRAPH_LABEL: "Graph",
+    HIDE_GRAPH_LABEL: "Back",
     GREEN_GREEN: "00FE20",
     RED_RED: "FE0000",
     DATE_TITLE_BACKGROUND_COLOR: "D9FE7F",
@@ -26,4 +31,4 @@ const Constants = {
     DOWNLOAD_BUTTON_TEXT: "Download",
     
 }
-export default Constants
+export default StyleConfig
