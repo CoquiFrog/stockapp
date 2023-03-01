@@ -2,6 +2,7 @@ const LIGHT_YELLOW = "F5FF73";
 
 const StyleConfig = {
     // APP_NAME: "Metal Detector",
+    DISPLAY_OVERLAY_LABEL: "Toggle Overlay",
     VICTORY_OVERLAY_LABEL: "Overlay",
     TOGGLE_FRACTAL_HIGH_LABEL: "Highs",
     TOGGLE_FRACTAL_LOW_LABEL: "Lows",

@@ -32,8 +32,8 @@ export const Home = () => {
     const [stockChartFractalLows, setStockChartFractalLows] = useState();
     const [victoryScatterHigh, setVictoryScatterHigh] = useState();
     const [victoryScatterLow, setVictoryScatterLow] = useState();
-    const [showFractalHigh, setShowFractalHigh] = useState(true);
-    const [showFractalLow, setShowFractalLow] = useState(true);
+    const [showFractalHigh, setShowFractalHigh] = useState(false);
+    const [showFractalLow, setShowFractalLow] = useState(false);
     const [showDateOverlay, setShowDateOverlay] = useState(true);
     const [victoryDateOverlay, setVictoryDateOverlay] = useState([]);
 
@@ -357,8 +357,8 @@ export const Home = () => {
     const toggleFractalLows = () => {
         setShowFractalLow(!showFractalLow);
     }
-    const toggleDateOverlay = () => {
-        setShowFractalLow(!showFractalLow);
+    const toggleDisplayOverlay = () => {
+        setShowDateOverlay(!showDateOverlay);
     }
 
         return (
@@ -420,6 +420,8 @@ export const Home = () => {
                         <div className="margin-top-30">
                             <DateOverlayInput buttonText={StyleConfig.VICTORY_OVERLAY_LABEL} grabOverlayDataAndSetToState={grabOverlayDataAndSetToState} />
                         </div>
+                        <button className="button-33" onClick={toggleDisplayOverlay}>{StyleConfig.DISPLAY_OVERLAY_LABEL}</button>
+
                         <button className="button-33" onClick={toggleFractalHighs}>{StyleConfig.TOGGLE_FRACTAL_HIGH_LABEL}</button>
 
                         <button className="button-33" onClick={toggleFractalLows}>{StyleConfig.TOGGLE_FRACTAL_LOW_LABEL}</button>
