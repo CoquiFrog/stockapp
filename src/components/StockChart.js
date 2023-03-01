@@ -18,7 +18,7 @@ const DataPoint1 = (props) => {
 
     const DataPoint2 = (props) => {
         const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
-      //   const cat = datum._y >= 0 ? "😻" : "😹";
+      //   const cat = datum._y >= 0 ? "⧐" : "😹";
       const point = datum._y >= 0 ? "🔺" : "🔺";
       
         return (
@@ -52,8 +52,8 @@ export const StockChart = (props) => {
                 scale="linear"
                 containerComponent={
                     <VictoryVoronoiContainer
-                    labels={({datum}) => `${(datum.x)}`}
-                        // labels={({datum}) => `${DateConversion((datum.x))}`}
+                    // labels={({datum}) => `${(datum.x)}`}
+                        labels={({datum}) => `${DateConversion((datum.x))}`}
                     />
                 }
                 

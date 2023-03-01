@@ -9,8 +9,6 @@ import ChunkAmountInput from "./ChunkAmountInput";
 import Constants from '../constants/Constants';
 import StyleConfig from '../constants/StyleConfig';
 import NameDial from '../functions/NameDial';
-// import FractalGraph from './components/FractalGraph';
-// import FractalGraph from "./FractalGraph";
 import StockChart from "./StockChart";
 import DateOverlayInput from "./DateOverlayInput";
 
@@ -25,7 +23,6 @@ export const Home = () => {
     const [graphCeiling, setGraphCeiling] = useState();
     const [showGraph, setShowGraph] = useState(true);
     const [storageBox, setStorageBox] = useState();//Constants.DUMMY_DATA_LARGE
-    const [fractalData, setFractalData] = useState([]);
     const [arrayOfFractalHighs, setArrayOfFractalHighs] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_HIGH_FRACTAL
     const [arrayOfFractalLows, setArrayOfFractalLows] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_LOW_FRACTAL
     const [stockChartFractalHighs, setStockChartFractalHighs] = useState();
@@ -37,46 +34,26 @@ export const Home = () => {
     const [showDateOverlay, setShowDateOverlay] = useState(true);
     const [victoryDateOverlay, setVictoryDateOverlay] = useState([]);
 
-    useEffect (() => {
-        // console.log('Constant: ', Constants.APPLE_DUMMY_DATA_THREE_YEARS_LOW_FRACTAL)
-        // const fractalHighBox = [];
-        // const fractalLowBox = [];
-        // const storageBox = [];
-        // console.log('arrayOfFractalhighs: ', arrayOfFractalHighs)
-        // Object.values(Constants.APPLE_DUMMY_DATA_THREE_YEARS).map((curr, index, stockDay) => {
-        //     arrayOfFractalHighs.includes(DateConversion(stockDay[index].Date)) ? fractalHighBox.push({x: stockDay[index].Date, y: stockDay[index].Price}) : fractalHighBox.push( {x: stockDay[index].Date, y:0 })
-        //     arrayOfFractalLows.includes(DateConversion(stockDay[index].Date)) ? fractalLowBox.push({x: stockDay[index].Date, y: stockDay[index].Price}) : fractalLowBox.push( {x: stockDay[index].Date, y:0 })
-        //     storageBox.push({x: stockDay.Date, y: stockDay.Price})
-        // })
-        // // console.log('fractalHighBox: ', fractalHighBox);
-        // setStockChartFractalHighs(fractalHighBox);
-        // setStockChartFractalLows(fractalLowBox);
-    }, [])
+    // useEffect (() => {
+    // }, [])
 
     const grabOverlayDataAndSetToState = (val) => {
-        // console.log('hihihihihihihihihihi', val)
         const storedDatesArray = [];
         const victoryDateOverlayBox = [];
-
         val.map((element, index, array) => {
+            console.log('test: ', Object.values(array[index])[0])
             storedDatesArray.push(Object.values(array[index])[0]);
         })
+        console.log('yoyoyo: ', storedDatesArray);
         if (excelData) {
             excelData.map((element, index, array) => {
-                let currentDay = Math.round(element.Date);
-                // let dataOverlayDay = {x: day.Date, y: day.Price, symbol: "circle", fill: "green"}
-                // storedDatesArray.includes(element[index])
-
-                // console.log('element2: ', storedDatesArray.includes(Math.round(element.Date)));
+                let currentDay = element.Date;
                 if (storedDatesArray.includes(currentDay)) {
-
-                    let dataOverlayDay = {x: Math.round(element.Date), y: element.Price, symbol: "circle", fill: "green"}
-                    console.log('Hit here: ', dataOverlayDay)
+                    let dataOverlayDay = {x: element.Date, y: element.Price, symbol: "circle", fill: "green"}
                     victoryDateOverlayBox.push(dataOverlayDay);
                 }
             })
         }
-        console.log('final: ', victoryDateOverlayBox);
         setVictoryDateOverlay(victoryDateOverlayBox);
     }
 
@@ -85,6 +62,7 @@ export const Home = () => {
         // trim all the fat off leaving only date and price
             console.log('val: ', val);
             val.map((day) => {
+                day.Date = Math.round(day.Date);
             // delete day.Low;
             delete day.Open;
             // delete day.High;
@@ -98,7 +76,7 @@ export const Home = () => {
         setExcelData(val);
         // setDummyData(Constants.DUMMY_DATA_LARGE_PART1.concat(Constants.DUMMY_DATA_LARGE_PART2));
         // Clipboard command for saving JSON data
-        navigator.clipboard.writeText(JSON.stringify(val));
+        // navigator.clipboard.writeText(JSON.stringify(val));
 
         const arrayOfFractalHighsBox = [];
         const arrayOfFractalLowsBox = [];
@@ -168,7 +146,6 @@ export const Home = () => {
 
     const grabFractalAndSetToState = (val) => {
         const lengthOfArray = val.length;
-        console.log('length of array: ', lengthOfArray);
         const arrayOfFractalHighsBox = [];
         const arrayOfFractalLowsBox = [];
         val.map((day, index, arr) => {
@@ -211,7 +188,6 @@ export const Home = () => {
     const grabTestDataAndSetToState = (val) => {
         const copiedClone = val.map(({Date, Price}) => ({
                 Date, Price, High: arrayOfFractalHighs.includes(Date) ? " " : "", Low: arrayOfFractalLows.includes(Date) ? " " : ""}));
-
         setExcelData(copiedClone);
         SplitExcel(copiedClone, parseInt(chunkAmount), fileName, "highAndLow", false);
     }
@@ -344,8 +320,6 @@ export const Home = () => {
     }
     const testMe = () => {
         console.log('storagebox: ', victoryDateOverlay);
-        // console.log('exceldata2: ', excelData);
-        
 
         // navigator.clipboard.writeText(JSON.stringify(stockChartFractalHighs));
     }
@@ -416,7 +390,6 @@ export const Home = () => {
                 {!showGraph &&
                 <div>
                     <div>
-                        {/* <button className="button-33" onClick={toggleThings}>{showGraph ? StyleConfig.SHOW_GRAPH_LABEL : StyleConfig.HIDE_GRAPH_LABEL}</button> */}
                         <div className="margin-top-30">
                             <DateOverlayInput buttonText={StyleConfig.VICTORY_OVERLAY_LABEL} grabOverlayDataAndSetToState={grabOverlayDataAndSetToState} />
                         </div>
@@ -439,21 +412,3 @@ export const Home = () => {
 }
 
 export default Home;
-
-
-
-        // const copiedClone2 = excelData.map(({Date, Price, High, Low}) => ({
-        //     Date, Price, High: "", Low: ""}));
-
-    // Function 2
-    // const splitterDatePrice = () => {
-    //     console.log('function 2');
-    //     const copiedClone = [...excelData];
-        
-    //     const newArrayWithoutHighLow = copiedClone.map((day) => {
-    //         delete day.Low;
-    //         delete day.High;
-    //         return day;
-    //     })
-    //     SplitExcel(newArrayWithoutHighLow, parseInt(chunkAmount), fileName, false, hideHighLowColumns);
-    // }

@@ -20,7 +20,7 @@ export const ReadDates = (file, props) => {
     });
 
     promise.then((data) => {
-        // console.log('data: ', data);
+        console.log('data: ', data);
         props.grabOverlayDataAndSetToState(data);
     });
 }
