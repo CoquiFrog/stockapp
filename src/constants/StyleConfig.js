@@ -1,13 +1,19 @@
 const LIGHT_YELLOW = "F5FF73";
 
 const StyleConfig = {
-    // APP_NAME: "Metal Detector",
+    // Labels
+    LABEL_FOLDER_INPUT: "Folder",
     DISPLAY_OVERLAY_LABEL: "Toggle Overlay",
     VICTORY_OVERLAY_LABEL: "Overlay",
     TOGGLE_FRACTAL_HIGH_LABEL: "Highs",
     TOGGLE_FRACTAL_LOW_LABEL: "Lows",
     SHOW_GRAPH_LABEL: "Graph",
     HIDE_GRAPH_LABEL: "Back",
+    EXCEL_INPUT_BUTTON_TEXT: "Excel Input",
+    FRACTAL_INPUT_BUTTON_TEXT: "Fractal Input",
+    DOWNLOAD_BUTTON_TEXT: "Download",
+
+    // Colors
     GREEN_GREEN: "00FE20",
     RED_RED: "FE0000",
     DATE_TITLE_BACKGROUND_COLOR: "D9FE7F",
@@ -20,16 +26,18 @@ const StyleConfig = {
     // LOW_COLUMN_BACKGROUND_COLOR:"FFBFC8",
     HIGH_COLUMN_BACKGROUND_COLOR: undefined,
     LOW_COLUMN_BACKGROUND_COLOR: undefined,
+
+    // Column Sizes
     DATE_COLUMN_WIDTH: 14,
     PRICE_COLUMN_WIDTH: 9,
     HIGH_COLUMN_WIDTH: 9,
     LOW_COLUMN_WIDTH: 9,
     EMPTY_COLUMN_WIDTH: 4,
+
+    // Fonts
     MAIN_FONT: "Arial",
+
+    // Alignments
     MAIN_TEXT_HORIZONTAL_ALIGNMENT: "center",
-    EXCEL_INPUT_BUTTON_TEXT: "Excel Input",
-    FRACTAL_INPUT_BUTTON_TEXT: "Fractal Input",
-    DOWNLOAD_BUTTON_TEXT: "Download",
-    
 }
 export default StyleConfig

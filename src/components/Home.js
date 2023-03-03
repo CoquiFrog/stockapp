@@ -11,6 +11,8 @@ import StyleConfig from '../constants/StyleConfig';
 import NameDial from '../functions/NameDial';
 import StockChart from "./StockChart";
 import DateOverlayInput from "./DateOverlayInput";
+import * as XLSX from "xlsx";
+
 
 export const Home = () => {
     const [amountOfFunctions, setAmountOfFunctions] = useState(9);
@@ -33,9 +35,11 @@ export const Home = () => {
     const [showFractalLow, setShowFractalLow] = useState(false);
     const [showDateOverlay, setShowDateOverlay] = useState(true);
     const [victoryDateOverlay, setVictoryDateOverlay] = useState([]);
+    const [fileList, setFileList] = useState({});
+    const [currentFileNumber, setCurrentFileNumber] = useState(1);
 
-    // useEffect (() => {
-    // }, [])
+    useEffect (() => {
+    }, [])
 
     const grabOverlayDataAndSetToState = (val) => {
         const storedDatesArray = [];
@@ -61,8 +65,8 @@ export const Home = () => {
         // filter dates before setting to state
         // trim all the fat off leaving only date and price
             console.log('val: ', val);
-            val.map((day) => {
-                day.Date = Math.round(day.Date);
+        val.map((day) => {
+            day.Date = Math.round(day.Date);
             // delete day.Low;
             delete day.Open;
             // delete day.High;
@@ -318,15 +322,11 @@ export const Home = () => {
     const toggleThings = () => {
         setShowGraph(!showGraph);
     }
-    const testMe = () => {
-        console.log('storagebox: ', victoryDateOverlay);
 
-        // navigator.clipboard.writeText(JSON.stringify(stockChartFractalHighs));
-    }
-
+    
     const toggleFractalHighs = () => {
         setShowFractalHigh(!showFractalHigh);
-
+        
     }
     const toggleFractalLows = () => {
         setShowFractalLow(!showFractalLow);
@@ -334,11 +334,82 @@ export const Home = () => {
     const toggleDisplayOverlay = () => {
         setShowDateOverlay(!showDateOverlay);
     }
+    
+    const inputOnChange = (e) => {
+        const file = e.target.files;
+        console.log('e here: ', e);
+        console.log('files here: ', file);
+        setFileList(file);
+    }
+    const testMe = () => {
+        console.log('hi paul file list: ', fileList);
+        const useThisFile = fileList[currentFileNumber];
+        // console.log('yes? ', useThisFile);
+        const promise = new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(useThisFile);
+    
+            fileReader.onload = (e) => {
+                const bufferArray = e.target.result;
+                const wb = XLSX.read(bufferArray, { type: "buffer" });
+                const wsname = wb.SheetNames[0];
+                const ws = wb.Sheets[wsname];
+                const data = XLSX.utils.sheet_to_json(ws);
+                resolve(data);
+            }
+    
+            fileReader.oneerror = (error) => {
+                reject(error);
+            };
+        });
+    
+        promise.then((data) => {
+            const storedDatesArray = [];
+            const victoryDateOverlayBox = [];
+
+            data.map((element, index, array) => {
+                // serial date
+                console.log('serial date: ', Object.values(array[index])[0])
+                // string date
+                console.log('string date: ', Object.keys(array[index])[0])
+                storedDatesArray.push(Object.values(array[index])[0]);
+            })
+
+            if (excelData) {
+                excelData.map((element, index, array) => {
+                    let currentDay = element.Date;
+                    if (storedDatesArray.includes(currentDay)) {
+                        let dataOverlayDay = {x: element.Date, y: element.Price, symbol: "circle", fill: "green"}
+                        victoryDateOverlayBox.push(dataOverlayDay);
+                    }
+                })
+            }
+            console.log('FINAL: ', victoryDateOverlayBox)
+
+            setVictoryDateOverlay(victoryDateOverlayBox);
+        });
+    }
+
+    const addNumber = () => {
+        if (currentFileNumber > (fileList.length + 1)){
+            return;
+        } else {
+            setCurrentFileNumber(currentFileNumber + 1)
+        }
+    }
+
+    const subtractNumber = () => {
+        if (currentFileNumber < 2) {
+            return;
+        } else {
+            setCurrentFileNumber(currentFileNumber - 1);
+        }
+
+
+    }
 
         return (
             <div>
-                <button onClick={testMe}>testMe</button>
-                
                 {showGraph &&
                     <div>
                         <button className="button-33 margin-top-20" onClick={toggleThings}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
@@ -389,7 +460,25 @@ export const Home = () => {
                 }
                 {!showGraph &&
                 <div>
+
                     <div>
+                        <label className="button-33">{StyleConfig.LABEL_FOLDER_INPUT}
+                            <input 
+                                className="hideWhileScreenReaderAccessible"
+                                onChange={inputOnChange}
+                                type="file"
+                                id="filepicker"
+                                name="fileList"
+                                webkitdirectory="true"
+                                multiple
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <button onClick={testMe}>testMe</button>
+                        <button onClick={addNumber}>add</button>
+                        <button onClick={subtractNumber}>subtract</button>
+                        <div> {currentFileNumber} </div>
                         <div className="margin-top-30">
                             <DateOverlayInput buttonText={StyleConfig.VICTORY_OVERLAY_LABEL} grabOverlayDataAndSetToState={grabOverlayDataAndSetToState} />
                         </div>
@@ -404,6 +493,7 @@ export const Home = () => {
                     <div className="stock-chart">
                         <StockChart victoryDateOverlay={victoryDateOverlay} showDateOverlay={showDateOverlay} showFractalHigh={showFractalHigh} showFractalLow={showFractalLow} victoryScatterHigh={victoryScatterHigh} victoryScatterLow={victoryScatterLow} stockChartFractalLows={stockChartFractalLows} stockChartFractalHighs={stockChartFractalHighs} storageBox={storageBox} stockChartData={excelData} graphFloor={graphFloor} graphCeiling={graphCeiling}/>
                     </div>
+                    
                 </div>
                 }
 

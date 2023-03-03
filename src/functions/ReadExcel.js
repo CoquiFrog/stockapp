@@ -22,7 +22,6 @@ export const ReadExcel = (file, props) => {
     });
 
     promise.then((data) => {
-        // console.log('data: ', data);
         props.grabExcelDataAndSetToState(data);
     });
 }
