@@ -5,41 +5,40 @@ import "../styling/Home.css";
 import DateConversion from "../functions/DateConversion";
 
 const DataPoint1 = (props) => {
-      const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
+    const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
     //   const cat = datum._y >= 0 ? "😻" : "😹";
     const point = datum._y >= 0 ? "▼" : "🔺";
-    
-      return (
+
+    return (
         <text x={x} y={y} fontSize={10} className="highFractal">
-          {point}
+            {point}
         </text>
-      );
-    }
+    );
+}
 
-    const DataPoint2 = (props) => {
-        const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
-      //   const cat = datum._y >= 0 ? "⧐" : "😹";
-      const point = datum._y >= 0 ? "🔺" : "🔺";
-      
-        return (
-          <text x={x} y={y} fontSize={10} className="lowFractal">
+const DataPoint2 = (props) => {
+    const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
+    //   const cat = datum._y >= 0 ? "⧐" : "😹";
+    const point = datum._y >= 0 ? "🔺" : "🔺";
+    
+    return (
+        <text x={x} y={y} fontSize={10} className="lowFractal">
             {point}
-          </text>
-        );
-    }
+        </text>
+    );
+}
 
-    const DataPoint3 = (props) => {
-        const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
-      //   const cat = datum._y >= 0 ? "⫷" : "😹";
-      const point = datum._y >= 0 ? "⧐" : "😻";
-      
-        return (
-          <text x={x} y={y} fontSize={10} className="dateOverlay">
+const DataPoint3 = (props) => {
+    const {x, y, datum} = props; // VictoryScatter supplies x, y and datum
+    //   const cat = datum._y >= 0 ? "⫷" : "😹";
+    const point = datum._y >= 0 ? "⧐" : "😻";
+
+    return (
+        <text x={x} y={y} fontSize={10} className="dateOverlay">
             {point}
-          </text>
-        );
-      }
-  
+        </text>
+    );
+}
 
 export const StockChart = (props) => {
     return (
@@ -73,7 +72,7 @@ export const StockChart = (props) => {
                     style={{
                         data: {
                         fill: ({ datum }) => datum.fill,
-                        opacity: ({ datum }) => datum.opacity
+                        // opacity: ({ datum }) => datum.opacity
                         }
                     }}
                 /> }
@@ -84,7 +83,7 @@ export const StockChart = (props) => {
                     style={{
                         data: {
                         fill: ({ datum }) => datum.fill,
-                        opacity: ({ datum }) => datum.opacity
+                        // opacity: ({ datum }) => datum.opacity
                         }
                     }}
                 />}

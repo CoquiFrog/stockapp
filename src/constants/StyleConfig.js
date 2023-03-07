@@ -2,9 +2,14 @@ const LIGHT_YELLOW = "F5FF73";
 
 const StyleConfig = {
     // Labels
+    LABEL_SELECTED_DATE_OVERLAY: "Loaded",
+    LABEL_SELECT_ME: "Selected",
+    LABEL_LOAD_OVERLAY: "Load Overlay",
+    LABEL_ADD_BUTTON: "Add",
+    LABEL_SUBTRACT_BUTTON: "Subtract",
     LABEL_FOLDER_INPUT: "Folder",
     DISPLAY_OVERLAY_LABEL: "Toggle Overlay",
-    VICTORY_OVERLAY_LABEL: "Overlay",
+    VICTORY_OVERLAY_LABEL: "Load Singular Overlay By File",
     TOGGLE_FRACTAL_HIGH_LABEL: "Highs",
     TOGGLE_FRACTAL_LOW_LABEL: "Lows",
     SHOW_GRAPH_LABEL: "Graph",

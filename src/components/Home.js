@@ -16,7 +16,7 @@ import * as XLSX from "xlsx";
 
 export const Home = () => {
     const [amountOfFunctions, setAmountOfFunctions] = useState(9);
-    const [excelData, setExcelData] = useState(); //Constants.APPLE_DUMMY_DATA_THREE_YEARS
+    const [excelData, setExcelData] = useState(); //Constants.APPLE_THREE_YEARS_2020_2023
     const [fileName, setFileName] = useState('Default_File_Name');
     const [chunkAmount, setChunkAmount] = useState(28);
     const [hideHighLowColumns, setHideHighLowColumns] = useState(false)
@@ -37,6 +37,7 @@ export const Home = () => {
     const [victoryDateOverlay, setVictoryDateOverlay] = useState([]);
     const [fileList, setFileList] = useState({});
     const [currentFileNumber, setCurrentFileNumber] = useState(1);
+    const [currentLoadedDateOverlay, setCurrentLoadedDateOverlay] = useState("");
 
     useEffect (() => {
     }, [])
@@ -57,6 +58,9 @@ export const Home = () => {
                     victoryDateOverlayBox.push(dataOverlayDay);
                 }
             })
+        }
+        if (fileList && fileList[currentFileNumber] && fileList[currentFileNumber].name){
+            setCurrentLoadedDateOverlay(fileList[currentFileNumber].name);
         }
         setVictoryDateOverlay(victoryDateOverlayBox);
     }
@@ -80,7 +84,7 @@ export const Home = () => {
         setExcelData(val);
         // setDummyData(Constants.DUMMY_DATA_LARGE_PART1.concat(Constants.DUMMY_DATA_LARGE_PART2));
         // Clipboard command for saving JSON data
-        // navigator.clipboard.writeText(JSON.stringify(val));
+        navigator.clipboard.writeText(JSON.stringify(val));
 
         const arrayOfFractalHighsBox = [];
         const arrayOfFractalLowsBox = [];
@@ -139,7 +143,7 @@ export const Home = () => {
             arrayOfFractalLowsBox.includes(DateConversion(stockDay[index].Date)) ? fractalLowBox.push({x: stockDay[index].Date, y: stockDay[index].Price}) : fractalLowBox.push( {x: stockDay[index].Date, y:0 })
             storageBox.push({x: stockDay[index].Date, y: stockDay[index].Price})
         })
-        // navigator.clipboard.writeText(JSON.stringify(storageBox));
+        navigator.clipboard.writeText(JSON.stringify(storageBox));
         setVictoryScatterHigh(fractalHighVictoryScatterBox);
         setVictoryScatterLow(fractalLowVictoryScatterBox);
         calculateGraphCeilingAndFloor(storageBox);
@@ -261,7 +265,8 @@ export const Home = () => {
     }
 
     const testFunc = () => {
-        console.log('I am test func', excelData);
+        console.log('I am test func', fileList);
+        console.log('I am test func', fileList[currentFileNumber].name);
     }
     
     const downloadExcelFile = () => {
@@ -341,8 +346,7 @@ export const Home = () => {
         console.log('files here: ', file);
         setFileList(file);
     }
-    const testMe = () => {
-        console.log('hi paul file list: ', fileList);
+    const loadDateOverlay = () => {
         const useThisFile = fileList[currentFileNumber];
         // console.log('yes? ', useThisFile);
         const promise = new Promise((resolve, reject) => {
@@ -369,9 +373,9 @@ export const Home = () => {
 
             data.map((element, index, array) => {
                 // serial date
-                console.log('serial date: ', Object.values(array[index])[0])
+                // console.log('serial date: ', Object.values(array[index])[0])
                 // string date
-                console.log('string date: ', Object.keys(array[index])[0])
+                // console.log('string date: ', Object.keys(array[index])[0])
                 storedDatesArray.push(Object.values(array[index])[0]);
             })
 
@@ -384,14 +388,13 @@ export const Home = () => {
                     }
                 })
             }
-            console.log('FINAL: ', victoryDateOverlayBox)
-
+            setCurrentLoadedDateOverlay(fileList[currentFileNumber].name);
             setVictoryDateOverlay(victoryDateOverlayBox);
         });
     }
 
     const addNumber = () => {
-        if (currentFileNumber > (fileList.length + 1)){
+        if (currentFileNumber > (fileList.length - 2)){
             return;
         } else {
             setCurrentFileNumber(currentFileNumber + 1)
@@ -404,12 +407,53 @@ export const Home = () => {
         } else {
             setCurrentFileNumber(currentFileNumber - 1);
         }
+    }
 
+    const addDay = (arr) => {
+        console.log('add day', arr);
+        const newArray = [];
+        const newArray2 = [];
+        arr.map((day) => {
+            newArray.push(day.x);
+        })
+        excelData.map((element,index, array) => {
+            if (newArray.includes(array[index].Date)) {
+                if (array[index-1]) {
+                    console.log('here I am', array[index-1])
+                    let pushThis = {x: array[index-1].Date, y: array[index-1].Price, symbol: 'circle', fill: 'green'};
+                    newArray2.push(pushThis);
+                }
+            }
+        })
+        console.log('new thing: ', newArray2);
+        setVictoryDateOverlay(newArray2);
+    }
+
+    const subtractDay = (arr) => {
+        console.log('add day', arr);
+        const newArray = [];
+        const newArray2 = [];
+        arr.map((day) => {
+            newArray.push(day.x);
+        })
+        excelData.map((element,index, array) => {
+            if (newArray.includes(array[index].Date)) {
+                if (array[index+1]) {
+                    console.log('here I am', array[index+1])
+                    let pushThis = {x: array[index+1].Date, y: array[index+1].Price, symbol: 'circle', fill: 'green'};
+                    newArray2.push(pushThis);
+                }
+            }
+        })
+        console.log('new thing: ', newArray2);
+        setVictoryDateOverlay(newArray2);
 
     }
 
         return (
-            <div>
+            <div><button onClick={testFunc}>testFunc</button>
+            <button onClick={()=>addDay(victoryDateOverlay)}>test add</button>
+            <button onClick={()=>subtractDay(victoryDateOverlay)}>test subtract</button>
                 {showGraph &&
                     <div>
                         <button className="button-33 margin-top-20" onClick={toggleThings}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
@@ -475,10 +519,12 @@ export const Home = () => {
                         </label>
                     </div>
                     <div>
-                        <button onClick={testMe}>testMe</button>
-                        <button onClick={addNumber}>add</button>
-                        <button onClick={subtractNumber}>subtract</button>
+                        {fileList && fileList[currentFileNumber] && <div>{StyleConfig.LABEL_SELECT_ME}: {fileList[currentFileNumber].name}</div>}
+                        <button className="button-33" onClick={addNumber}>{StyleConfig.LABEL_ADD_BUTTON}</button>
+                        <button className="button-33" onClick={subtractNumber}>{StyleConfig.LABEL_SUBTRACT_BUTTON}</button>
                         <div> {currentFileNumber} </div>
+                        <button className="button-33" onClick={loadDateOverlay}>{StyleConfig.LABEL_LOAD_OVERLAY}</button>
+                        <div> {StyleConfig.LABEL_SELECTED_DATE_OVERLAY}: {currentLoadedDateOverlay} </div>
                         <div className="margin-top-30">
                             <DateOverlayInput buttonText={StyleConfig.VICTORY_OVERLAY_LABEL} grabOverlayDataAndSetToState={grabOverlayDataAndSetToState} />
                         </div>
@@ -502,3 +548,14 @@ export const Home = () => {
 }
 
 export default Home;
+
+
+ // console.log('days 1: ', days[index])
+            // if (days[index + 1]){
+            //     console.log('days array: ', days[index+1])
+            //     console.log('days excel: ', excelData[index+1])
+            //     day.y = excelData[index+1].Price
+            //     day.x = excelData[index+1].Date
+                
+            // }
+            // day.x = days[index+1].x;
