@@ -36,6 +36,7 @@ export const Home = () => {
     const [fileList, setFileList] = useState({});
     const [currentFileNumber, setCurrentFileNumber] = useState(1);
     const [currentLoadedDateOverlay, setCurrentLoadedDateOverlay] = useState("");
+    const [zoomOrTooltip, setZoomOrTooltip] = useState(true);
 
     const grabExcelDataAndSetToState = (val) => {
         val.map((day) => {
@@ -314,6 +315,10 @@ export const Home = () => {
     const toggleDisplayOverlay = () => {
         setShowDateOverlay(!showDateOverlay);
     }
+    const toggleThing = () => {
+        console.log('yoyoyoyo')
+        setZoomOrTooltip(!zoomOrTooltip);
+    }
 
      // To be passed through child component so child can set parent state
     const setFileNameToDownload = (val) => {
@@ -405,13 +410,16 @@ export const Home = () => {
                         <button className="button-33 margin-top-10" onClick={toggleDisplayOverlay}>{StyleConfig.DISPLAY_OVERLAY_LABEL}</button>
                         <button className="button-33" onClick={toggleFractalHighs}>{StyleConfig.TOGGLE_FRACTAL_HIGH_LABEL}</button>
                         <button className="button-33" onClick={toggleFractalLows}>{StyleConfig.TOGGLE_FRACTAL_LOW_LABEL}</button>
+                        <button className="button-33" onClick={toggleThing}>{zoomOrTooltip ? StyleConfig.LABEL_TOOLTIP_BUTTON: StyleConfig.LABEL_ZOOM_BUTTON}</button>
+                        <div>{JSON.stringify(zoomOrTooltip)}</div>
+
                     </div>
                     <div className="margin-top-10">
                         <button className="button-33" onClick={()=>addDay(victoryDateOverlay)}>+</button>
                         <button className="button-33" onClick={()=>subtractDay(victoryDateOverlay)}>-</button>
                     </div>
                     <div className="stock-chart margin-top-10">
-                        <StockChart victoryDateOverlay={victoryDateOverlay} showDateOverlay={showDateOverlay} showFractalHigh={showFractalHigh} showFractalLow={showFractalLow} victoryScatterHigh={victoryScatterHigh} victoryScatterLow={victoryScatterLow} stockChartFractalLows={stockChartFractalLows} stockChartFractalHighs={stockChartFractalHighs} storageBox={storageBox} stockChartData={excelData} graphFloor={graphFloor} graphCeiling={graphCeiling}/>
+                        <StockChart zoomOrTooltip={zoomOrTooltip} victoryDateOverlay={victoryDateOverlay} showDateOverlay={showDateOverlay} showFractalHigh={showFractalHigh} showFractalLow={showFractalLow} victoryScatterHigh={victoryScatterHigh} victoryScatterLow={victoryScatterLow} stockChartFractalLows={stockChartFractalLows} stockChartFractalHighs={stockChartFractalHighs} storageBox={storageBox} stockChartData={excelData} graphFloor={graphFloor} graphCeiling={graphCeiling}/>
                     </div>
                 </div>
                 }

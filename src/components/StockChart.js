@@ -40,6 +40,7 @@ const DataPoint3 = (props) => {
 }
 
 export const StockChart = (props) => {
+    const tooltipOrZoom =  props.zoomOrTooltip ? <VictoryVoronoiContainer labels={({datum}) => `${DateConversion((datum.x))}`} /> : <VictoryZoomContainer labels={({datum}) => `${DateConversion((datum.x))}`} />;
     return (
         <div>
             <VictoryChart domainPadding={{ y: 10}}
@@ -49,10 +50,7 @@ export const StockChart = (props) => {
                 maxDomain={{y: props.graphCeiling}} // props.graphCeiling
                 scale="linear"
                 containerComponent={
-                    <VictoryVoronoiContainer
-                    // labels={({datum}) => `${(datum.x)}`}
-                        labels={({datum}) => `${DateConversion((datum.x))}`}
-                    />
+                    tooltipOrZoom
                 }
                 
             >
