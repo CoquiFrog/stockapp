@@ -21,6 +21,10 @@
   transform: translateX(2px) translateY(-20px);
 }
 
+.font-size-24 {
+  font-size: 24px;
+}
+
 .margin-top-10 {
     margin-top: 10px;
 }

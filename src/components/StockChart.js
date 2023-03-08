@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {VictoryChart, VictoryLine, VictoryScatter, VictoryTooltip, VictoryVoronoiContainer, VictoryZoomContainer } from 'victory';
-// import * as V from 'victory';
 import "../styling/Home.css";
 import DateConversion from "../functions/DateConversion";
 

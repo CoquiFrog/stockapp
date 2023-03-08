@@ -3910,6 +3910,7 @@ export const NumberToLetterConverter = (i) => {
     return column;
     }
 var column = grabColumnFromList(i);
+console.log('column: ', column);
 return column;
 }
 

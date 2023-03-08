@@ -6,7 +6,6 @@ import Workbook2blob from "./Workbook2blob";
 import AddStyle from '../functions/AddStyle';
 
 export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowNumbers) => {
-    // console.log('DATA HERE: ', data);
     const createDownLoadData = (howManyRows) => {
         handleExport(howManyRows).then((url) => {
           const downloadAnchorNode = document.createElement("a");
@@ -18,21 +17,20 @@ export const SplitExcel = (data, chunkAmount, filename, highAndLow, hideHighLowN
     };
       const handleExport = (howManyRows) => {
         const workbookBlob = Workbook2blob(workBook);
-        // console.log('TEST HERE: ', workbookBlob);
     
         return AddStyle(workbookBlob, howManyColumns, howManyRows, hideHighLowNumbers);
       };
     let howManyColumns;
     const addToSheet = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverter(counter);
-        // console.log('addToSheet columnString: ', columnString);
+        console.log('addToSheet columnString: ', columnString);
         let printStartPoint = columnString + 1;
         howManyColumns = counter * 4;
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: printStartPoint });
     }
     const addToSheetHighLow = (smallChunkArray, counter) => {
         let columnString = IterationToColumnConverterHighLow(counter);
-        // console.log('addToSheetHighLow columnString: ', columnString);
+        console.log('addToSheetHighLow columnString: ', columnString);
         let printStartPoint = columnString + 1;
         howManyColumns = counter * 8;
         XLSX.utils.sheet_add_json(workSheet, smallChunkArray, { origin: printStartPoint });

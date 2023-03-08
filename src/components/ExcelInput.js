@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import "../styling/Home.css";
-// import * as XLSX from "xlsx";
 import ReadExcel from "../functions/ReadExcel";
-import StyleConfig from "../constants/StyleConfig";
-
 export const ExcelInput = (props) => {
     return (
         <div>

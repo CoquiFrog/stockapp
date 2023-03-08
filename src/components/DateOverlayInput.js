@@ -1,7 +1,6 @@
 import React from "react";
 import "../styling/Home.css";
 import ReadDates from "../functions/ReadDates";
-import StyleConfig from "../constants/StyleConfig";
 
 export const DateOverlayInput = (props) => {
     return (

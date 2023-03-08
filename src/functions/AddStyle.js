@@ -19,6 +19,7 @@ export const AddStyle = (workbookBlob, howManyColumns, howManyRows, hideHighLowN
 
       for (let i=0, counter=0; i < howManyColumns; i++) {
         let columnAddress =  NumberToLetterConverter(i);
+        console.log('column address: ', columnAddress);
         let columnAndRowAddress = columnAddress + 1;
         let cellValue = sheet.cell(columnAndRowAddress).value();
         
