@@ -105,13 +105,6 @@ export const Home = () => {
         setStockChartFractalLows(fractalLowBox);
     }
 
-    const grabTestDataAndSetToState = (val) => {
-        const copiedClone = val.map(({Date, Price}) => ({
-                Date, Price, High: arrayOfFractalHighs.includes(Date) ? " " : "", Low: arrayOfFractalLows.includes(Date) ? " " : ""}));
-        setExcelData(copiedClone);
-        SplitExcel(copiedClone, parseInt(chunkAmount), fileName, "highAndLow", false);
-    }
-
     const addMenuNumber = () => {
         if (menuNumber <= amountOfFunctions) {
             setMenuNumber(menuNumber + 1);
@@ -170,8 +163,10 @@ export const Home = () => {
     // Function 7 - Fractals
     const HighLowFractal = () => {
         const lengthOfArray = excelData.length;
-        const copiedClone = excelData.map((day, index, arr) => {
+        const copiedClone = structuredClone(excelData);
+        copiedClone.map((day, index, arr) => {
         // Filters out first and last 2 days
+            day.Date = DateConversion(day.Date);
             if (index > 2 && index <= (lengthOfArray - 3)) {
                 let highCheck1 = arr[index].High > arr[index-2].High;
                 let highCheck2 = arr[index].High > arr[index-1].High;
@@ -282,7 +277,6 @@ export const Home = () => {
         excelData.map((element,index, array) => {
             if (arrayOfDates.includes(array[index].Date)) {
                 if (array[index-1]) {
-                    console.log('here I am', array[index-1])
                     let pushThis = {x: array[index-1].Date, y: array[index-1].Price, symbol: 'circle', fill: 'green'};
                     newOverlayArrayPlusOneDay.push(pushThis);
                 }
@@ -343,9 +337,9 @@ export const Home = () => {
                         {/* <div className="margin-top-30">
                             <ExcelInput buttonText={StyleConfig.FRACTAL_INPUT_BUTTON_TEXT} grabExcelDataAndSetToState={grabFractalAndSetToState} />
                         </div> */}
-                        <div className="margin-top-30">
+                        {/* <div className="margin-top-30">
                             <ExcelInput buttonText="test input" grabExcelDataAndSetToState={grabTestDataAndSetToState} />
-                        </div>
+                        </div> */}
                         <div className="margin-top-10">
                             <FileNameInput setFileNameToDownload={setFileNameToDownload}/>
                         </div>
@@ -493,4 +487,11 @@ export default Home;
     //         setCurrentLoadedDateOverlay(fileList[currentFileNumber].name);
     //     }
     //     setVictoryDateOverlay(victoryDateOverlayBox);
+    // }
+
+        // const grabTestDataAndSetToState = (val) => {
+    //     const copiedClone = val.map(({Date, Price}) => ({
+    //             Date, Price, High: arrayOfFractalHighs.includes(Date) ? " " : "", Low: arrayOfFractalLows.includes(Date) ? " " : ""}));
+    //     setExcelData(copiedClone);
+    //     SplitExcel(copiedClone, parseInt(chunkAmount), fileName, "highAndLow", false);
     // }
