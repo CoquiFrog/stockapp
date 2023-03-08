@@ -8,7 +8,6 @@ export const AddStyle = (workbookBlob, howManyColumns, howManyRows, hideHighLowN
   howManyRows = howManyRows + 1;
   
   return XlsxPopulate.fromDataAsync(workbookBlob).then((workbook) => {
-      // console.log("FINAL CHECK: ", workbook);
 
     workbook.sheets().forEach((sheet) => {
       // Style Whole Page Here
@@ -17,12 +16,10 @@ export const AddStyle = (workbookBlob, howManyColumns, howManyRows, hideHighLowN
         horizontalAlignment: StyleConfig.MAIN_TEXT_HORIZONTAL_ALIGNMENT,
       });
 
-      for (let i=0, counter=0; i < howManyColumns; i++) {
+      for (let i=0; i < (howManyColumns + 1); i++) {
         let columnAddress =  NumberToLetterConverter(i);
-        console.log('column address: ', columnAddress);
         let columnAndRowAddress = columnAddress + 1;
         let cellValue = sheet.cell(columnAndRowAddress).value();
-        
 
         // Set date range for one chunked array
         let chunkedRange =  (columnAddress + 2) + ':' + (columnAddress + howManyRows);
@@ -58,15 +55,15 @@ export const AddStyle = (workbookBlob, howManyColumns, howManyRows, hideHighLowN
           sheet.cell(columnAndRowAddress).style("fill", StyleConfig.HIGH_TITLE_BACKGROUND_COLOR)
 
           // Loop through entire column and check each value
-         for (let j=2; j < howManyRows; j++) {
-           let currentCell = columnAddress + j;
-           let cellValue = sheet.cell(currentCell).value();
-           // check for exclamation
-           if (cellValue && cellValue[0] === " ") {
-            //  console.log('I am fractal high', cellValue)
-             sheet.cell(currentCell).style("fill", StyleConfig.GREEN_GREEN);
-           }
-         }
+          for (let j=2; j < howManyRows; j++) {
+            let currentCell = columnAddress + j;
+            let cellValue = sheet.cell(currentCell).value();
+            // check for exclamation
+            if (cellValue && cellValue[0] === " ") {
+              //  console.log('I am fractal high', cellValue)
+              sheet.cell(currentCell).style("fill", StyleConfig.GREEN_GREEN);
+            }
+          }
         }
         if (cellValue === "Low") {
           // Apply background color to column range
@@ -109,20 +106,3 @@ export const AddStyle = (workbookBlob, howManyColumns, howManyRows, hideHighLowN
   };
 
 export default AddStyle;
-
-
-
-// let m2 = arr[index+2].High/arr[index+2].Low;
-// let m1 = arr[index+1].High/arr[index+1].Low;
-// let n = arr[index].High/arr[index].Low;
-// let p1 = arr[index-1].High/arr[index-1].Low;
-// let p2 = arr[index-2].High/arr[index-2].Low;
-
-// let highCheck1 = (arr[index].High * n) > (arr[index].High * m2);
-// let highCheck2 = (arr[index].High * n) > (arr[index].High * m1);
-// let highCheck3 = (arr[index].High * n) >(arr[index].High * p1);
-// let highCheck4 = (arr[index].High * n) >(arr[index].High * p2);
-
-// if (highCheck1 && highCheck2 && highCheck3 && highCheck4) {
-//     console.log('high fractal')
-// }

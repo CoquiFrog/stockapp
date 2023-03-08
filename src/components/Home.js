@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styling/Home.css";
 import ExcelInput from "./ExcelInput";
 import DateConversion from '../functions/DateConversion';
@@ -10,9 +10,7 @@ import Constants from '../constants/Constants';
 import StyleConfig from '../constants/StyleConfig';
 import NameDial from '../functions/NameDial';
 import StockChart from "./StockChart";
-// import DateOverlayInput from "./DateOverlayInput";
 import * as XLSX from "xlsx";
-
 
 export const Home = () => {
     const [amountOfFunctions, setAmountOfFunctions] = useState(9);
@@ -39,32 +37,6 @@ export const Home = () => {
     const [currentFileNumber, setCurrentFileNumber] = useState(1);
     const [currentLoadedDateOverlay, setCurrentLoadedDateOverlay] = useState("");
 
-    useEffect (() => {
-    }, [])
-
-    const grabOverlayDataAndSetToState = (val) => {
-        const storedDatesArray = [];
-        const victoryDateOverlayBox = [];
-        val.map((element, index, array) => {
-            console.log('test: ', Object.values(array[index])[0])
-            storedDatesArray.push(Object.values(array[index])[0]);
-        })
-        console.log('yoyoyo: ', storedDatesArray);
-        if (excelData) {
-            excelData.map((element, index, array) => {
-                let currentDay = element.Date;
-                if (storedDatesArray.includes(currentDay)) {
-                    let dataOverlayDay = {x: element.Date, y: element.Price, symbol: "circle", fill: "green"}
-                    victoryDateOverlayBox.push(dataOverlayDay);
-                }
-            })
-        }
-        if (fileList && fileList[currentFileNumber] && fileList[currentFileNumber].name){
-            setCurrentLoadedDateOverlay(fileList[currentFileNumber].name);
-        }
-        setVictoryDateOverlay(victoryDateOverlayBox);
-    }
-
     const grabExcelDataAndSetToState = (val) => {
         val.map((day) => {
             day.Date = Math.round(day.Date);
@@ -74,9 +46,6 @@ export const Home = () => {
         })
 
         setExcelData(val);
-        // setDummyData(Constants.DUMMY_DATA_LARGE_PART1.concat(Constants.DUMMY_DATA_LARGE_PART2));
-        // Clipboard command for saving JSON data
-        navigator.clipboard.writeText(JSON.stringify(val));
 
         const arrayOfFractalHighsBox = [];
         const arrayOfFractalLowsBox = [];
@@ -90,7 +59,6 @@ export const Home = () => {
                 let highCheck2 = arr[index].High > arr[index-1].High;
                 let highCheck3 = arr[index].High > arr[index+1].High;
                 let highCheck4 = arr[index].High > arr[index+2].High;
-
                 let lowCheck1 = arr[index].Low < arr[index-2].Low;
                 let lowCheck2 = arr[index].Low < arr[index-1].Low;
                 let lowCheck3 = arr[index].Low < arr[index+1].Low;
@@ -98,24 +66,20 @@ export const Home = () => {
 
                 // Remember this is here in case you input files with date strings instead of excel serial numbers later
                 if (highCheck1 && highCheck2 && highCheck3 && highCheck4) {
-                    // console.log('high frac');
                     if (typeof day.Date === 'string') {
                         arrayOfFractalHighsBox.push(day.Date);
                     }
                     if (typeof day.Date === 'number') {
-                        // let fractalHighDay = {x: day.Date, y: day.Price, label: DateConversion(day.Date), symbol: "circle", fill: "green"}
                         let fractalHighDay = {x: day.Date, y: day.Price, symbol: "circle", fill: "green"}
                         arrayOfFractalHighsBox.push(DateConversion(day.Date));
                         fractalHighVictoryScatterBox.push(fractalHighDay);
                     }
                 }
                 if (lowCheck1 && lowCheck2 && lowCheck3 && lowCheck4) {
-                    // console.log('low frac');
                     if (typeof day.Date === 'string') {
                         arrayOfFractalLowsBox.push(day.Date);
                     }
                     if (typeof day.Date === 'number') {
-                        // let fractalLowDay = {x: day.Date, y: day.Price, label: DateConversion(day.Date), symbol: "diamond", fill: "red"}
                         let fractalLowDay = {x: day.Date, y: day.Price, symbol: "diamond", fill: "red"}
                         arrayOfFractalLowsBox.push(DateConversion(day.Date));
                         fractalLowVictoryScatterBox.push(fractalLowDay);
@@ -128,14 +92,11 @@ export const Home = () => {
         const storageBox = [];
         const fractalHighBox = [];
         const fractalLowBox = [];
-        const victoryDateOverlayBox = [];
         Object.values(val).map((curr, index, stockDay) => {
-            // if arrayOfVictoryOverlayDates is included then push day to array
             arrayOfFractalHighsBox.includes(DateConversion(stockDay[index].Date)) ? fractalHighBox.push({x: stockDay[index].Date, y: stockDay[index].Price, label: "Look Mom!", symbol: "diamond"}) : fractalHighBox.push( {x: stockDay[index].Date, y:0 })
             arrayOfFractalLowsBox.includes(DateConversion(stockDay[index].Date)) ? fractalLowBox.push({x: stockDay[index].Date, y: stockDay[index].Price}) : fractalLowBox.push( {x: stockDay[index].Date, y:0 })
             storageBox.push({x: stockDay[index].Date, y: stockDay[index].Price})
         })
-        navigator.clipboard.writeText(JSON.stringify(storageBox));
         setVictoryScatterHigh(fractalHighVictoryScatterBox);
         setVictoryScatterLow(fractalLowVictoryScatterBox);
         calculateGraphCeilingAndFloor(storageBox);
@@ -143,47 +104,6 @@ export const Home = () => {
         setStockChartFractalHighs(fractalHighBox);
         setStockChartFractalLows(fractalLowBox);
     }
-
-    // const grabFractalAndSetToState = (val) => {
-    //     const lengthOfArray = val.length;
-    //     const arrayOfFractalHighsBox = [];
-    //     const arrayOfFractalLowsBox = [];
-    //     val.map((day, index, arr) => {
-    //     // Filters out first and last 2 days
-    //         if (index > 2 && index <= (lengthOfArray - 3)) {
-    //             let highCheck1 = arr[index].High > arr[index-2].High;
-    //             let highCheck2 = arr[index].High > arr[index-1].High;
-    //             let highCheck3 = arr[index].High > arr[index+1].High;
-    //             let highCheck4 = arr[index].High > arr[index+2].High;
-
-    //             let lowCheck1 = arr[index].Low < arr[index-2].Low;
-    //             let lowCheck2 = arr[index].Low < arr[index-1].Low;
-    //             let lowCheck3 = arr[index].Low < arr[index+1].Low;
-    //             let lowCheck4 = arr[index].Low < arr[index+2].Low;
-
-    //             if (highCheck1 && highCheck2 && highCheck3 && highCheck4) {
-    //                 if (typeof day.Date === 'string') {
-    //                     arrayOfFractalHighsBox.push(day.Date);
-    //                 }
-    //                 if (typeof day.Date === 'number') {
-    //                     arrayOfFractalHighsBox.push(DateConversion(day.Date));
-    //                 }
-    //             }
-    //             if (lowCheck1 && lowCheck2 && lowCheck3 && lowCheck4) {
-    //                 if (typeof day.Date === 'string') {
-    //                     arrayOfFractalLowsBox.push(day.Date);
-    //                 }
-    //                 if (typeof day.Date === 'number') {
-    //                     arrayOfFractalLowsBox.push(DateConversion(day.Date));
-    //                 }
-    //             }
-    //         }
-    //         return day;
-    //     })
-    //     // navigator.clipboard.writeText(JSON.stringify(arrayOfFractalHighsBox));
-    //     setArrayOfFractalHighs(arrayOfFractalHighsBox);
-    //     setArrayOfFractalLows(arrayOfFractalLowsBox);
-    // }
 
     const grabTestDataAndSetToState = (val) => {
         const copiedClone = val.map(({Date, Price}) => ({
@@ -201,16 +121,6 @@ export const Home = () => {
         if (menuNumber >= 2) {
             setMenuNumber(menuNumber - 1);
         }
-    }
-
-    // To be passed through child component so child can set parent state
-    const setFileNameToDownload = (val) => {
-        setFileName(val);
-    }
-
-    // To be passed through child component so child can set parent state
-    const setChunkAmountForClipping = (val) => {
-        setChunkAmount(val);
     }
 
     // Function 1 - Save
@@ -305,19 +215,6 @@ export const Home = () => {
         setGraphCeiling(ceiling);
     }
 
-    const toggleStockChart = () => {
-        setShowGraph(!showGraph);
-    }
-    const toggleFractalHighs = () => {
-        setShowFractalHigh(!showFractalHigh);
-    }
-    const toggleFractalLows = () => {
-        setShowFractalLow(!showFractalLow);
-    }
-    const toggleDisplayOverlay = () => {
-        setShowDateOverlay(!showDateOverlay);
-    }
-    
     const inputOnChange = (e) => {
         const file = e.target.files;
         setFileList(file);
@@ -340,7 +237,6 @@ export const Home = () => {
                 reject(error);
             };
         });
-    
         promise.then((data) => {
             const storedDatesArray = [];
             const victoryDateOverlayBox = [];
@@ -410,6 +306,29 @@ export const Home = () => {
             }
         })
         setVictoryDateOverlay(newOverlayArrayMinusOneDay);
+    }
+
+    const toggleStockChart = () => {
+        setShowGraph(!showGraph);
+    }
+    const toggleFractalHighs = () => {
+        setShowFractalHigh(!showFractalHigh);
+    }
+    const toggleFractalLows = () => {
+        setShowFractalLow(!showFractalLow);
+    }
+    const toggleDisplayOverlay = () => {
+        setShowDateOverlay(!showDateOverlay);
+    }
+
+     // To be passed through child component so child can set parent state
+    const setFileNameToDownload = (val) => {
+        setFileName(val);
+    }
+
+    // To be passed through child component so child can set parent state
+    const setChunkAmountForClipping = (val) => {
+        setChunkAmount(val);
     }
 
         return (
@@ -511,3 +430,67 @@ export default Home;
 
     // Clipboard command for saving JSON data
     // navigator.clipboard.writeText(JSON.stringify(val));
+
+        // const grabFractalAndSetToState = (val) => {
+    //     const lengthOfArray = val.length;
+    //     const arrayOfFractalHighsBox = [];
+    //     const arrayOfFractalLowsBox = [];
+    //     val.map((day, index, arr) => {
+    //     // Filters out first and last 2 days
+    //         if (index > 2 && index <= (lengthOfArray - 3)) {
+    //             let highCheck1 = arr[index].High > arr[index-2].High;
+    //             let highCheck2 = arr[index].High > arr[index-1].High;
+    //             let highCheck3 = arr[index].High > arr[index+1].High;
+    //             let highCheck4 = arr[index].High > arr[index+2].High;
+
+    //             let lowCheck1 = arr[index].Low < arr[index-2].Low;
+    //             let lowCheck2 = arr[index].Low < arr[index-1].Low;
+    //             let lowCheck3 = arr[index].Low < arr[index+1].Low;
+    //             let lowCheck4 = arr[index].Low < arr[index+2].Low;
+
+    //             if (highCheck1 && highCheck2 && highCheck3 && highCheck4) {
+    //                 if (typeof day.Date === 'string') {
+    //                     arrayOfFractalHighsBox.push(day.Date);
+    //                 }
+    //                 if (typeof day.Date === 'number') {
+    //                     arrayOfFractalHighsBox.push(DateConversion(day.Date));
+    //                 }
+    //             }
+    //             if (lowCheck1 && lowCheck2 && lowCheck3 && lowCheck4) {
+    //                 if (typeof day.Date === 'string') {
+    //                     arrayOfFractalLowsBox.push(day.Date);
+    //                 }
+    //                 if (typeof day.Date === 'number') {
+    //                     arrayOfFractalLowsBox.push(DateConversion(day.Date));
+    //                 }
+    //             }
+    //         }
+    //         return day;
+    //     })
+    //     // navigator.clipboard.writeText(JSON.stringify(arrayOfFractalHighsBox));
+    //     setArrayOfFractalHighs(arrayOfFractalHighsBox);
+    //     setArrayOfFractalLows(arrayOfFractalLowsBox);
+    // }
+
+    // const grabOverlayDataAndSetToState = (val) => {
+    //     const storedDatesArray = [];
+    //     const victoryDateOverlayBox = [];
+    //     val.map((element, index, array) => {
+    //         console.log('test: ', Object.values(array[index])[0])
+    //         storedDatesArray.push(Object.values(array[index])[0]);
+    //     })
+    //     console.log('yoyoyo: ', storedDatesArray);
+    //     if (excelData) {
+    //         excelData.map((element, index, array) => {
+    //             let currentDay = element.Date;
+    //             if (storedDatesArray.includes(currentDay)) {
+    //                 let dataOverlayDay = {x: element.Date, y: element.Price, symbol: "circle", fill: "green"}
+    //                 victoryDateOverlayBox.push(dataOverlayDay);
+    //             }
+    //         })
+    //     }
+    //     if (fileList && fileList[currentFileNumber] && fileList[currentFileNumber].name){
+    //         setCurrentLoadedDateOverlay(fileList[currentFileNumber].name);
+    //     }
+    //     setVictoryDateOverlay(victoryDateOverlayBox);
+    // }
