@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styling/Home.css";
 import ExcelInput from "./ExcelInput";
 import DateConversion from '../functions/DateConversion';
@@ -11,6 +11,7 @@ import StyleConfig from '../constants/StyleConfig';
 import NameDial from '../functions/NameDial';
 import StockChart from "./StockChart";
 import * as XLSX from "xlsx";
+import axios from 'axios';
 
 export const Home = () => {
     const [amountOfFunctions, setAmountOfFunctions] = useState(9);
@@ -37,6 +38,17 @@ export const Home = () => {
     const [currentFileNumber, setCurrentFileNumber] = useState(1);
     const [currentLoadedDateOverlay, setCurrentLoadedDateOverlay] = useState("");
     const [zoomOrTooltip, setZoomOrTooltip] = useState(true);
+    const [coinData, setCoinData] = useState();
+
+    useEffect(() => {
+        axios.get('https://api.coingecko.com/api/v3/coins/bitcoin')
+        .then(res => {
+            setCoinData(res.data);
+            console.log(res.data);
+            console.log(res.data.market_data);
+        })
+        .catch(error => console.log(error));
+    }, []);
 
     const grabExcelDataAndSetToState = (val) => {
         val.map((day) => {
@@ -333,6 +345,9 @@ export const Home = () => {
         return (
             <div>
                 {/* <button onClick={testFunc}>testFunc</button> */}
+                {coinData && <div>${JSON.stringify(coinData.market_data.current_price.usd)} </div>}
+
+                {coinData && Math.sign(coinData.market_data.price_change_24h_in_currency.usd) ? <div>negative</div> : <div>positive</div>}
                 {showGraph &&
                     <div>
                         <button className="button-33 margin-top-20" onClick={toggleStockChart}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
@@ -429,6 +444,8 @@ export const Home = () => {
 }
 
 export default Home;
+
+
 
     // Clipboard command for saving JSON data
     // navigator.clipboard.writeText(JSON.stringify(val));
