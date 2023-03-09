@@ -25,6 +25,14 @@
   font-size: 24px;
 }
 
+.margin-top-3 {
+  margin-top: 3px;
+}
+
+.margin-top-5 {
+  margin-top: 5px;
+}
+
 .margin-top-10 {
     margin-top: 10px;
 }
@@ -49,6 +57,10 @@
     margin-right: 18px;
 }
 
+.margin-left-5 {
+  margin-left: 5px;
+}
+
 .width-140 {
     width: 140px;
 }
@@ -60,6 +72,20 @@
 .position-relative {
     position: relative;
 }
+
+.font-color-green {
+  color: green;
+}
+
+.font-color-red {
+  color: red;
+}
+
+.bitcoin-container {
+  display: flex;
+  flex-direction: row;
+}
+
 
 /* Change these values to move the function title within the div */
 .position-within-div {

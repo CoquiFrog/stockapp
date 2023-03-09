@@ -328,7 +328,6 @@ export const Home = () => {
         setShowDateOverlay(!showDateOverlay);
     }
     const toggleThing = () => {
-        console.log('yoyoyoyo')
         setZoomOrTooltip(!zoomOrTooltip);
     }
 
@@ -345,9 +344,13 @@ export const Home = () => {
         return (
             <div>
                 {/* <button onClick={testFunc}>testFunc</button> */}
-                {coinData && <div>${JSON.stringify(coinData.market_data.current_price.usd)} </div>}
-
-                {coinData && Math.sign(coinData.market_data.price_change_24h_in_currency.usd) ? <div>negative</div> : <div>positive</div>}
+                <div className="bitcoin-container">
+                    {coinData && coinData.image && <img className="margin-top-3" src={coinData.image.thumb}/>}
+                    {coinData && coinData.market_data && coinData.market_data.current_price && <div className="margin-left-5 margin-top-5">${JSON.stringify(coinData.market_data.current_price.usd)}</div>}
+                    {coinData && coinData.market_data && Math.sign(coinData.market_data.price_change_24h_in_currency.usd) ?
+                     <div className="font-color-red margin-left-5 margin-top-5">{Math.round(coinData.market_data.price_change_24h_in_currency.usd)}</div> :
+                      <div className="font-color-green margin-left-5 margin-top-5">{Math.round(coinData.market_data.price_change_24h_in_currency.usd)}</div>}
+                </div>
                 {showGraph &&
                     <div>
                         <button className="button-33 margin-top-20" onClick={toggleStockChart}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
