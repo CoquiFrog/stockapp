@@ -20,6 +20,12 @@ const StyleConfig = {
     FRACTAL_INPUT_BUTTON_TEXT: "Fractal Input",
     DOWNLOAD_BUTTON_TEXT: "Download",
 
+    // Placeholders
+    PLACEHOLDER_CHUNK_AMOUNT: "Chunk Amount",
+    PLACEHOLDER_START_DATE: "Start Date",
+    PLACEHOLDER_END_DATE: "End Date",
+    PLACEHOLDER_TICKER_SYMBOL: "Symbol",
+
     // Colors
     GREEN_GREEN: "00FE20",
     RED_RED: "FE0000",

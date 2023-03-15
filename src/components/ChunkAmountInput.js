@@ -1,5 +1,6 @@
 import React from "react";
 import "../styling/Home.css";
+import StyleConfig from "../constants/StyleConfig";
 
 export const ChunkAmountInput = (props) => {
     return (
@@ -11,7 +12,7 @@ export const ChunkAmountInput = (props) => {
             placeholder=" "
             onChange={(e) => props.setChunkAmountForClipping(e.target.value)}
         />
-            <span className="placeholder">Chunk Amount</span>
+            <span className="placeholder">{StyleConfig.PLACEHOLDER_CHUNK_AMOUNT_INPUT}</span>
         </label>
     </div>
     )

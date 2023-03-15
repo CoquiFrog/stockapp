@@ -6,6 +6,9 @@ import DownloadExcel from "../functions/DownloadExcel";
 import SplitExcel from "../functions/SplitExcel";
 import FileNameInput from "./FileNameInput";
 import ChunkAmountInput from "./ChunkAmountInput";
+import StartDateInput from "./StartDateInput";
+import EndDateInput from "./EndDateInput";
+import TickerSymbolInput from "./TickerSymbolInput";
 import Constants from '../constants/Constants';
 import StyleConfig from '../constants/StyleConfig';
 import NameDial from '../functions/NameDial';
@@ -24,8 +27,8 @@ export const Home = () => {
     const [graphCeiling, setGraphCeiling] = useState();
     const [showGraph, setShowGraph] = useState(true);
     const [storageBox, setStorageBox] = useState();//Constants.DUMMY_DATA_LARGE
-    const [arrayOfFractalHighs, setArrayOfFractalHighs] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_HIGH_FRACTAL
-    const [arrayOfFractalLows, setArrayOfFractalLows] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_LOW_FRACTAL
+    // const [arrayOfFractalHighs, setArrayOfFractalHighs] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_HIGH_FRACTAL
+    // const [arrayOfFractalLows, setArrayOfFractalLows] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_LOW_FRACTAL
     const [stockChartFractalHighs, setStockChartFractalHighs] = useState();
     const [stockChartFractalLows, setStockChartFractalLows] = useState();
     const [victoryScatterHigh, setVictoryScatterHigh] = useState();
@@ -39,16 +42,20 @@ export const Home = () => {
     const [currentLoadedDateOverlay, setCurrentLoadedDateOverlay] = useState("");
     const [zoomOrTooltip, setZoomOrTooltip] = useState(true);
     const [coinData, setCoinData] = useState();
+    const [stockApiData, setStockApiData] = useState({});
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    const [tickerSymbol, setTickerSymbol] = useState();
 
     useEffect(() => {
         axios.get('https://api.coingecko.com/api/v3/coins/bitcoin')
         .then(res => {
             setCoinData(res.data);
             console.log(res.data);
-            console.log(res.data.market_data);
         })
         .catch(error => console.log(error));
     }, []);
+
 
     const grabExcelDataAndSetToState = (val) => {
         val.map((day) => {
@@ -197,8 +204,21 @@ export const Home = () => {
         })
         SplitExcel(copiedClone, parseInt(chunkAmount), fileName, "highAndLow", false);
     }
-    const testFunc = () => {
-        console.log('I am test func', fileList[currentFileNumber].name);
+
+    const printData = () => {
+        console.log('stockData: ', stockApiData);
+    }
+
+    const testFunc = async () => {
+        const url2 = "https://api.coingecko.com/api/v3/coins/bitcoin";
+        const url6 = "https://api.twelvedata.com/time_series?&start_date=2010-05-06&end_date=2023-02-15&outputsize=4999&symbol=aapl&interval=1day&apikey=f697c3c71ee64f0387a55fe2a8c838bf";
+
+        axios.get(url6)
+        .then(res => {
+            console.log(res.data);
+            setStockApiData(res.data);
+        })
+        .catch(error => console.log(error));
     }
     
     const downloadExcelFile = () => {
@@ -341,18 +361,58 @@ export const Home = () => {
         setChunkAmount(val);
     }
 
+
+    const setStartDateToState = (val) => {
+        setStartDate(val);
+    }
+
+    const setEndDateToState = (val) => {
+        setEndDate(val);
+    }
+
+    const testingThings = () => {
+        console.log('hihihihi');
+        console.log('start: ', startDate);
+        console.log('end: ', endDate);
+        console.log('ticker: ', tickerSymbol);
+    }
+
+    const positiveOrNegative = (val) => {
+        if (Math.sign(val) === 1) {
+            console.log('I am true');
+            return true;
+        } else {
+            console.log('i am false');
+            return false;
+        }
+    }
+
         return (
             <div>
-                {/* <button onClick={testFunc}>testFunc</button> */}
+                <button onClick={testFunc}>testFunc</button>
+                <button onClick={printData}>print data</button>
+
                 <div className="bitcoin-container">
-                    {coinData && coinData.image && <img className="margin-top-3" src={coinData.image.thumb}/>}
+                    {coinData && coinData.image && <img className="margin-top-3 margin-left-5" src={coinData.image.thumb}/>}
                     {coinData && coinData.market_data && coinData.market_data.current_price && <div className="margin-left-5 margin-top-5">${JSON.stringify(coinData.market_data.current_price.usd)}</div>}
-                    {coinData && coinData.market_data && Math.sign(coinData.market_data.price_change_24h_in_currency.usd) ?
-                     <div className="font-color-red margin-left-5 margin-top-5">{Math.round(coinData.market_data.price_change_24h_in_currency.usd)}</div> :
-                      <div className="font-color-green margin-left-5 margin-top-5">{Math.round(coinData.market_data.price_change_24h_in_currency.usd)}</div>}
+                    {coinData && positiveOrNegative(Math.sign(coinData.market_data.price_change_24h_in_currency.usd)) ?
+                       <div className="font-color-green margin-left-5 margin-top-5">{coinData && coinData.market_data && Math.round(coinData.market_data.price_change_24h_in_currency.usd)}</div> :
+                     <div className="font-color-red margin-left-5 margin-top-5">{coinData && coinData.market_data && Math.round(coinData.market_data.price_change_24h_in_currency.usd)}</div>}
                 </div>
                 {showGraph &&
                     <div>
+                        <div>
+                            <div className="margin-top-10">
+                                <TickerSymbolInput setStartDateToState={setStartDateToState}/>
+                            </div>
+                            <div className="margin-top-10">
+                                <StartDateInput setStartDateToState={setStartDateToState}/>
+                            </div>
+                            <div className="margin-top-10">
+                                <EndDateInput setEndDateToState={setEndDateToState}/>
+                            </div>
+                            <button disabled={!startDate} className="margin-top-20" onClick={testingThings}>test test test</button>
+                        </div>
                         <button className="button-33 margin-top-20" onClick={toggleStockChart}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
                         <div className="margin-top-30">
                             <ExcelInput buttonText={StyleConfig.EXCEL_INPUT_BUTTON_TEXT} grabExcelDataAndSetToState={grabExcelDataAndSetToState} />
@@ -453,7 +513,9 @@ export default Home;
     // Clipboard command for saving JSON data
     // navigator.clipboard.writeText(JSON.stringify(val));
 
-        // const grabFractalAndSetToState = (val) => {
+    // Code for printing fractals Later
+
+    // const grabFractalAndSetToState = (val) => {
     //     const lengthOfArray = val.length;
     //     const arrayOfFractalHighsBox = [];
     //     const arrayOfFractalLowsBox = [];
@@ -523,3 +585,12 @@ export default Home;
     //     setExcelData(copiedClone);
     //     SplitExcel(copiedClone, parseInt(chunkAmount), fileName, "highAndLow", false);
     // }
+
+
+
+//     access-control-allow-headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+// access-control-allow-methods: POST, PUT, DELETE, GET, OPTIONS
+// access-control-allow-origin: *
+// access-control-expose-headers: link, per-page, total
+// access-control-max-age: 7200
+// access-control-request-method: *
