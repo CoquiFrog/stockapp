@@ -2,6 +2,7 @@ const LIGHT_YELLOW = "F5FF73";
 
 const StyleConfig = {
     // Labels
+    LABEL_API_BUTTON: "API",
     LABEL_ZOOM_BUTTON: "Zoom",
     LABEL_TOOLTIP_BUTTON: "Tooltip",
     LABEL_SELECTED_DATE_OVERLAY: "Loaded",

@@ -10,7 +10,7 @@ export const TickerSymbolInput = (props) => {
             type="string"
             value={props.tickerSymbol}
             placeholder=" "
-            onChange={(e) => props.setTickerSymbol(e.target.value)}
+            onChange={(e) => props.setTickerySymbolToState(e.target.value)}
         />
             <span className="placeholder">{StyleConfig.PLACEHOLDER_TICKER_SYMBOL}</span>
         </label>

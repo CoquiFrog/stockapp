@@ -18,7 +18,7 @@ import axios from 'axios';
 
 export const Home = () => {
     const [amountOfFunctions, setAmountOfFunctions] = useState(9);
-    const [excelData, setExcelData] = useState(Constants.APPLE_THREE_YEARS_2020_2023); //Constants.APPLE_THREE_YEARS_2020_2023
+    const [excelData, setExcelData] = useState(); //Constants.APPLE_THREE_YEARS_2020_2023
     const [fileName, setFileName] = useState('Default_File_Name');
     const [chunkAmount, setChunkAmount] = useState(28);
     const [hideHighLowColumns, setHideHighLowColumns] = useState(false)
@@ -43,9 +43,9 @@ export const Home = () => {
     const [zoomOrTooltip, setZoomOrTooltip] = useState(true);
     const [coinData, setCoinData] = useState();
     const [stockApiData, setStockApiData] = useState({});
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    const [tickerSymbol, setTickerSymbol] = useState();
+    const [startDate, setStartDate] = useState('2020-10-01');
+    const [endDate, setEndDate] = useState('2023-01-07');
+    const [tickerSymbol, setTickerSymbol] = useState('AAPL');
 
     useEffect(() => {
         axios.get('https://api.coingecko.com/api/v3/coins/bitcoin')
@@ -210,15 +210,17 @@ export const Home = () => {
     }
 
     const testFunc = async () => {
-        const url2 = "https://api.coingecko.com/api/v3/coins/bitcoin";
-        const url6 = "https://api.twelvedata.com/time_series?&start_date=2010-05-06&end_date=2023-02-15&outputsize=4999&symbol=aapl&interval=1day&apikey=f697c3c71ee64f0387a55fe2a8c838bf";
+        console.log('check: ', stockApiData);
+        console.log('excelData: ', excelData);
+        // const url2 = "https://api.coingecko.com/api/v3/coins/bitcoin";
+        // const url6 = "https://api.twelvedata.com/time_series?&start_date=2010-05-06&end_date=2023-02-15&outputsize=4999&symbol=aapl&interval=1day&apikey=f697c3c71ee64f0387a55fe2a8c838bf";
 
-        axios.get(url6)
-        .then(res => {
-            console.log(res.data);
-            setStockApiData(res.data);
-        })
-        .catch(error => console.log(error));
+        // axios.get(url6)
+        // .then(res => {
+        //     console.log(res.data);
+        //     setStockApiData(res.data);
+        // })
+        // .catch(error => console.log(error));
     }
     
     const downloadExcelFile = () => {
@@ -370,12 +372,34 @@ export const Home = () => {
         setEndDate(val);
     }
 
+    const setTickerySymbolToState = (val) => {
+        setTickerSymbol(val);
+    }
+
     const testingThings = () => {
+        const token = "f697c3c71ee64f0387a55fe2a8c838bf"
         console.log('hihihihi');
         console.log('start: ', startDate);
         console.log('end: ', endDate);
         console.log('ticker: ', tickerSymbol);
-    }
+        const url6 = "https://api.twelvedata.com/time_series?&start_date=2010-05-06&end_date=2023-02-15&outputsize=4999&symbol=aapl&interval=1day&apikey=f697c3c71ee64f0387a55fe2a8c838bf";
+        const url = `https://api.twelvedata.com/time_series?&start_date=${startDate}&end_date=${endDate}&outputsize=4999&symbol=${tickerSymbol}&interval=1day&apikey=${token}`
+        console.log('url: ', url);
+        console.log('url: ', url6);
+
+        
+        axios.get(url)
+        .then(res => {
+            console.log(res.data.values);
+            const copiedClone = res.data.values.map(({datetime, high, low, close}) => ({
+                Date: datetime, Price: close, High: high, Low: low}));
+                
+                setStockApiData(res.data.values);
+                setExcelData(copiedClone);
+            })
+            .catch(error => console.log(error));
+        }
+        // Date: DateConversion(Date), Price, High, Low}));
 
     const positiveOrNegative = (val) => {
         if (Math.sign(val) === 1) {
@@ -386,6 +410,8 @@ export const Home = () => {
             return false;
         }
     }
+
+
 
         return (
             <div>
@@ -403,7 +429,7 @@ export const Home = () => {
                     <div>
                         <div>
                             <div className="margin-top-10">
-                                <TickerSymbolInput setStartDateToState={setStartDateToState}/>
+                                <TickerSymbolInput setTickerySymbolToState={setTickerySymbolToState}/>
                             </div>
                             <div className="margin-top-10">
                                 <StartDateInput setStartDateToState={setStartDateToState}/>
@@ -411,7 +437,7 @@ export const Home = () => {
                             <div className="margin-top-10">
                                 <EndDateInput setEndDateToState={setEndDateToState}/>
                             </div>
-                            <button disabled={!startDate} className="margin-top-20" onClick={testingThings}>test test test</button>
+                            <button disabled={!startDate || !endDate || !tickerSymbol} className="margin-top-20" onClick={testingThings}>{StyleConfig.LABEL_API_BUTTON}</button>
                         </div>
                         <button className="button-33 margin-top-20" onClick={toggleStockChart}>{showGraph ? Constants.SHOW_GRAPH_LABEL : Constants.HIDE_GRAPH_LABEL}</button>
                         <div className="margin-top-30">
