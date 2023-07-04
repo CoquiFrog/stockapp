@@ -18,7 +18,7 @@ const StyleConfig = {
     SHOW_GRAPH_LABEL: "Graph",
     HIDE_GRAPH_LABEL: "Back",
     EXCEL_INPUT_BUTTON_TEXT: "Excel Input",
-    FRACTAL_INPUT_BUTTON_TEXT: "Fractal Input",
+    FRACTAL_INPUT_BUTTON_TEXT: "Grab Fractals",
     DOWNLOAD_BUTTON_TEXT: "Download",
 
     // Placeholders

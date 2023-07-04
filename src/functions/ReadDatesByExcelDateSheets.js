@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx";
 
-export const ReadExcel = (file, props) => {
+export const ReadDatesByExcelDateSheets = (file, props) => {
     const promise = new Promise((resolve, reject) => {
         const fileReader = new FileReader();
         fileReader.readAsArrayBuffer(file);
@@ -20,11 +20,9 @@ export const ReadExcel = (file, props) => {
     });
 
     promise.then((data) => {
-        props.grabExcelDataAndSetToState(data);
-        // TOGGLE FOR LOCATION PAUL
-        // WHEN YOU WANT TO SWITCH FILE TYPE FROM INVESTMENT DATES TO UNIQUE FREQUENCIES
-        // props.grabExcelDataAndSetToStateForLocationData(data);
+        console.log('data from ReadDatesByExcelDateSheets.js: ', data);
+        props.grabFractalAndSetToStateByDateFiles(data);
     });
 }
 
-export default ReadExcel;
+export default ReadDatesByExcelDateSheets;

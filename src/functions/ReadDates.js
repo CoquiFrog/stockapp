@@ -21,7 +21,9 @@ export const ReadDates = (file, props) => {
 
     promise.then((data) => {
         console.log('data: ', data);
-        props.grabOverlayDataAndSetToState(data);
+        // props.grabOverlayDataAndSetToState(data);
+
+        props.grabFractalAndSetToState(data);
     });
 }
 

@@ -6,6 +6,10 @@ import DownloadExcel from "../functions/DownloadExcel";
 import SplitExcel from "../functions/SplitExcel";
 import FileNameInput from "./FileNameInput";
 import ChunkAmountInput from "./ChunkAmountInput";
+import AverageNumberInput1 from "./AverageNumberInput1";
+import AverageNumberInput2 from "./AverageNumberInput2";
+import AverageNumberInput3 from "./AverageNumberInput3";
+import AverageNumberInput4 from "./AverageNumberInput4";
 import StartDateInput from "./StartDateInput";
 import EndDateInput from "./EndDateInput";
 import TickerSymbolInput from "./TickerSymbolInput";
@@ -15,20 +19,22 @@ import NameDial from '../functions/NameDial';
 import StockChart from "./StockChart";
 import * as XLSX from "xlsx";
 import axios from 'axios';
+import DateOverlayInput from './DateOverlayInput';
+import GrabFractalByDateInput from "./GrabFractalByDateInput";
 
 export const Home = () => {
     const [amountOfFunctions, setAmountOfFunctions] = useState(9);
     const [excelData, setExcelData] = useState(); //Constants.APPLE_THREE_YEARS_2020_2023
     const [fileName, setFileName] = useState('Default_File_Name');
-    const [chunkAmount, setChunkAmount] = useState(28);
+    const [chunkAmount, setChunkAmount] = useState(820);
     const [hideHighLowColumns, setHideHighLowColumns] = useState(false)
-    const [menuNumber, setMenuNumber] = useState(2);
+    const [menuNumber, setMenuNumber] = useState(8);
     const [graphFloor, setGraphFloor] = useState();
     const [graphCeiling, setGraphCeiling] = useState();
     const [showGraph, setShowGraph] = useState(true);
     const [storageBox, setStorageBox] = useState();//Constants.DUMMY_DATA_LARGE
-    // const [arrayOfFractalHighs, setArrayOfFractalHighs] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_HIGH_FRACTAL
-    // const [arrayOfFractalLows, setArrayOfFractalLows] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_LOW_FRACTAL
+    const [arrayOfFractalHighs, setArrayOfFractalHighs] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_HIGH_FRACTAL
+    const [arrayOfFractalLows, setArrayOfFractalLows] = useState(); //Constants.APPLE_DUMMY_DATA_FIVE_YEARS_LOW_FRACTAL
     const [stockChartFractalHighs, setStockChartFractalHighs] = useState();
     const [stockChartFractalLows, setStockChartFractalLows] = useState();
     const [victoryScatterHigh, setVictoryScatterHigh] = useState();
@@ -46,6 +52,11 @@ export const Home = () => {
     const [startDate, setStartDate] = useState('2020-10-01');
     const [endDate, setEndDate] = useState('2023-01-07');
     const [tickerSymbol, setTickerSymbol] = useState('AAPL');
+    const [averageAmount1, setAverageAmount1] = useState(10);
+    const [averageAmount2, setAverageAmount2] = useState(10);
+    const [averageAmount3, setAverageAmount3] = useState(10);
+    const [averageAmount4, setAverageAmount4] = useState(10);
+    const [finalAverage, setFinalAverage] = useState(averageAmount1 + averageAmount2 + averageAmount3 + averageAmount4);
 
     useEffect(() => {
         axios.get('https://api.coingecko.com/api/v3/coins/bitcoin')
@@ -123,6 +134,18 @@ export const Home = () => {
         setStorageBox(storageBox)
         setStockChartFractalHighs(fractalHighBox);
         setStockChartFractalLows(fractalLowBox);
+    }
+
+    const grabExcelDataAndSetToStateForLocationData = (val) => {
+        console.log('val: ', val);
+        // val.map((day) => {
+        //     day.Date = Math.round(day.Date);
+        //     delete day.Open;
+        //     delete day["Vol."];
+        //     delete day["Change %"];
+        // })
+
+        setExcelData(val);
     }
 
     const addMenuNumber = () => {
@@ -206,21 +229,34 @@ export const Home = () => {
     }
 
     const printData = () => {
-        console.log('stockData: ', stockApiData);
+        console.log('highs: ', arrayOfFractalHighs);
+        console.log('lows: ', arrayOfFractalLows);
     }
 
     const testFunc = async () => {
-        console.log('check: ', stockApiData);
         console.log('excelData: ', excelData);
-        // const url2 = "https://api.coingecko.com/api/v3/coins/bitcoin";
-        // const url6 = "https://api.twelvedata.com/time_series?&start_date=2010-05-06&end_date=2023-02-15&outputsize=4999&symbol=aapl&interval=1day&apikey=f697c3c71ee64f0387a55fe2a8c838bf";
+        console.log('fractal highs: ', arrayOfFractalHighs);
+        console.log('fractal lows: ', arrayOfFractalLows);
+        const lengthOfArray = excelData.length;
+        const copiedClone = structuredClone(excelData);
 
-        // axios.get(url6)
-        // .then(res => {
-        //     console.log(res.data);
-        //     setStockApiData(res.data);
-        // })
-        // .catch(error => console.log(error));
+        copiedClone.map(({Date, Price, High, Low}) => ({
+            Date, Price, High, Low}));
+
+
+        copiedClone.map((day, index, arr) => {
+        // Filters out first and last 2 days
+            day.Date = DateConversion(day.Date);
+            if (index > 2 && index <= (lengthOfArray - 3)) {
+                day.High = "";
+                day.Low = "";
+                console.log('index: ', index);
+                if (arrayOfFractalHighs.includes(day.Date)) {day.High = " ";}
+                if (arrayOfFractalLows.includes(day.Date)) {day.Low = " ";}
+            }
+            return day;
+        })
+        SplitExcel(copiedClone, parseInt(chunkAmount), fileName, "highAndLow", false);
     }
     
     const downloadExcelFile = () => {
@@ -363,6 +399,22 @@ export const Home = () => {
         setChunkAmount(val);
     }
 
+    const setAverageAmountForNum1 = (val) => {
+        setAverageAmount1(val);
+    }
+
+    const setAverageAmountForNum2 = (val) => {
+        setAverageAmount2(val);
+    }
+
+    const setAverageAmountForNum3 = (val) => {
+        setAverageAmount3(val);
+    }
+
+    const setAverageAmountForNum4 = (val) => {
+        setAverageAmount4(val);
+    }
+
 
     const setStartDateToState = (val) => {
         setStartDate(val);
@@ -413,8 +465,91 @@ export const Home = () => {
 
 
 
+    const grabFractalAndSetToStateByDateFiles = (val) => {
+        const lengthOfArray = val.length;
+        const arrayOfFractalHighsBox = [];
+        const arrayOfFractalLowsBox = [];
+        console.log('check paul val: ', val);
+        console.log('length here: ', lengthOfArray);
+        val.map((day, index, arr) => {
+                // console.log('day: ', day);
+                if (day.High === 'H'){
+                    // push this day.Date to fractal high box
+                    // console.log('hit high: ', day.Date);
+                    arrayOfFractalHighsBox.push(DateConversion(day.Date));
+                }
+                if (day.Low === 'L'){
+                    // push this day.Date to fractal low box
+                    // console.log('hit low: ', day.Date)
+                    arrayOfFractalLowsBox.push(DateConversion(day.Date));
+                }
+                // return day;
+        })
+        console.log('test 1: ', arrayOfFractalHighsBox);
+        console.log('test 2: ', arrayOfFractalLowsBox);
+        setArrayOfFractalHighs(arrayOfFractalHighsBox);
+        setArrayOfFractalLows(arrayOfFractalLowsBox);
+    }
+
+    const grabFractalAndSetToState = (val) => {
+        const lengthOfArray = val.length;
+        const arrayOfFractalHighsBox = [];
+        const arrayOfFractalLowsBox = [];
+        val.map((day, index, arr) => {
+        // Filters out first and last 2 days
+            if (index > 2 && index <= (lengthOfArray - 3)) {
+                let highCheck1 = arr[index].High > arr[index-2].High;
+                let highCheck2 = arr[index].High > arr[index-1].High;
+                let highCheck3 = arr[index].High > arr[index+1].High;
+                let highCheck4 = arr[index].High > arr[index+2].High;
+
+                let lowCheck1 = arr[index].Low < arr[index-2].Low;
+                let lowCheck2 = arr[index].Low < arr[index-1].Low;
+                let lowCheck3 = arr[index].Low < arr[index+1].Low;
+                let lowCheck4 = arr[index].Low < arr[index+2].Low;
+
+                if (highCheck1 && highCheck2 && highCheck3 && highCheck4) {
+                    if (typeof day.Date === 'string') {
+                        arrayOfFractalHighsBox.push(day.Date);
+                    }
+                    if (typeof day.Date === 'number') {
+                        arrayOfFractalHighsBox.push(DateConversion(day.Date));
+                    }
+                }
+                if (lowCheck1 && lowCheck2 && lowCheck3 && lowCheck4) {
+                    if (typeof day.Date === 'string') {
+                        arrayOfFractalLowsBox.push(day.Date);
+                    }
+                    if (typeof day.Date === 'number') {
+                        arrayOfFractalLowsBox.push(DateConversion(day.Date));
+                    }
+                }
+            }
+            return day;
+        })
+        // navigator.clipboard.writeText(JSON.stringify(arrayOfFractalHighsBox));
+        setArrayOfFractalHighs(arrayOfFractalHighsBox);
+        setArrayOfFractalLows(arrayOfFractalLowsBox);
+    }
+
+    const calculateAverage = () => {
+        return ((parseInt(averageAmount1) + parseInt(averageAmount2) + parseInt(averageAmount3) + parseInt(averageAmount4))/4);
+    }
+
         return (
             <div>
+                <div className="averageContainer">
+                    <AverageNumberInput1 setAverageAmountForNum1={setAverageAmountForNum1} />
+                    <AverageNumberInput2 setAverageAmountForNum2={setAverageAmountForNum2} />
+                    <AverageNumberInput3 setAverageAmountForNum3={setAverageAmountForNum3} />
+                    <AverageNumberInput4 setAverageAmountForNum4={setAverageAmountForNum4} />
+
+                </div>
+                <div>
+                {calculateAverage()}
+                </div>
+
+
                 <button onClick={testFunc}>testFunc</button>
                 <button onClick={printData}>print data</button>
 
@@ -443,9 +578,12 @@ export const Home = () => {
                         <div className="margin-top-30">
                             <ExcelInput buttonText={StyleConfig.EXCEL_INPUT_BUTTON_TEXT} grabExcelDataAndSetToState={grabExcelDataAndSetToState} />
                         </div>
-                        {/* <div className="margin-top-30">
+                        <div className="margin-top-30">
+                            <ExcelInput buttonText="For Location" grabExcelDataAndSetToStateForLocationData={grabExcelDataAndSetToStateForLocationData} />
+                        </div>
+                        <div className="margin-top-30">
                             <ExcelInput buttonText={StyleConfig.FRACTAL_INPUT_BUTTON_TEXT} grabExcelDataAndSetToState={grabFractalAndSetToState} />
-                        </div> */}
+                        </div>
                         {/* <div className="margin-top-30">
                             <ExcelInput buttonText="test input" grabExcelDataAndSetToState={grabTestDataAndSetToState} />
                         </div> */}
@@ -508,9 +646,17 @@ export const Home = () => {
                         <div className="margin-top-10 font-size-24"> {currentFileNumber} </div>
                         <button className="button-33 margin-top-10" onClick={loadDateOverlay}>{StyleConfig.LABEL_LOAD_OVERLAY}</button>
                         <div className="margin-top-10 font-size-24"> {StyleConfig.LABEL_SELECTED_DATE_OVERLAY}: {currentLoadedDateOverlay} </div>
-                        {/* <div className="margin-top-30">
-                            <DateOverlayInput buttonText={StyleConfig.VICTORY_OVERLAY_LABEL} grabOverlayDataAndSetToState={grabOverlayDataAndSetToState} />
-                        </div> */}
+                        <div className="margin-top-30">
+                            <GrabFractalByDateInput buttonText="grab fractals by date input excel file" grabFractalAndSetToStateByDateFiles={grabFractalAndSetToStateByDateFiles} />
+                            {/* <div>hihihihihihihihihihihi</div>
+                            <div>hihihihihihihihihihihi</div>
+                            <div>hihihihihihihihihihihi</div>
+                            <DateOverlayInput buttonText="grab fractals by stock graph" grabFractalAndSetToState={grabFractalAndSetToState} />
+                            <div>hihihihihihihihihihihi</div>
+                            <div>hihihihihihihihihihihi</div>
+                            <div>hihihihihihihihihihihi</div> */}
+                            
+                        </div>
                         <button className="button-33 margin-top-10" onClick={toggleDisplayOverlay}>{StyleConfig.DISPLAY_OVERLAY_LABEL}</button>
                         <button className="button-33" onClick={toggleFractalHighs}>{StyleConfig.TOGGLE_FRACTAL_HIGH_LABEL}</button>
                         <button className="button-33" onClick={toggleFractalLows}>{StyleConfig.TOGGLE_FRACTAL_LOW_LABEL}</button>
@@ -521,6 +667,7 @@ export const Home = () => {
                     <div className="margin-top-10">
                         <button className="button-33" onClick={()=>addDay(victoryDateOverlay)}>+</button>
                         <button className="button-33" onClick={()=>subtractDay(victoryDateOverlay)}>-</button>
+                        
                     </div>
                     <div className="stock-chart margin-top-10">
                         <StockChart zoomOrTooltip={zoomOrTooltip} victoryDateOverlay={victoryDateOverlay} showDateOverlay={showDateOverlay} showFractalHigh={showFractalHigh} showFractalLow={showFractalLow} victoryScatterHigh={victoryScatterHigh} victoryScatterLow={victoryScatterLow} stockChartFractalLows={stockChartFractalLows} stockChartFractalHighs={stockChartFractalHighs} storageBox={storageBox} stockChartData={excelData} graphFloor={graphFloor} graphCeiling={graphCeiling}/>

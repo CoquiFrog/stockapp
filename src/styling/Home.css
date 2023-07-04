@@ -21,6 +21,15 @@
   transform: translateX(2px) translateY(-20px);
 }
 
+.averageContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.averageBoxWidth {
+  width: 90px !important;
+}
+
 .font-size-24 {
   font-size: 24px;
 }
